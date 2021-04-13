@@ -1,0 +1,4 @@
+export const CURRENT_REQUEST = "CURRENT_REQUEST";
+export const ONECALL_REQUEST = "ONECALL_REQUEST";
+export const SEARCH_TERM = "SEARCH_TERM";
+export const CHANGE_UNITS = "CHANGE_UNITS";
