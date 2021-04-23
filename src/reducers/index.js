@@ -6,7 +6,7 @@ import oneCallReducer from "./oneCallReducer";
 import unitsReducer from "./unitsReducer";
 
 export default combineReducers({
-	term: termReducer,
+	location: termReducer,
 	current: currentReducer,
 	oneCall: oneCallReducer,
 	units: unitsReducer,

@@ -42,7 +42,7 @@ export const fetchOneCall = (location, units, lang = "en") => {
 		if (unitsStatus || locationStatus || langStatus) {
 			// MAKE REQUEST
 		} else {
-			// DONT'T MAKE REQUEST
+			// DONT'T MAKE REQUEST (KEEP STATE AS IS)
 			dispatch({ type: null });
 		}
 
