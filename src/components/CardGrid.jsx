@@ -120,7 +120,7 @@ function CardGrid() {
 							display="inline"
 							color="textSecondary"
 						>
-							/4°
+							/44°
 						</Typography>
 					</Grid>
 					<Grid item>

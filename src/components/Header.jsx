@@ -117,7 +117,7 @@ function Header(props) {
 					</Tooltip>
 				</Toolbar>
 			</AppBar>
-			{/* Here to offset AppBar postion os it does not obscure othere elemetns */}
+			{/* Here to offset AppBar postion so it does not obscure othere elemetns */}
 			<Toolbar />
 		</React.Fragment>
 	);

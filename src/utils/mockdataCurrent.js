@@ -1,4 +1,4 @@
-export default current = {
+const current = {
 	coord: {
 		lon: 15.9775,
 		lat: 45.8131,
@@ -41,3 +41,5 @@ export default current = {
 	name: "Donji grad",
 	cod: 200,
 };
+
+export default current;

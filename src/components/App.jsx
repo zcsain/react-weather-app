@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Router, Route, Switch } from "react-router-dom";
 
 // Material UI
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
@@ -10,10 +11,12 @@ import Container from "@material-ui/core/Container";
 
 // Custom
 import Header from "./Header";
-import { setUnits } from "../actions/index";
+import { setUnits, setSearchTerm } from "../actions/index";
 import WeatherCard from "./WeatherCard";
 import CardV1 from "./CardV1";
 import CardGrid from "./CardGrid";
+import CurrentView from "./CurrentView";
+import history from "../history";
 
 const dark = createMuiTheme({
 	palette: {
@@ -63,29 +66,36 @@ class App extends React.Component {
 		return (
 			<ThemeProvider theme={this.state.theme ? blueLight : dark}>
 				<CssBaseline />
-				<Header onThemeChange={this.changeTheme} theme={this.state.theme} />
-				<Container maxWidth="md" style={{ marginTop: "20px" }}>
-					<Grid container spacing={2} direction="column">
-						<Grid item>
-							<WeatherCard />
-						</Grid>
-						<Grid item>
-							<CardGrid />
-						</Grid>
-						<Grid item>
-							<CardV1 />
-						</Grid>
-						<Grid item>
-							<WeatherCard />
-						</Grid>
-						<Grid item>
-							<WeatherCard />
-						</Grid>
-						<Grid item>
-							<WeatherCard />
-						</Grid>
-					</Grid>
-				</Container>
+				<Router history={history}>
+					<Header onThemeChange={this.changeTheme} theme={this.state.theme} />
+					<Container maxWidth="md" style={{ marginTop: "20px" }}>
+						<Switch>
+							<Route path="/" exact>
+								<Grid container spacing={2} direction="column">
+									<Grid item>
+										<WeatherCard />
+									</Grid>
+									<Grid item>
+										<CardGrid />
+									</Grid>
+									<Grid item>
+										<CardV1 />
+									</Grid>
+									<Grid item>
+										<WeatherCard />
+									</Grid>
+									<Grid item>
+										<WeatherCard />
+									</Grid>
+									<Grid item>
+										<WeatherCard />
+									</Grid>
+								</Grid>
+							</Route>
+							<Route path="/current/:location" exact component={CurrentView} />
+						</Switch>
+					</Container>
+				</Router>
 			</ThemeProvider>
 		);
 	}
@@ -94,7 +104,8 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		units: state.units,
+		location: state.location,
 	};
 };
 
-export default connect(mapStateToProps, { setUnits })(App);
+export default connect(mapStateToProps, { setUnits, setSearchTerm })(App);
