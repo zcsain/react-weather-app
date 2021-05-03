@@ -12,17 +12,21 @@ import Container from "@material-ui/core/Container";
 // Custom
 import Header from "./Header";
 import { setUnits, setSearchTerm } from "../actions/index";
-import WeatherCard from "./WeatherCard";
 import CardV1 from "./CardV1";
 import CardGrid from "./CardGrid";
 import CurrentView from "./CurrentView";
+import CurrentViewEdit from "./CurrentViewEdit";
 import history from "../history";
+import SearchField from "./SearchField";
 
 const dark = createMuiTheme({
 	palette: {
 		type: "dark",
 		// primary: {
 		// 	main: "#1976d2",
+		// },
+		// primary: {
+		// 	main: "#424242",
 		// },
 	},
 });
@@ -67,32 +71,44 @@ class App extends React.Component {
 			<ThemeProvider theme={this.state.theme ? blueLight : dark}>
 				<CssBaseline />
 				<Router history={history}>
-					<Header onThemeChange={this.changeTheme} theme={this.state.theme} />
 					<Container maxWidth="md" style={{ marginTop: "20px" }}>
 						<Switch>
 							<Route path="/" exact>
+								<Header
+									searchFieldInAppBar={false}
+									onThemeChange={this.changeTheme}
+									theme={this.state.theme}
+								/>
+								<SearchField />
+							</Route>
+							<Route path="/testArea" exact>
+								<Header
+									onThemeChange={this.changeTheme}
+									theme={this.state.theme}
+								/>
 								<Grid container spacing={2} direction="column">
-									<Grid item>
-										<WeatherCard />
-									</Grid>
 									<Grid item>
 										<CardGrid />
 									</Grid>
 									<Grid item>
 										<CardV1 />
 									</Grid>
-									<Grid item>
-										<WeatherCard />
-									</Grid>
-									<Grid item>
-										<WeatherCard />
-									</Grid>
-									<Grid item>
-										<WeatherCard />
-									</Grid>
 								</Grid>
 							</Route>
-							<Route path="/current/:location" exact component={CurrentView} />
+							<Route path="/currentTest/:location" exact>
+								<Header
+									onThemeChange={this.changeTheme}
+									theme={this.state.theme}
+								/>
+								<CurrentViewEdit />
+							</Route>
+							<Route path="/current/:location" exact>
+								<Header
+									onThemeChange={this.changeTheme}
+									theme={this.state.theme}
+								/>
+								<CurrentView />
+							</Route>
 						</Switch>
 					</Container>
 				</Router>

@@ -15,8 +15,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
-import CardActions from "@material-ui/core/CardActions";
-import CardActionsArea from "@material-ui/core/CardActionArea";
 
 // Custom
 import iconsMap from "../utils/iconsMap";
@@ -24,6 +22,7 @@ import Backdrop from "./Backdrop";
 import degToCompasDir from "../utils/degToCompasDir";
 import titleCase from "../utils/titleCase";
 import formatTime from "../utils/formatTime";
+import { Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -53,6 +52,8 @@ function CurrentView(props) {
 		});
 		const icon = iconsMap[weather[0].icon];
 
+		console.log(props);
+
 		return (
 			<Card>
 				<CardHeader
@@ -74,20 +75,12 @@ function CurrentView(props) {
 							</Typography>
 						</Grid>
 					</Grid>
-					<Typography
-						variant="h6"
-						component="p"
-						color="textSecondary"
-						// style={{ marginLeft: "8px" }}
-					>
-						{titleCase(weather[0].description)}
-					</Typography>
 				</CardContent>
-				{/* <CardActionsArea>
+				<CardContent>
 					<Typography variant="h6" component="p" color="textSecondary">
 						{titleCase(weather[0].description)}
 					</Typography>
-				</CardActionsArea> */}
+				</CardContent>
 			</Card>
 		);
 	};
@@ -205,17 +198,13 @@ function CurrentView(props) {
 		<React.Fragment>
 			{props.current ? (
 				<Grid container direction="row" spacing={2}>
-					<Grid item xs={12}>
+					<Grid item xs={12} sm={6}>
 						{renderQuickViewCard()}
 					</Grid>
-					<Grid item xs={12} sm={6}>
-						{renderInfoCard()}
-					</Grid>
-					<Grid item xs={12} sm={6}>
-						{renderWindTable()}
-					</Grid>
-					<Grid item xs={12} sm={6}>
-						{renderSunsetTable()}
+					<Grid container item direction="column" spacing={2} xs={12} sm={6}>
+						<Grid item>{renderInfoCard()}</Grid>
+						<Grid item>{renderWindTable()}</Grid>
+						<Grid item>{renderSunsetTable()}</Grid>
 					</Grid>
 				</Grid>
 			) : (

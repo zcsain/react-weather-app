@@ -1,4 +1,10 @@
-export default function degToCompasDir(deg) {
+/**
+ * Transforms wind direction from degrees to compas direction
+ * @param {number} deg Wind direction in degrees
+ * @returns {string} Compas direction
+ */
+
+const degToCompasDir = (deg) => {
 	const compasMap = [
 		"N",
 		"NNE",
@@ -21,7 +27,7 @@ export default function degToCompasDir(deg) {
 
 	const index = Math.round((deg % 360) / 22.5);
 
-	const compasDir = compasMap[index];
+	return compasMap[index];
+};
 
-	return compasDir;
-}
+export default degToCompasDir;

@@ -8,7 +8,7 @@ const current = {
 			id: 800,
 			main: "Clear",
 			description: "clear sky",
-			icon: "01d",
+			icon: "04d",
 		},
 	],
 	base: "stations",
