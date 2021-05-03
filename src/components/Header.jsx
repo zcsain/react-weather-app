@@ -95,6 +95,9 @@ const useStyles = makeStyles((theme) => ({
 		marginLeft: "5px",
 	},
 	settingsButton: {
+		marginLeft: "16px",
+	},
+	settingsButtonContent: {
 		paddingLeft: "8px",
 		paddingRight: "2px",
 		fontWeight: "bold",
@@ -197,7 +200,10 @@ function Header(props) {
 							onClick={handleClick}
 						>
 							<SettingsIcon />
-							<Typography variant="button" className={classes.settingsButton}>
+							<Typography
+								variant="button"
+								className={classes.settingsButtonContent}
+							>
 								{selectedUnits.type} ({selectedUnits.units.temp})
 							</Typography>
 							<ExpandMoreIcon fontSize="small" />

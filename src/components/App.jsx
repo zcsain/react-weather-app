@@ -18,10 +18,15 @@ import CurrentView from "./CurrentView";
 import CurrentViewEdit from "./CurrentViewEdit";
 import history from "../history";
 import SearchField from "./SearchField";
+import NavigationTabs from "./NavigationTabs";
 
 const dark = createMuiTheme({
 	palette: {
 		type: "dark",
+		// makes text white, or anything with the "primary" keyword
+		primary: {
+			main: "#fff",
+		},
 		// primary: {
 		// 	main: "#1976d2",
 		// },
@@ -100,6 +105,7 @@ class App extends React.Component {
 									onThemeChange={this.changeTheme}
 									theme={this.state.theme}
 								/>
+								<NavigationTabs />
 								<CurrentViewEdit />
 							</Route>
 							<Route path="/current/:location" exact>
@@ -108,6 +114,12 @@ class App extends React.Component {
 									theme={this.state.theme}
 								/>
 								<CurrentView />
+							</Route>
+							<Route path="/daily" exact>
+								Daily
+							</Route>
+							<Route path="/hourly" exact>
+								Hourly
 							</Route>
 						</Switch>
 					</Container>
