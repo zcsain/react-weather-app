@@ -5,7 +5,6 @@ import { Router, Route, Switch } from "react-router-dom";
 // Material UI
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { blue } from "@material-ui/core/colors";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 
@@ -15,7 +14,6 @@ import { setUnits, setSearchTerm } from "../actions/index";
 import CardV1 from "./CardV1";
 import CardGrid from "./CardGrid";
 import CurrentView from "./CurrentView";
-import CurrentViewEdit from "./CurrentViewEdit";
 import history from "../history";
 import SearchField from "./SearchField";
 import NavigationTabs from "./NavigationTabs";
@@ -36,11 +34,11 @@ const dark = createMuiTheme({
 	},
 });
 
-const light = createMuiTheme({
-	palette: {
-		type: "light",
-	},
-});
+// const light = createMuiTheme({
+// 	palette: {
+// 		type: "light",
+// 	},
+// });
 
 const blueLight = createMuiTheme({
 	palette: {
@@ -52,17 +50,17 @@ const blueLight = createMuiTheme({
 	},
 });
 
-const blueDark = createMuiTheme({
-	palette: {
-		type: "dark",
-		primary: {
-			main: "#333333",
-		},
-		secondary: {
-			main: "#222222",
-		},
-	},
-});
+// const blueDark = createMuiTheme({
+// 	palette: {
+// 		type: "dark",
+// 		primary: {
+// 			main: "#333333",
+// 		},
+// 		secondary: {
+// 			main: "#222222",
+// 		},
+// 	},
+// });
 
 class App extends React.Component {
 	state = { theme: true };
@@ -76,7 +74,7 @@ class App extends React.Component {
 			<ThemeProvider theme={this.state.theme ? blueLight : dark}>
 				<CssBaseline />
 				<Router history={history}>
-					<Container maxWidth="md" style={{ marginTop: "20px" }}>
+					<Container maxWidth="md" style={{ marginTop: "10px" }}>
 						<Switch>
 							<Route path="/" exact>
 								<Header
@@ -96,29 +94,38 @@ class App extends React.Component {
 										<CardGrid />
 									</Grid>
 									<Grid item>
+										<CardGrid />
+									</Grid>
+									<Grid item>
+										<CardGrid />
+									</Grid>
+									<Grid item>
 										<CardV1 />
 									</Grid>
 								</Grid>
-							</Route>
-							<Route path="/currentTest/:location" exact>
-								<Header
-									onThemeChange={this.changeTheme}
-									theme={this.state.theme}
-								/>
-								<NavigationTabs />
-								<CurrentViewEdit />
 							</Route>
 							<Route path="/current/:location" exact>
 								<Header
 									onThemeChange={this.changeTheme}
 									theme={this.state.theme}
 								/>
+								<NavigationTabs />
 								<CurrentView />
 							</Route>
 							<Route path="/daily" exact>
+								<Header
+									onThemeChange={this.changeTheme}
+									theme={this.state.theme}
+								/>
+								<NavigationTabs />
 								Daily
 							</Route>
 							<Route path="/hourly" exact>
+								<Header
+									onThemeChange={this.changeTheme}
+									theme={this.state.theme}
+								/>
+								<NavigationTabs />
 								Hourly
 							</Route>
 						</Switch>

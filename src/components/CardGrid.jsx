@@ -15,6 +15,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
+import CardActionArea from "@material-ui/core/CardActionArea";
 
 const useStyles = makeStyles((theme) => ({
 	temp: {
@@ -87,53 +88,55 @@ function CardGrid() {
 
 	const content = () => {
 		return (
-			<CardContent className={classes.content}>
-				<Grid container spacing={3} className={classes.container}>
-					<Grid item>
-						<Grid container direction="column" spacing={1} align="center">
-							<Grid item>
-								<Chip label="WED" />
-							</Grid>
-							<Grid item>
-								<Typography color="textSecondary">21/4</Typography>
+			<CardActionArea onClick={handleExpandeClick}>
+				<CardContent className={classes.content}>
+					<Grid container spacing={2} className={classes.container}>
+						<Grid item>
+							<Grid container direction="column" spacing={1} align="center">
+								<Grid item>
+									<Chip label="WED" />
+								</Grid>
+								<Grid item>
+									<Typography color="textSecondary">21/4</Typography>
+								</Grid>
 							</Grid>
 						</Grid>
+						<Grid item>
+							<Icon
+								className="fa fa-cloud-sun"
+								fontSize="large"
+								color="disabled"
+								style={{ display: "inline-table" }}
+							/>
+						</Grid>
+						<Grid item className={classes.temp}>
+							<Typography variant="h3" component="p" display="inline">
+								17°
+							</Typography>
+							<Typography
+								variatn="h5"
+								component="p"
+								display="inline"
+								color="textSecondary"
+							>
+								/44°
+							</Typography>
+						</Grid>
+						<Grid item>
+							<IconButton
+								className={clsx(classes.expand, {
+									[classes.expandOpen]: expanded,
+								})}
+								onClick={handleExpandeClick}
+								aria-expanded={expanded}
+								aria-label="show more"
+							>
+								<ExpandMoreIcon />
+							</IconButton>
+						</Grid>
 					</Grid>
-					<Grid item>
-						<Icon
-							className="fa fa-cloud-sun"
-							fontSize="large"
-							color="disabled"
-							style={{ display: "inline-table" }}
-						/>
-					</Grid>
-					<Grid item className={classes.temp}>
-						<Typography variant="h3" component="p" display="inline">
-							17°
-						</Typography>
-						<Typography
-							variatn="h5"
-							component="p"
-							display="inline"
-							color="textSecondary"
-						>
-							/44°
-						</Typography>
-					</Grid>
-					<Grid item>
-						<IconButton
-							className={clsx(classes.expand, {
-								[classes.expandOpen]: expanded,
-							})}
-							onClick={handleExpandeClick}
-							aria-expanded={expanded}
-							aria-label="show more"
-						>
-							<ExpandMoreIcon />
-						</IconButton>
-					</Grid>
-				</Grid>
-			</CardContent>
+				</CardContent>
+			</CardActionArea>
 		);
 	};
 
@@ -145,7 +148,7 @@ function CardGrid() {
 						<Table>
 							<TableBody>
 								<TableRow>
-									<TableCell>Dessert</TableCell>
+									<TableCell>DeZZert</TableCell>
 									<TableCell align="right">Calories</TableCell>
 								</TableRow>
 								<TableRow>

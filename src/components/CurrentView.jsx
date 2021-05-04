@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 
 // Material UI
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
@@ -16,7 +16,9 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
 import CardActions from "@material-ui/core/CardActions";
-import CardActionsArea from "@material-ui/core/CardActionArea";
+import Button from "@material-ui/core/Button";
+import { Container, Paper } from "@material-ui/core";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // Custom
 import iconsMap from "../utils/iconsMap";
@@ -24,6 +26,7 @@ import Backdrop from "./Backdrop";
 import degToCompasDir from "../utils/degToCompasDir";
 import titleCase from "../utils/titleCase";
 import formatTime from "../utils/formatTime";
+import FactsCards from "./FactsCard";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -36,10 +39,18 @@ const useStyles = makeStyles((theme) => ({
 	rightText: {
 		fontWeight: "bold",
 	},
+	card: {
+		padding: "10px",
+	},
+	table: {
+		padding: "0px 10px 0px 10px",
+	},
 }));
 
 function CurrentView(props) {
-	const classes = useStyles();
+	const theme = useTheme();
+	const classes = useStyles(theme);
+	const showFacts = useMediaQuery(theme.breakpoints.up("sm"));
 
 	const { current, selectedUnits } = props;
 	const { weather, main, wind, dt, sys, timezone } = current;
@@ -54,13 +65,18 @@ function CurrentView(props) {
 		const icon = iconsMap[weather[0].icon];
 
 		return (
-			<Card>
+			<Card style={{ padding: "10px" }}>
 				<CardHeader
 					title={`${props.match.params.location} - Current Weather`}
 					subheader={date}
 				/>
 				<CardContent>
-					<Grid container spacing={3} className={classes.container}>
+					<Grid container spacing={2} className={classes.container}>
+						<Grid item style={{ flexGrow: 1 }}>
+							<Typography variant="h1" component="p">
+								{main.temp.toFixed(0)}°
+							</Typography>
+						</Grid>
 						<Grid item>
 							<Icon
 								className={`${icon}`}
@@ -68,33 +84,20 @@ function CurrentView(props) {
 								style={{ fontSize: 80, display: "inline-table" }}
 							/>
 						</Grid>
-						<Grid item>
-							<Typography variant="h1" component="p">
-								{main.temp.toFixed(0)}°
-							</Typography>
-						</Grid>
 					</Grid>
-					<Typography
-						variant="h6"
-						component="p"
-						color="textSecondary"
-						// style={{ marginLeft: "8px" }}
-					>
-						{titleCase(weather[0].description)}
+				</CardContent>
+				<CardContent>
+					<Typography variant="h6" component="p" color="textSecondary">
+						{weather[0].main + ", " + titleCase(weather[0].description)}
 					</Typography>
 				</CardContent>
-				{/* <CardActionsArea>
-					<Typography variant="h6" component="p" color="textSecondary">
-						{titleCase(weather[0].description)}
-					</Typography>
-				</CardActionsArea> */}
 			</Card>
 		);
 	};
 
 	const renderInfoCard = () => {
 		return (
-			<TableContainer component={Card}>
+			<TableContainer component={Card} className={classes.table}>
 				<Table>
 					<TableBody>
 						{Object.keys(main).map((key) => {
@@ -135,7 +138,7 @@ function CurrentView(props) {
 		const { speed, deg } = wind;
 
 		return (
-			<TableContainer component={Card}>
+			<TableContainer component={Card} className={classes.table}>
 				<Table>
 					<TableBody>
 						<TableRow>
@@ -172,7 +175,7 @@ function CurrentView(props) {
 		const { sunrise, sunset } = sys;
 
 		return (
-			<TableContainer component={Card}>
+			<TableContainer component={Card} className={classes.table}>
 				<Table>
 					<TableBody>
 						<TableRow>
@@ -205,18 +208,17 @@ function CurrentView(props) {
 		<React.Fragment>
 			{props.current ? (
 				<Grid container direction="row" spacing={2}>
-					<Grid item xs={12}>
-						{renderQuickViewCard()}
+					<Grid container item direction="column" spacing={2} sm={8}>
+						<Grid item>{renderQuickViewCard()}</Grid>
+						<Grid item>{renderInfoCard()}</Grid>
+						<Grid item>{renderWindTable()}</Grid>
+						<Grid item>{renderSunsetTable()}</Grid>
 					</Grid>
-					<Grid item xs={12} sm={6}>
-						{renderInfoCard()}
-					</Grid>
-					<Grid item xs={12} sm={6}>
-						{renderWindTable()}
-					</Grid>
-					<Grid item xs={12} sm={6}>
-						{renderSunsetTable()}
-					</Grid>
+					{showFacts && (
+						<Grid container item direction="column" spacing={2} xs>
+							<FactsCards n={3} />
+						</Grid>
+					)}
 				</Grid>
 			) : (
 				<Backdrop />
