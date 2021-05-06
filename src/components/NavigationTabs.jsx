@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, withRouter } from "react-router-dom";
 
 // Material UI
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -16,27 +16,42 @@ const useStyles = makeStyles({
 	},
 });
 
-function NavigationTabs() {
+function NavigationTabs(props) {
 	const theme = useTheme();
 	const classes = useStyles();
-	const smallDevice = useMediaQuery(theme.breakpoints.down("xs"));
-	const [value, setValue] = useState(0);
+	const xsDevice = useMediaQuery(theme.breakpoints.down("xs"));
+	const { match } = props;
+	const { url } = match;
+	const mapIndexToName = {
+		0: "/current/Zagreb",
+		1: "/daily",
+		2: "/hourly",
+	};
+	const mapNameToIndex = {
+		"/current/Zagreb": 0,
+		"/daily": 1,
+		"/hourly": 2,
+	};
+	const [selectedTab, setSelectedTab] = useState(mapNameToIndex[url]);
+
+	console.log(props);
+	console.log(url);
 
 	const handleChange = (event, newValue) => {
-		setValue(newValue);
+		setSelectedTab(newValue);
 	};
 
 	return (
 		<Box className={classes.root}>
 			<Tabs
-				value={value}
+				value={selectedTab}
 				onChange={handleChange}
 				indicatorColor="primary"
 				textColor="primary"
 				centered
-				variant={smallDevice && "fullWidth"}
+				variant={xsDevice ? "fullWidth" : "standard"}
 			>
-				<Tab label="Current" component={RouterLink} to="/currentTest/Zagreb" />
+				<Tab label="Current" component={RouterLink} to="/current/Zagreb" />
 				<Tab label="Daily" component={RouterLink} to="/daily" />
 				<Tab label="Houry" component={RouterLink} to="/hourly" />
 			</Tabs>
@@ -44,4 +59,4 @@ function NavigationTabs() {
 	);
 }
 
-export default NavigationTabs;
+export default withRouter(NavigationTabs);

@@ -24,6 +24,7 @@ import Icon from "@material-ui/core/Icon";
 import CheckIcon from "@material-ui/icons/Check";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TuneIcon from "@material-ui/icons/Tune";
+import Paper from "@material-ui/core/Paper";
 
 // Custom
 import { setUnits } from "../actions";
@@ -239,6 +240,7 @@ function Header(props) {
 					</Tooltip>
 					<Tooltip title="GitHub repository">
 						<IconButton
+							edge="end"
 							aria-label="github repository"
 							color="inherit"
 							href="https://github.com/zcsain"
@@ -250,7 +252,7 @@ function Header(props) {
 				</Toolbar>
 			</AppBar>
 			{/* Here to offset AppBar postion so it does not obscure othere elemetns */}
-			<Toolbar />
+			{/* <Toolbar /> */}
 		</React.Fragment>
 	);
 }

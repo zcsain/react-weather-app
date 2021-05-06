@@ -17,6 +17,7 @@ import CurrentView from "./CurrentView";
 import history from "../history";
 import SearchField from "./SearchField";
 import NavigationTabs from "./NavigationTabs";
+import BottomNavigation from "./BottomNavigation";
 
 const dark = createMuiTheme({
 	palette: {
@@ -83,6 +84,14 @@ class App extends React.Component {
 									theme={this.state.theme}
 								/>
 								<SearchField />
+							</Route>
+							<Route path="/explore/:location" exact>
+								<NavigationTabs />
+								<CurrentView />
+								<BottomNavigation
+									onThemeChange={this.changeTheme}
+									theme={this.state.theme}
+								/>
 							</Route>
 							<Route path="/testArea" exact>
 								<Header

@@ -6,6 +6,7 @@ import reduxThunk from "redux-thunk";
 
 import reducers from "./reducers";
 import App from "./components/App";
+import AppFun from "./components/AppFun";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -15,7 +16,7 @@ const store = createStore(
 
 ReactDOM.render(
 	<Provider store={store}>
-		<App />
+		<AppFun />
 	</Provider>,
 	document.getElementById("root")
 );
