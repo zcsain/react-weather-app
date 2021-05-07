@@ -29,6 +29,7 @@ import Paper from "@material-ui/core/Paper";
 // Custom
 import { setUnits } from "../actions";
 import { metric, imperial, scientific } from "../actions/unitsPayload";
+import ExpandableSettings from "./ExpandableSettings";
 
 const useStyles = makeStyles((theme) => ({
 	spacing: {
@@ -119,7 +120,7 @@ function Header(props) {
 		setAnchorEl(null);
 	};
 
-	const handleSelect = (preferedUnits) => {
+	const handleUnitsSelect = (preferedUnits) => {
 		props.setUnits(preferedUnits);
 
 		setAnchorEl(null);
@@ -176,7 +177,7 @@ function Header(props) {
 			<AppBar position="fixed" color={props.theme ? "primary" : "inherit"}>
 				<Toolbar>
 					<Typography className={classes.title} variant="h6" noWrap>
-						WeatherApp
+						Breeze Weather
 					</Typography>
 					{props.searchFieldInAppBar ? (
 						<div className={classes.search}>
@@ -209,6 +210,7 @@ function Header(props) {
 							</Typography>
 							<ExpandMoreIcon fontSize="small" />
 						</Button>
+						{/* <ExpandableSettings viewOptions={false} /> */}
 					</Tooltip>
 					<Menu
 						id="simple-menu"
@@ -217,15 +219,15 @@ function Header(props) {
 						open={Boolean(anchorEl)}
 						onClose={handleClose}
 					>
-						<MenuItem onClick={() => handleSelect(metric)}>
+						<MenuItem onClick={() => handleUnitsSelect(metric)}>
 							Metric (°C, km/h, mm){renderCheckMark("metric")}
 						</MenuItem>
 						<Divider className={classes.menuDivider} />
-						<MenuItem onClick={() => handleSelect(imperial)}>
+						<MenuItem onClick={() => handleUnitsSelect(imperial)}>
 							Imperial (°F, mph, in){renderCheckMark("imperial")}
 						</MenuItem>
 						<Divider className={classes.menuDivider} />
-						<MenuItem onClick={() => handleSelect(scientific)}>
+						<MenuItem onClick={() => handleUnitsSelect(scientific)}>
 							Scientific (°K, m/s, mm){renderCheckMark("scientific")}
 						</MenuItem>
 					</Menu>

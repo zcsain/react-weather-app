@@ -73,16 +73,24 @@ function CurrentView(props) {
 				<CardContent>
 					<Grid container spacing={2} className={classes.container}>
 						<Grid item style={{ flexGrow: 1 }}>
-							<Typography variant="h1" component="p">
-								{main.temp.toFixed(0)}°
-							</Typography>
-						</Grid>
-						<Grid item>
 							<Icon
 								className={`${icon}`}
 								color="disabled"
 								style={{ fontSize: 80, display: "inline-table" }}
 							/>
+						</Grid>
+						<Grid item>
+							<Typography variant="h1" component="p">
+								{main.temp.toFixed(0)}
+								<Typography
+									variant="h2"
+									color="textSecondary"
+									display="inline"
+									style={{ fontWeight: "400" }}
+								>
+									{units.temp}
+								</Typography>
+							</Typography>
 						</Grid>
 					</Grid>
 				</CardContent>

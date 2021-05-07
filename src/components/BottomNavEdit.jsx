@@ -24,6 +24,7 @@ import Grid from "@material-ui/core/Grid";
 // Custom
 import MoreCard from "./MoreCard";
 import { More } from "@material-ui/icons";
+import ExpandableSettings from "./ExpandableSettings";
 
 const useStyles = makeStyles((theme) => ({
 	text: {
@@ -103,7 +104,8 @@ function BottomNavigation(props) {
 							<IconButton color="inherit">
 								<SearchIcon />
 							</IconButton>
-							<MoreCard />
+							{/* <MoreCard /> */}
+							<ExpandableSettings />
 							<IconButton edge="end" color="inherit">
 								<GitHubIcon />
 							</IconButton>

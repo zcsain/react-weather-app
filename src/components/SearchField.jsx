@@ -13,6 +13,7 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { Typography } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { Translate } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -35,6 +36,15 @@ const useStyles = makeStyles((theme) => ({
 	},
 	container: {
 		marginTop: "33%",
+	},
+	[theme.breakpoints.only("xs")]: {
+		container: {
+			marginTop: "auto",
+			position: "fixed",
+			top: "45%",
+			left: "50%",
+			transform: "translate(-50%, -50%)",
+		},
 	},
 	content: {
 		display: "grid",
@@ -61,9 +71,17 @@ export default function CustomizedInputBase() {
 	const classes = useStyles(theme);
 
 	return (
-		<Container className={classes.container}>
+		<Container
+			className={classes.container}
+			style={{
+				display: "grid",
+				alignContent: "center",
+				alignItems: "center",
+				alignSelf: "center",
+			}}
+		>
 			<Typography varinat="h1" className={classes.content} color="primary">
-				Weather App
+				Breeze Weather
 			</Typography>
 			<Paper component="form" className={classes.root}>
 				<IconButton className={classes.iconButton} aria-label="menu">
