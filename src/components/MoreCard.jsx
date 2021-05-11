@@ -7,10 +7,10 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
+// import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Brightness7Icon from "@material-ui/icons/Brightness7"; //light
+// import Brightness7Icon from "@material-ui/icons/Brightness7"; //light
 import Brightness4Icon from "@material-ui/icons/Brightness4"; //dark
 import GitHubIcon from "@material-ui/icons/GitHub";
 

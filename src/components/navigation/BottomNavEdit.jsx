@@ -6,25 +6,16 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import Fab from "@material-ui/core/Fab";
-import MenuIcon from "@material-ui/icons/Menu";
-import SettingsIcon from "@material-ui/icons/Settings";
-import AddIcon from "@material-ui/icons/Add";
-import TuneIcon from "@material-ui/icons/Tune";
 import SearchIcon from "@material-ui/icons/Search";
-import MoreIcon from "@material-ui/icons/MoreVert";
-import Brightness7Icon from "@material-ui/icons/Brightness7"; //light
-import Brightness4Icon from "@material-ui/icons/Brightness4"; //dark
-import GitHubIcon from "@material-ui/icons/GitHub";
 import { useTheme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Grid from "@material-ui/core/Grid";
 
 // Custom
-import MoreCard from "./MoreCard";
-import { More } from "@material-ui/icons";
-import ExpandableSettings from "./ExpandableSettings";
+// import MoreCard from "./MoreCard";
+import ExpandableSettings from "../parts/ExpandableSettings";
+import GitHubButton from "../parts/GitHubButton";
 
 const useStyles = makeStyles((theme) => ({
 	text: {
@@ -84,8 +75,8 @@ function BottomNavigation(props) {
 					<Grid container justify="space-between" alignItems="center">
 						<Grid item>
 							<Button
-								style={{ marginLeft: theme.spacing(0) }}
-								variant="outlined"
+								style={{ marginLeft: theme.spacing(-1) }}
+								variant="text"
 								aria-label="change units"
 								color="inherit"
 								className={classes.settingsButton}
@@ -94,7 +85,7 @@ function BottomNavigation(props) {
 									variant="button"
 									className={classes.settingsButtonContent}
 								>
-									Daily
+									Current
 								</Typography>
 								<ExpandMoreIcon fontSize="small" />
 							</Button>
@@ -106,9 +97,7 @@ function BottomNavigation(props) {
 							</IconButton>
 							{/* <MoreCard /> */}
 							<ExpandableSettings />
-							<IconButton edge="end" color="inherit">
-								<GitHubIcon />
-							</IconButton>
+							<GitHubButton href="https://github.com/zcsain" edge="end" />
 						</Grid>
 					</Grid>
 				</Toolbar>

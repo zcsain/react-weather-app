@@ -10,23 +10,16 @@ import {
 	useTheme,
 } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Box from "@material-ui/core/Box";
 
 // Custom
-import Header from "./Header";
+// import Header from "./Header";
 import { setUnits, setSearchTerm } from "../actions/index";
-import CardV1 from "./CardV1";
-import CardGrid from "./CardGrid";
 import CurrentView from "./CurrentView";
 import history from "../history";
-import SearchField from "./SearchField";
-import NavigationTabs from "./NavigationTabs";
-import BottomNavigation from "./BottomNavigation";
-import BottomNavEdit from "./BottomNavEdit";
-import BottomNavigation2 from "./BottomNavigation2";
+// import BottomNavigation from "./BottomNavigation";
+import BottomNavEdit from "./navigation/BottomNavEdit";
 import ExpandableSettings from "./ExpandableSettings";
 
 const dark = createMuiTheme({
@@ -90,26 +83,10 @@ function App(props) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 	const [selectedTheme, setSelectedTheme] = useState(true);
-	const xsDevice = useMediaQuery(theme.breakpoints.down("xs"));
+	// const xsDevice = useMediaQuery(theme.breakpoints.down("xs"));
 
 	const changeTheme = () => {
 		setSelectedTheme(!selectedTheme);
-	};
-
-	const renderNavigation = () => {
-		if (xsDevice) {
-			return (
-				<BottomNavigation onThemeChange={changeTheme} theme={selectedTheme} />
-			);
-		}
-
-		return (
-			<Header
-				searchFieldInAppBar={true}
-				onThemeChange={changeTheme}
-				theme={selectedTheme}
-			/>
-		);
 	};
 
 	return (

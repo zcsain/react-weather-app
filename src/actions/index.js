@@ -3,6 +3,7 @@ import {
 	ONECALL_REQUEST,
 	SEARCH_TERM,
 	CHANGE_UNITS,
+	TOGGLE_THEME,
 } from "./types";
 import openWeather from "../apis/openWeather";
 
@@ -82,5 +83,11 @@ export const setUnits = (units) => {
 	return {
 		type: CHANGE_UNITS,
 		payload: units,
+	};
+};
+
+export const toggleTheme = () => {
+	return {
+		type: TOGGLE_THEME,
 	};
 };

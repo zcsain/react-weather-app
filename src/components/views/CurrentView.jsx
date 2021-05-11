@@ -15,18 +15,15 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
-import CardActions from "@material-ui/core/CardActions";
-import Button from "@material-ui/core/Button";
-import { Container, Paper } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // Custom
-import iconsMap from "../utils/iconsMap";
-import Backdrop from "./Backdrop";
-import degToCompasDir from "../utils/degToCompasDir";
-import titleCase from "../utils/titleCase";
-import formatTime from "../utils/formatTime";
-import FactsCards from "./FactsCard";
+import iconsMap from "../../utils/iconsMap";
+import Backdrop from "../parts/Backdrop";
+import degToCompasDir from "../../utils/degToCompasDir";
+import titleCase from "../../utils/titleCase";
+import formatTime from "../../utils/formatTime";
+import FactsCards from "../parts/FactsCard";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -44,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	table: {
 		padding: "0px 10px 0px 10px",
+	},
+	tempUnit: {
+		fontWeight: "400",
 	},
 }));
 
@@ -80,16 +80,16 @@ function CurrentView(props) {
 							/>
 						</Grid>
 						<Grid item>
-							<Typography variant="h1" component="p">
+							<Typography variant="h1" component="p" display="inline">
 								{main.temp.toFixed(0)}
-								<Typography
-									variant="h2"
-									color="textSecondary"
-									display="inline"
-									style={{ fontWeight: "400" }}
-								>
-									{units.temp}
-								</Typography>
+							</Typography>
+							<Typography
+								variant="h2"
+								color="textSecondary"
+								display="inline"
+								className={classes.tempUnit}
+							>
+								{units.temp}
 							</Typography>
 						</Grid>
 					</Grid>
@@ -214,7 +214,9 @@ function CurrentView(props) {
 
 	return (
 		<React.Fragment>
-			{props.current ? (
+			{props.current === {} ? (
+				<Backdrop />
+			) : (
 				<Grid container direction="row" spacing={2}>
 					<Grid container item direction="column" spacing={2} sm={8}>
 						<Grid item>{renderQuickViewCard()}</Grid>
@@ -228,8 +230,6 @@ function CurrentView(props) {
 						</Grid>
 					)}
 				</Grid>
-			) : (
-				<Backdrop />
 			)}
 		</React.Fragment>
 	);
@@ -239,6 +239,7 @@ const mapStateToProps = (state) => {
 	return {
 		current: state.current,
 		selectedUnits: state.units,
+		searchTerm: state.location,
 	};
 };
 

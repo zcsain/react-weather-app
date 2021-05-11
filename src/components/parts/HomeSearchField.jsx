@@ -1,27 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 
 // Material UI
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
-import DirectionsIcon from "@material-ui/icons/Directions";
-import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { Typography } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { Translate } from "@material-ui/icons";
+
+// Custom
+import { setSearchTerm } from "../../actions";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		padding: "2px 4px",
 		display: "flex",
 		alignItems: "center",
-		// width: 600,
-		// maxWidth: 800,
 	},
 	input: {
 		marginLeft: theme.spacing(1),
@@ -66,22 +62,28 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function CustomizedInputBase() {
+function HomeSearchField(props) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
+	const [searchValue, setSearchValue] = useState("");
+
+	const handleChange = (event) => {
+		setSearchValue(event.target.value);
+	};
+
+	const handlePress = (event) => {
+		if (event.key === "Enter") {
+			event.preventDefault();
+			console.log("Enter was pressed, the search term is: " + searchValue);
+			props.setSearchTerm(searchValue);
+			setSearchValue("");
+		}
+	};
 
 	return (
-		<Container
-			className={classes.container}
-			style={{
-				display: "grid",
-				alignContent: "center",
-				alignItems: "center",
-				alignSelf: "center",
-			}}
-		>
+		<Container className={classes.container}>
 			<Typography varinat="h1" className={classes.content} color="primary">
-				Breeze Weather
+				Simple Weather
 			</Typography>
 			<Paper component="form" className={classes.root}>
 				<IconButton className={classes.iconButton} aria-label="menu">
@@ -91,8 +93,13 @@ export default function CustomizedInputBase() {
 					className={classes.input}
 					placeholder="Search"
 					inputProps={{ "aria-label": "search" }}
+					value={searchValue}
+					onChange={handleChange}
+					onKeyDown={handlePress}
 				/>
 			</Paper>
 		</Container>
 	);
 }
+
+export default connect(null, { setSearchTerm })(HomeSearchField);

@@ -9,15 +9,15 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 
 // Custom
-import Header from "./Header";
+import Header from "./navigation/Header";
 import { setUnits, setSearchTerm } from "../actions/index";
 import CardV1 from "./CardV1";
 import CardGrid from "./CardGrid";
-import CurrentView from "./CurrentView";
+import CurrentView from "./views/CurrentView";
 import history from "../history";
-import SearchField from "./SearchField";
-import NavigationTabs from "./NavigationTabs";
-import BottomNavigation from "./BottomNavigation";
+import HomeSearchField from "./parts/HomeSearchField";
+import NavigationTabs from "./navigation/NavigationTabs";
+import BottomNavigation from "./navigation/BottomNavigation";
 
 const dark = createMuiTheme({
 	palette: {
@@ -83,7 +83,7 @@ class App extends React.Component {
 									onThemeChange={this.changeTheme}
 									theme={this.state.theme}
 								/>
-								<SearchField />
+								<HomeSearchField />
 							</Route>
 							<Route path="/explore/:location" exact>
 								<NavigationTabs />

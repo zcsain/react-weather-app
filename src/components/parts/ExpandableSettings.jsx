@@ -10,20 +10,16 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Brightness7Icon from "@material-ui/icons/Brightness7"; //light
 import Brightness4Icon from "@material-ui/icons/Brightness4"; //dark
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SettingsIcon from "@material-ui/icons/Settings";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
 
 // Custom
-import { setUnits } from "../actions";
-import { metric, imperial, scientific } from "../actions/unitsPayload";
+import { setUnits, toggleTheme } from "../../actions";
+import { metric, imperial, scientific } from "../../actions/unitsPayload";
 
 const useStyles = makeStyles((theme) => ({
 	title: {
@@ -40,20 +36,6 @@ function ExpandableSettings(props) {
 		"Imperial (°F, mph, in)",
 		"Scientific (°K, m/s, mm)",
 	];
-	const options2 = [
-		{
-			type: "metric",
-			description: "Metric (°C, km/h, mm)",
-		},
-		{
-			type: "imperial",
-			description: "Imperial (°F, mph, in)",
-		},
-		{
-			type: "scientific",
-			description: "Scientific (°K, m/s, mm)",
-		},
-	];
 	const mapUnitsToIndex = {
 		metric: 0,
 		imperial: 1,
@@ -64,8 +46,6 @@ function ExpandableSettings(props) {
 	const [selectedIndex, setSelectedIndex] = React.useState(
 		mapUnitsToIndex[selectedUnits.type]
 	);
-
-	console.log(props);
 
 	const handleClickListItem = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -83,9 +63,11 @@ function ExpandableSettings(props) {
 
 	return (
 		<React.Fragment>
-			<IconButton color="inherit" onClick={handleClickListItem}>
-				<SettingsIcon />
-			</IconButton>
+			<Tooltip title={props.viewOptions ? "Settings" : "Change units"}>
+				<IconButton color="inherit" onClick={handleClickListItem}>
+					<SettingsIcon />
+				</IconButton>
+			</Tooltip>
 
 			<Menu
 				id="lock-menu"
@@ -109,24 +91,32 @@ function ExpandableSettings(props) {
 
 						<ListItem button>
 							<ListItemIcon>
-								<Brightness4Icon />
+								{props.selectedTheme ? (
+									<Brightness4Icon />
+								) : (
+									<Brightness7Icon />
+								)}
 							</ListItemIcon>
-							<ListItemText>Dark Mode</ListItemText>
+							<ListItemText>
+								{props.selectedTheme ? "Dark Mode" : "Light Mode"}
+							</ListItemText>
 						</ListItem>
 					</List>
 				)}
 
 				<List dense>
-					<ListItem>
-						<Typography
-							className={classes.title}
-							color="textSecondary"
-							gutterBottom
-							variant="subtitle2"
-						>
-							Units
-						</Typography>
-					</ListItem>
+					{props.viewOptions && (
+						<ListItem>
+							<Typography
+								className={classes.title}
+								color="textSecondary"
+								gutterBottom
+								variant="subtitle2"
+							>
+								Units
+							</Typography>
+						</ListItem>
+					)}
 					{options.map((option, index) => (
 						<MenuItem
 							key={option}
@@ -155,7 +145,10 @@ ExpandableSettings.defaultProps = {
 const mapStateToProps = (state) => {
 	return {
 		selectedUnits: state.units,
+		selectedTheme: state.theme,
 	};
 };
 
-export default connect(mapStateToProps, { setUnits })(ExpandableSettings);
+export default connect(mapStateToProps, { setUnits, toggleTheme })(
+	ExpandableSettings
+);

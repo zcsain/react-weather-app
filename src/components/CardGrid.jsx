@@ -55,36 +55,36 @@ function CardGrid() {
 		setExpanded(!expanded);
 	};
 
-	const date = () => {
-		return (
-			<Grid container direction="column" spacing={1} align="center">
-				<Grid item>
-					<Chip label="WED" />
-				</Grid>
-				<Grid item>
-					<Typography color="textSecondary">21/4</Typography>
-				</Grid>
-			</Grid>
-		);
-	};
+	// const date = () => {
+	// 	return (
+	// 		<Grid container direction="column" spacing={1} align="center">
+	// 			<Grid item>
+	// 				<Chip label="WED" />
+	// 			</Grid>
+	// 			<Grid item>
+	// 				<Typography color="textSecondary">21/4</Typography>
+	// 			</Grid>
+	// 		</Grid>
+	// 	);
+	// };
 
-	const temperature = () => {
-		return (
-			<React.Fragment>
-				<Typography variant="h3" component="p" display="inline">
-					17°
-				</Typography>
-				<Typography
-					variatn="h5"
-					component="p"
-					display="inline"
-					color="textSecondary"
-				>
-					/4°
-				</Typography>
-			</React.Fragment>
-		);
-	};
+	// const temperature = () => {
+	// 	return (
+	// 		<React.Fragment>
+	// 			<Typography variant="h3" component="p" display="inline">
+	// 				17°
+	// 			</Typography>
+	// 			<Typography
+	// 				variatn="h5"
+	// 				component="p"
+	// 				display="inline"
+	// 				color="textSecondary"
+	// 			>
+	// 				/4°
+	// 			</Typography>
+	// 		</React.Fragment>
+	// 	);
+	// };
 
 	const content = () => {
 		return (

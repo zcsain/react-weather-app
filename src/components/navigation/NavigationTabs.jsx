@@ -3,7 +3,6 @@ import { Link as RouterLink, withRouter } from "react-router-dom";
 
 // Material UI
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
@@ -22,20 +21,17 @@ function NavigationTabs(props) {
 	const xsDevice = useMediaQuery(theme.breakpoints.down("xs"));
 	const { match } = props;
 	const { url } = match;
-	const mapIndexToName = {
-		0: "/current/Zagreb",
-		1: "/daily",
-		2: "/hourly",
-	};
+	// const mapIndexToName = {
+	// 	0: "/current/Zagreb",
+	// 	1: "/daily",
+	// 	2: "/hourly",
+	// };
 	const mapNameToIndex = {
 		"/current/Zagreb": 0,
 		"/daily": 1,
 		"/hourly": 2,
 	};
 	const [selectedTab, setSelectedTab] = useState(mapNameToIndex[url]);
-
-	console.log(props);
-	console.log(url);
 
 	const handleChange = (event, newValue) => {
 		setSelectedTab(newValue);

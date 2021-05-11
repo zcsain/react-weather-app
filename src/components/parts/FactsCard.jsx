@@ -10,8 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
 // Custom
-import weatherFacts from "../utils/weatherFacts";
-import getRandom from "../utils/getRandom";
+import weatherFacts from "../../utils/weatherFacts";
+import getRandom from "../../utils/getRandom";
 
 const useStyles = makeStyles({
 	bullet: {

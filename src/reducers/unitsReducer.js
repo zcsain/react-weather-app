@@ -1,5 +1,7 @@
 import { CHANGE_UNITS } from "../actions/types";
-import { metric, imperial, scientific } from "../actions/unitsPayload";
+import { metric } from "../actions/unitsPayload";
+// import { scientific } from "../actions/unitsPayload";
+// import { imperial  } from "../actions/unitsPayload";
 
 const unitsReducer = (state = metric, action) => {
 	switch (action.type) {

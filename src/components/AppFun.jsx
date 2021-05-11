@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 // Material UI
 import {
@@ -15,16 +15,16 @@ import Container from "@material-ui/core/Container";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // Custom
-import Header from "./Header";
+import Header from "./navigation/Header";
 import { setUnits, setSearchTerm } from "../actions/index";
 import CardV1 from "./CardV1";
 import CardGrid from "./CardGrid";
-import CurrentView from "./CurrentView";
+import CurrentView from "./views/CurrentView";
 import history from "../history";
-import SearchField from "./SearchField";
-import NavigationTabs from "./NavigationTabs";
-import BottomNavigation from "./BottomNavigation";
-import BottomNavEdit from "./BottomNavEdit";
+import SearchField from "./parts/HomeSearchField";
+import NavigationTabs from "./navigation/NavigationTabs";
+// import BottomNavigation from "./BottomNavigation";
+import BottomNavEdit from "./navigation/BottomNavEdit";
 
 const dark = createMuiTheme({
 	palette: {
@@ -33,6 +33,9 @@ const dark = createMuiTheme({
 		primary: {
 			main: "#fff",
 		},
+		// secondary: {
+		// 	main: "#434343",
+		// },
 		// primary: {
 		// 	main: "#1976d2",
 		// },
@@ -93,22 +96,6 @@ function App(props) {
 		setSelectedTheme(!selectedTheme);
 	};
 
-	const renderNavigation = () => {
-		if (xsDevice) {
-			return (
-				<BottomNavigation onThemeChange={changeTheme} theme={selectedTheme} />
-			);
-		}
-
-		return (
-			<Header
-				searchFieldInAppBar={true}
-				onThemeChange={changeTheme}
-				theme={selectedTheme}
-			/>
-		);
-	};
-
 	return (
 		<ThemeProvider theme={selectedTheme ? blueLight : dark}>
 			<CssBaseline />
@@ -121,7 +108,10 @@ function App(props) {
 							theme={selectedTheme}
 						/>
 					)}
+
 					<Switch>
+						{/* If no location is provide redirect to home */}
+						<Redirect exact from="/current" to="/" />
 						<Route path="/" exact>
 							<SearchField />
 						</Route>

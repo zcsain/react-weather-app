@@ -6,15 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import Fab from "@material-ui/core/Fab";
-import MenuIcon from "@material-ui/icons/Menu";
-import SettingsIcon from "@material-ui/icons/Settings";
-import AddIcon from "@material-ui/icons/Add";
-import TuneIcon from "@material-ui/icons/Tune";
 import SearchIcon from "@material-ui/icons/Search";
-import MoreIcon from "@material-ui/icons/MoreVert";
-import Brightness7Icon from "@material-ui/icons/Brightness7"; //light
-import Brightness4Icon from "@material-ui/icons/Brightness4"; //dark
 import GitHubIcon from "@material-ui/icons/GitHub";
 import { useTheme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
