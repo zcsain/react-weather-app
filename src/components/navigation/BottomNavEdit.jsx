@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 // Material UI
 import { makeStyles } from "@material-ui/core/styles";
@@ -66,12 +67,9 @@ function BottomNavigation(props) {
 			<AppBar
 				position="fixed"
 				className={classes.appBar}
-				color={props.theme ? "primary" : "inherit"}
+				color={props.selectedTheme ? "primary" : "inherit"}
 			>
 				<Toolbar>
-					{/* <Button variant="contained" style={{ marginLeft: "-8px" }}>
-						WHY
-					</Button> */}
 					<Grid container justify="space-between" alignItems="center">
 						<Grid item>
 							<Button
@@ -95,7 +93,6 @@ function BottomNavigation(props) {
 							<IconButton color="inherit">
 								<SearchIcon />
 							</IconButton>
-							{/* <MoreCard /> */}
 							<ExpandableSettings />
 							<GitHubButton href="https://github.com/zcsain" edge="end" />
 						</Grid>
@@ -106,4 +103,10 @@ function BottomNavigation(props) {
 	);
 }
 
-export default BottomNavigation;
+const mapStateToProps = (state) => {
+	return {
+		selectedTheme: state.theme,
+	};
+};
+
+export default connect(mapStateToProps)(BottomNavigation);

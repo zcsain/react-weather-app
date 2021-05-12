@@ -89,7 +89,7 @@ function ExpandableSettings(props) {
 							</Typography>
 						</ListItem>
 
-						<ListItem button>
+						<ListItem button onClick={() => props.toggleTheme()}>
 							<ListItemIcon>
 								{props.selectedTheme ? (
 									<Brightness4Icon />

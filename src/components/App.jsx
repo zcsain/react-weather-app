@@ -1,23 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 // Material UI
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import {
+	makeStyles,
+	ThemeProvider,
+	createMuiTheme,
+	useTheme,
+} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // Custom
 import Header from "./navigation/Header";
-import { setUnits, setSearchTerm } from "../actions/index";
 import CardV1 from "./CardV1";
 import CardGrid from "./CardGrid";
 import CurrentView from "./views/CurrentView";
 import history from "../history";
-import HomeSearchField from "./parts/HomeSearchField";
+import SearchField from "./parts/HomeSearchField";
 import NavigationTabs from "./navigation/NavigationTabs";
-import BottomNavigation from "./navigation/BottomNavigation";
+import BottomNavEdit from "./navigation/BottomNavEdit";
 
 const dark = createMuiTheme({
 	palette: {
@@ -26,20 +31,8 @@ const dark = createMuiTheme({
 		primary: {
 			main: "#fff",
 		},
-		// primary: {
-		// 	main: "#1976d2",
-		// },
-		// primary: {
-		// 	main: "#424242",
-		// },
 	},
 });
-
-// const light = createMuiTheme({
-// 	palette: {
-// 		type: "light",
-// 	},
-// });
 
 const blueLight = createMuiTheme({
 	palette: {
@@ -47,109 +40,82 @@ const blueLight = createMuiTheme({
 		primary: {
 			main: "#1976d2",
 		},
-		// secondary: blue,
 	},
 });
 
-// const blueDark = createMuiTheme({
-// 	palette: {
-// 		type: "dark",
-// 		primary: {
-// 			main: "#333333",
-// 		},
-// 		secondary: {
-// 			main: "#222222",
-// 		},
-// 	},
-// });
+const useStyles = makeStyles((theme) => ({
+	[theme.breakpoints.up("sm")]: {
+		container: {
+			marginTop: theme.spacing(9),
+		},
+	},
+	[theme.breakpoints.down("xs")]: {
+		container: {
+			marginTop: theme.spacing(2),
+		},
+	},
+}));
 
-class App extends React.Component {
-	state = { theme: true };
+function App(props) {
+	const theme = useTheme();
+	const classes = useStyles(theme);
+	const xsDevice = useMediaQuery(theme.breakpoints.down("xs"));
 
-	changeTheme = () => {
-		this.setState({ theme: !this.state.theme });
-	};
-
-	render() {
-		return (
-			<ThemeProvider theme={this.state.theme ? blueLight : dark}>
-				<CssBaseline />
-				<Router history={history}>
-					<Container maxWidth="md" style={{ marginTop: "10px" }}>
-						<Switch>
-							<Route path="/" exact>
-								<Header
-									searchFieldInAppBar={false}
-									onThemeChange={this.changeTheme}
-									theme={this.state.theme}
-								/>
-								<HomeSearchField />
-							</Route>
-							<Route path="/explore/:location" exact>
-								<NavigationTabs />
-								<CurrentView />
-								<BottomNavigation
-									onThemeChange={this.changeTheme}
-									theme={this.state.theme}
-								/>
-							</Route>
-							<Route path="/testArea" exact>
-								<Header
-									onThemeChange={this.changeTheme}
-									theme={this.state.theme}
-								/>
-								<Grid container spacing={2} direction="column">
-									<Grid item>
-										<CardGrid />
-									</Grid>
-									<Grid item>
-										<CardGrid />
-									</Grid>
-									<Grid item>
-										<CardGrid />
-									</Grid>
-									<Grid item>
-										<CardV1 />
-									</Grid>
+	return (
+		<ThemeProvider theme={props.selectedTheme ? blueLight : dark}>
+			<CssBaseline />
+			<Router history={history}>
+				<Container maxWidth="md" className={classes.container}>
+					{!xsDevice && <Header searchFieldInAppBar={true} />}
+					<Switch>
+						{/* If no location is provide redirect to home */}
+						<Redirect exact from="/current" to="/" />
+						<Route path="/" exact>
+							<SearchField />
+						</Route>
+						<Route path="/explore/:location" exact>
+							<CurrentView />
+						</Route>
+						<Route path="/testArea" exact>
+							<Grid container spacing={2} direction="column">
+								<Grid item>
+									<CardGrid />
 								</Grid>
-							</Route>
-							<Route path="/current/:location" exact>
-								<Header
-									onThemeChange={this.changeTheme}
-									theme={this.state.theme}
-								/>
-								<NavigationTabs />
-								<CurrentView />
-							</Route>
-							<Route path="/daily" exact>
-								<Header
-									onThemeChange={this.changeTheme}
-									theme={this.state.theme}
-								/>
-								<NavigationTabs />
-								Daily
-							</Route>
-							<Route path="/hourly" exact>
-								<Header
-									onThemeChange={this.changeTheme}
-									theme={this.state.theme}
-								/>
-								<NavigationTabs />
-								Hourly
-							</Route>
-						</Switch>
-					</Container>
-				</Router>
-			</ThemeProvider>
-		);
-	}
+								<Grid item>
+									<CardGrid />
+								</Grid>
+								<Grid item>
+									<CardGrid />
+								</Grid>
+								<Grid item>
+									<CardV1 />
+								</Grid>
+							</Grid>
+						</Route>
+						<Route path="/current/:location" exact>
+							<NavigationTabs />
+							<CurrentView />
+						</Route>
+						<Route path="/daily" exact>
+							<NavigationTabs />
+							Daily
+						</Route>
+						<Route path="/hourly" exact>
+							<NavigationTabs />
+							Hourly
+						</Route>
+					</Switch>
+					{xsDevice && <BottomNavEdit />}
+				</Container>
+			</Router>
+		</ThemeProvider>
+	);
 }
 
 const mapStateToProps = (state) => {
 	return {
-		units: state.units,
-		location: state.location,
+		selectedTheme: state.theme,
 	};
 };
 
-export default connect(mapStateToProps, { setUnits, setSearchTerm })(App);
+export default connect(mapStateToProps)(App);

@@ -5,9 +5,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import reduxThunk from "redux-thunk";
 
 import reducers from "./reducers";
-// import App from "./components/App";
-import AppFun from "./components/AppFun";
-// import AppTestEnv from "./components/AppTestEnv";
+import App from "./components/App";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -17,7 +15,7 @@ const store = createStore(
 
 ReactDOM.render(
 	<Provider store={store}>
-		<AppFun />
+		<App />
 	</Provider>,
 	document.getElementById("root")
 );

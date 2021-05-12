@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 // Material UI
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Brightness7Icon from "@material-ui/icons/Brightness7"; //light
 import Brightness4Icon from "@material-ui/icons/Brightness4"; //dark
@@ -14,16 +13,10 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles";
 import { InputBase } from "@material-ui/core";
-import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
-import SettingsIcon from "@material-ui/icons/Settings";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import CheckIcon from "@material-ui/icons/Check";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 // Custom
-import { setSearchTerm } from "../../actions";
+import { setSearchTerm, toggleTheme } from "../../actions";
 import GitHubButton from "../parts/GitHubButton";
 import ExpandableSettings from "../parts/ExpandableSettings";
 
@@ -106,7 +99,11 @@ function Header(props) {
 
 	return (
 		<React.Fragment>
-			<AppBar position="fixed" color={props.theme ? "primary" : "inherit"}>
+			{/* <AppBar position="fixed" color={props.theme ? "primary" : "inherit"}> */}
+			<AppBar
+				position="fixed"
+				color={props.selectedTheme ? "primary" : "inherit"}
+			>
 				<Toolbar>
 					<Typography className={classes.title} variant="h6" noWrap>
 						Simple Weather
@@ -137,9 +134,11 @@ function Header(props) {
 						<IconButton
 							aria-label="toggle light/dark theme"
 							color="inherit"
-							onClick={() => props.onThemeChange()}
+							// onClick={() => props.onThemeChange()}
+							onClick={() => props.toggleTheme()}
 						>
-							{!props.theme ? <Brightness7Icon /> : <Brightness4Icon />}
+							{/* {!props.theme ? <Brightness7Icon /> : <Brightness4Icon />} */}
+							{!props.selectedTheme ? <Brightness7Icon /> : <Brightness4Icon />}
 						</IconButton>
 					</Tooltip>
 					<GitHubButton href="https://github.com/zcsain" edge="end" />
@@ -159,4 +158,10 @@ Header.defaultProps = {
 	searchFieldInAppBar: true,
 };
 
-export default connect(null, { setSearchTerm })(Header);
+const mapStateToProps = (state) => {
+	return {
+		selectedTheme: state.theme,
+	};
+};
+
+export default connect(mapStateToProps, { setSearchTerm, toggleTheme })(Header);

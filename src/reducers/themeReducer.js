@@ -1,6 +1,6 @@
 import { TOGGLE_THEME } from "../actions/types";
 
-const themeReducer = (state = false, action) => {
+const themeReducer = (state = true, action) => {
 	switch (action.type) {
 		case TOGGLE_THEME:
 			return !state;
