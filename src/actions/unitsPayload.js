@@ -1,5 +1,6 @@
 export const metric = {
 	type: "metric",
+	keyword: "metric",
 	units: {
 		speed: " km/h",
 		deg: "°",
@@ -16,6 +17,7 @@ export const metric = {
 
 export const imperial = {
 	type: "imperial",
+	keyword: "imperial",
 	units: {
 		speed: " mph",
 		deg: "°",
@@ -32,6 +34,7 @@ export const imperial = {
 
 export const scientific = {
 	type: "scientific",
+	keyword: "kelvin",
 	units: {
 		speed: " m/s",
 		deg: "°",

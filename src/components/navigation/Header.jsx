@@ -128,7 +128,6 @@ function Header(props) {
 							/>
 						</div>
 					) : null}
-
 					<ExpandableSettings viewOptions={false} />
 					<Tooltip title="Toggle light/dark theme">
 						<IconButton
@@ -137,11 +136,10 @@ function Header(props) {
 							// onClick={() => props.onThemeChange()}
 							onClick={() => props.toggleTheme()}
 						>
-							{/* {!props.theme ? <Brightness7Icon /> : <Brightness4Icon />} */}
 							{!props.selectedTheme ? <Brightness7Icon /> : <Brightness4Icon />}
 						</IconButton>
 					</Tooltip>
-					<GitHubButton href="https://github.com/zcsain" edge="end" />
+					<GitHubButton href="https://github.com/zcsain" edgeType="end" />
 				</Toolbar>
 			</AppBar>
 			{/* Here to offset AppBar postion so it does not obscure othere elemetns */}

@@ -10,7 +10,7 @@ function GitHubButton(props) {
 	return (
 		<Tooltip title="GitHub repository">
 			<IconButton
-				edge={props.edge}
+				edge={props.edgeType}
 				href={props.href}
 				color={props.color}
 				target="_blank"
@@ -23,12 +23,12 @@ function GitHubButton(props) {
 }
 
 GitHubButton.propTypes = {
-	edge: PropTypes.string || PropTypes.bool,
+	edgeType: PropTypes.string || PropTypes.bool,
 	color: PropTypes.string,
 };
 
 GitHubButton.defaultProps = {
-	edge: false,
+	edgeType: false,
 	color: "inherit",
 };
 

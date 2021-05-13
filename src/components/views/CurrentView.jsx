@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 
@@ -7,8 +7,8 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
-import Icon from "@material-ui/core/Icon";
 import Grid from "@material-ui/core/Grid";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -24,14 +24,16 @@ import degToCompasDir from "../../utils/degToCompasDir";
 import titleCase from "../../utils/titleCase";
 import formatTime from "../../utils/formatTime";
 import FactsCards from "../parts/FactsCard";
+import { fetchCurrent } from "../../actions";
+import openWeatherIconsMap from "../../utils/openWeatherIconsMap.json";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
 		alignItems: "center",
 	},
 	icon: {
-		fontSize: 80,
-		display: "inline-table",
+		fontSize: 56,
+		// display: "inline-table",
 	},
 	rightText: {
 		fontWeight: "bold",
@@ -45,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
 	tempUnit: {
 		fontWeight: "400",
 	},
+	mainTemp: {
+		fontWeight: "400",
+	},
 }));
 
 function CurrentView(props) {
@@ -52,9 +57,16 @@ function CurrentView(props) {
 	const classes = useStyles(theme);
 	const showFacts = useMediaQuery(theme.breakpoints.up("sm"));
 
-	const { current, selectedUnits } = props;
+	const { current, selectedUnits, searchTerm, fetchCurrent } = props;
 	const { weather, main, wind, dt, sys, timezone } = current;
+	const { id } = weather[0];
 	const { type, units, multipliers } = selectedUnits;
+
+	useEffect(() => {
+		fetchCurrent(searchTerm, selectedUnits.keyword);
+		// React throws a warning if "fetchCurrent" is not a dependency,
+		// even though it is a function and never changes
+	}, [searchTerm, selectedUnits, fetchCurrent]);
 
 	const renderQuickViewCard = () => {
 		const date = new Date(dt * 1000).toLocaleDateString("default", {
@@ -62,29 +74,33 @@ function CurrentView(props) {
 			day: "numeric",
 			year: "numeric",
 		});
-		const icon = iconsMap[weather[0].icon];
+		// const icon = iconsMap[weather[0].icon];
+		//   <Icon
+		//   // className={[classes.icon, `${icon}`].join(" ")}
+		//   color="disabled"
+		// />
+
+		const icon = `wi-day-${openWeatherIconsMap[id.toString()].icon}`;
 
 		return (
-			<Card style={{ padding: "10px" }}>
+			<Card className={classes.card}>
 				<CardHeader
-					title={`${props.match.params.location} - Current Weather`}
+					title={`${props.match.params.location} - Current weather`}
 					subheader={date}
 				/>
 				<CardContent>
 					<Grid container spacing={2} className={classes.container}>
 						<Grid item style={{ flexGrow: 1 }}>
-							<Icon
-								className={`${icon}`}
-								color="disabled"
-								style={{ fontSize: 80, display: "inline-table" }}
-							/>
-						</Grid>
-						<Grid item>
-							<Typography variant="h1" component="p" display="inline">
+							<Typography
+								variant="h2"
+								component="p"
+								display="inline"
+								className={classes.mainTemp}
+							>
 								{main.temp.toFixed(0)}
 							</Typography>
 							<Typography
-								variant="h2"
+								variant="h3"
 								color="textSecondary"
 								display="inline"
 								className={classes.tempUnit}
@@ -92,13 +108,19 @@ function CurrentView(props) {
 								{units.temp}
 							</Typography>
 						</Grid>
+						<Grid item>
+							<i
+								// className={[classes.icon, "wi wi-day-storm-showers"].join(" ")}
+								className={[classes.icon, `wi ${icon}`].join(" ")}
+							/>
+						</Grid>
 					</Grid>
 				</CardContent>
-				<CardContent>
+				<CardActions style={{ marginLeft: theme.spacing(1) }}>
 					<Typography variant="h6" component="p" color="textSecondary">
 						{weather[0].main + ", " + titleCase(weather[0].description)}
 					</Typography>
-				</CardContent>
+				</CardActions>
 			</Card>
 		);
 	};
@@ -214,7 +236,7 @@ function CurrentView(props) {
 
 	return (
 		<React.Fragment>
-			{props.current === {} ? (
+			{Object.keys(props.current).length === 0 ? (
 				<Backdrop />
 			) : (
 				<Grid container direction="row" spacing={2}>
@@ -243,4 +265,6 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps)(withRouter(CurrentView));
+export default connect(mapStateToProps, { fetchCurrent })(
+	withRouter(CurrentView)
+);

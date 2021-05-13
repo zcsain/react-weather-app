@@ -4,6 +4,8 @@ import {
 	SEARCH_TERM,
 	CHANGE_UNITS,
 	TOGGLE_THEME,
+	RESET_CURRENT,
+	RESET_ONECALL,
 } from "./types";
 import openWeather from "../apis/openWeather";
 
@@ -31,6 +33,12 @@ export const fetchCurrent = (location, units, lang = "en") => {
 				console.log("Error", error.message);
 			}
 		}
+	};
+};
+
+export const resetCurrent = () => {
+	return {
+		type: RESET_CURRENT,
 	};
 };
 
@@ -69,6 +77,12 @@ export const fetchOneCall = (location, units, lang = "en") => {
 				console.log("Error", error.message);
 			}
 		}
+	};
+};
+
+export const resetOneCall = () => {
+	return {
+		type: RESET_ONECALL,
 	};
 };
 

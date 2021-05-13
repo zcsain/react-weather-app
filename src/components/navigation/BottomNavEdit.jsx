@@ -94,7 +94,7 @@ function BottomNavigation(props) {
 								<SearchIcon />
 							</IconButton>
 							<ExpandableSettings />
-							<GitHubButton href="https://github.com/zcsain" edge="end" />
+							<GitHubButton href="https://github.com/zcsain" edgeType="end" />
 						</Grid>
 					</Grid>
 				</Toolbar>
