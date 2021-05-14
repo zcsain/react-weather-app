@@ -22,7 +22,9 @@ import CurrentView from "./views/CurrentView";
 import history from "../history";
 import SearchField from "./parts/HomeSearchField";
 import NavigationTabs from "./navigation/NavigationTabs";
-import BottomNavEdit from "./navigation/BottomNavEdit";
+import BottomNavigation from "./navigation/BottomNavigation";
+import NavigationButton from "./parts/NavigationButton";
+import ErrorView from "./views/ErrorView";
 
 const dark = createMuiTheme({
 	palette: {
@@ -104,8 +106,14 @@ function App(props) {
 							<NavigationTabs />
 							Hourly
 						</Route>
+						<Route path="/button" exact>
+							<NavigationButton />
+						</Route>
+						<Route path="/error" exact>
+							<ErrorView />
+						</Route>
 					</Switch>
-					{xsDevice && <BottomNavEdit />}
+					{xsDevice && <BottomNavigation />}
 				</Container>
 			</Router>
 		</ThemeProvider>

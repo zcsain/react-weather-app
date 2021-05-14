@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 // Material UI
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -66,6 +67,7 @@ function HomeSearchField(props) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 	const [searchValue, setSearchValue] = useState("");
+	const history = useHistory();
 
 	const handleChange = (event) => {
 		setSearchValue(event.target.value);
@@ -76,7 +78,8 @@ function HomeSearchField(props) {
 			event.preventDefault();
 			console.log("Enter was pressed, the search term is: " + searchValue);
 			props.setSearchTerm(searchValue);
-			setSearchValue("");
+			history.push(`/current/${searchValue}`);
+			// setSearchValue("");
 		}
 	};
 

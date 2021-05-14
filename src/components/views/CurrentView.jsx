@@ -25,7 +25,7 @@ import titleCase from "../../utils/titleCase";
 import formatTime from "../../utils/formatTime";
 import FactsCards from "../parts/FactsCard";
 import { fetchCurrent } from "../../actions";
-import openWeatherIconsMap from "../../utils/openWeatherIconsMap.json";
+import iconsMapper from "../../utils/iconsMapper";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -58,34 +58,37 @@ function CurrentView(props) {
 	const showFacts = useMediaQuery(theme.breakpoints.up("sm"));
 
 	const { current, selectedUnits, searchTerm, fetchCurrent } = props;
-	const { weather, main, wind, dt, sys, timezone } = current;
-	const { id } = weather[0];
 	const { type, units, multipliers } = selectedUnits;
 
+	// Bookmarked pages do do initiate searchTerm setting, so this line
+	// looks at the values received from reactRouter
+	const locationToSearch = searchTerm || props.match.params.location;
+
 	useEffect(() => {
-		fetchCurrent(searchTerm, selectedUnits.keyword);
+		fetchCurrent(locationToSearch, selectedUnits.keyword);
 		// React throws a warning if "fetchCurrent" is not a dependency,
 		// even though it is a function and never changes
 	}, [searchTerm, selectedUnits, fetchCurrent]);
 
 	const renderQuickViewCard = () => {
+		const { weather, sys, main, dt, timezone } = current;
+		const { id } = weather[0];
+		const { sunrise, sunset } = sys;
+
+		const icon = iconsMapper(id, sunrise, sunset, dt, timezone);
+
+		// Check if this shows correct date for different locations
 		const date = new Date(dt * 1000).toLocaleDateString("default", {
 			month: "long",
 			day: "numeric",
 			year: "numeric",
 		});
-		// const icon = iconsMap[weather[0].icon];
-		//   <Icon
-		//   // className={[classes.icon, `${icon}`].join(" ")}
-		//   color="disabled"
-		// />
-
-		const icon = `wi-day-${openWeatherIconsMap[id.toString()].icon}`;
 
 		return (
 			<Card className={classes.card}>
 				<CardHeader
-					title={`${props.match.params.location} - Current weather`}
+					// title={`${props.match.params.location} - Current weather`}
+					title={`${locationToSearch} - Current weather`}
 					subheader={date}
 				/>
 				<CardContent>
@@ -111,7 +114,7 @@ function CurrentView(props) {
 						<Grid item>
 							<i
 								// className={[classes.icon, "wi wi-day-storm-showers"].join(" ")}
-								className={[classes.icon, `wi ${icon}`].join(" ")}
+								className={[classes.icon, icon].join(" ")}
 							/>
 						</Grid>
 					</Grid>
@@ -126,6 +129,8 @@ function CurrentView(props) {
 	};
 
 	const renderInfoCard = () => {
+		const { main } = current;
+
 		return (
 			<TableContainer component={Card} className={classes.table}>
 				<Table>
@@ -165,6 +170,7 @@ function CurrentView(props) {
 	};
 
 	const renderWindTable = () => {
+		const { wind } = current;
 		const { speed, deg } = wind;
 
 		return (
@@ -202,6 +208,7 @@ function CurrentView(props) {
 	};
 
 	const renderSunsetTable = () => {
+		const { sys, timezone } = current;
 		const { sunrise, sunset } = sys;
 
 		return (

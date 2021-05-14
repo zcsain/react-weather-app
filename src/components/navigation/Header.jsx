@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 
 // Material UI
 import AppBar from "@material-ui/core/AppBar";
@@ -16,7 +17,12 @@ import { InputBase } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 
 // Custom
-import { setSearchTerm, toggleTheme } from "../../actions";
+import {
+	setSearchTerm,
+	toggleTheme,
+	resetCurrent,
+	resetOneCall,
+} from "../../actions";
 import GitHubButton from "../parts/GitHubButton";
 import ExpandableSettings from "../parts/ExpandableSettings";
 
@@ -30,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		flexGrow: 1,
 		display: "none",
+		textDecoration: "none",
+		color: "white",
 		[theme.breakpoints.up("sm")]: {
 			display: "block",
 		},
@@ -78,8 +86,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Header(props) {
 	const classes = useStyles();
-
 	const [searchValue, setSearchValue] = useState("");
+	const history = useHistory();
 
 	const handleChange = (event) => {
 		setSearchValue(event.target.value);
@@ -92,9 +100,18 @@ function Header(props) {
 				"Enter was pressed, the search term is (from header): " + searchValue
 			);
 			props.setSearchTerm(searchValue);
+			resetData();
+			// This will redirect to "current view" only, but needs to redirect
+			// to whatever view is active
+			history.push(`/current/${searchValue}`);
 			setSearchValue("");
 			event.target.blur();
 		}
+	};
+
+	const resetData = () => {
+		props.resetCurrent();
+		props.resetOneCall();
 	};
 
 	return (
@@ -105,7 +122,14 @@ function Header(props) {
 				color={props.selectedTheme ? "primary" : "inherit"}
 			>
 				<Toolbar>
-					<Typography className={classes.title} variant="h6" noWrap>
+					<Typography
+						className={classes.title}
+						variant="h6"
+						noWrap
+						component={RouterLink}
+						to="/"
+						onClick={resetData}
+					>
 						Simple Weather
 					</Typography>
 
@@ -162,4 +186,9 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { setSearchTerm, toggleTheme })(Header);
+export default connect(mapStateToProps, {
+	setSearchTerm,
+	toggleTheme,
+	resetCurrent,
+	resetOneCall,
+})(Header);

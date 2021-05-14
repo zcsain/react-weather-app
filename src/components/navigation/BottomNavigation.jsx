@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 // Material UI
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,13 +8,15 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
-import GitHubIcon from "@material-ui/icons/GitHub";
 import { useTheme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Grid from "@material-ui/core/Grid";
 
 // Custom
-import MoreCard from "./MoreCard";
+// import MoreCard from "./MoreCard";
+import ExpandableSettings from "../parts/ExpandableSettings";
+import GitHubButton from "../parts/GitHubButton";
 
 const useStyles = makeStyles((theme) => ({
 	text: {
@@ -53,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function BottomAppBar(props) {
+function BottomNavigation(props) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 
@@ -64,47 +67,46 @@ export default function BottomAppBar(props) {
 			<AppBar
 				position="fixed"
 				className={classes.appBar}
-				color={props.theme ? "primary" : "inherit"}
+				color={props.selectedTheme ? "primary" : "inherit"}
 			>
 				<Toolbar>
-					{/* <IconButton edge="start" color="inherit" aria-label="open drawer">
-						<MenuIcon />
-					</IconButton> */}
-					{/* <Fab color="primary" aria-label="add" className={classes.fabButton}>
-						<SearchIcon />
-					</Fab> */}
-					<Button
-						aria-label="change units"
-						color="inherit"
-						className={classes.settingsButton}
-					>
-						<Typography
-							variant="button"
-							className={classes.settingsButtonContent}
-						>
-							Current
-						</Typography>
-						<ExpandMoreIcon fontSize="small" />
-					</Button>
-					<div className={classes.grow} />
-					{/* <IconButton color="inherit">
-						<SearchIcon />
-					</IconButton> */}
-					{/* <IconButton color="inherit">
-						<SettingsIcon />
-					</IconButton> */}
-					<IconButton color="inherit">
-						<SearchIcon />
-					</IconButton>
-					<IconButton color="inherit">
-						<GitHubIcon />
-					</IconButton>
-					{/* <IconButton color="inherit">
-						<MoreIcon />
-					</IconButton> */}
-					<MoreCard />
+					<Grid container justify="space-between" alignItems="center">
+						<Grid item>
+							<Button
+								style={{ marginLeft: theme.spacing(-1) }}
+								variant="text"
+								aria-label="change units"
+								color="inherit"
+								className={classes.settingsButton}
+							>
+								<Typography
+									variant="button"
+									className={classes.settingsButtonContent}
+								>
+									Current
+								</Typography>
+								<ExpandMoreIcon fontSize="small" />
+							</Button>
+						</Grid>
+
+						<Grid item>
+							<IconButton color="inherit">
+								<SearchIcon />
+							</IconButton>
+							<ExpandableSettings />
+							<GitHubButton href="https://github.com/zcsain" edgeType="end" />
+						</Grid>
+					</Grid>
 				</Toolbar>
 			</AppBar>
 		</React.Fragment>
 	);
 }
+
+const mapStateToProps = (state) => {
+	return {
+		selectedTheme: state.theme,
+	};
+};
+
+export default connect(mapStateToProps)(BottomNavigation);

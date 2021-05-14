@@ -7,6 +7,7 @@ import {
 	RESET_CURRENT,
 	RESET_ONECALL,
 } from "./types";
+import history from "../history";
 import openWeather from "../apis/openWeather";
 
 export const fetchCurrent = (location, units, lang = "en") => {
@@ -32,6 +33,8 @@ export const fetchCurrent = (location, units, lang = "en") => {
 				// Something happened in setting up the request that triggered an Error
 				console.log("Error", error.message);
 			}
+
+			history.push("/error");
 		}
 	};
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -43,7 +43,7 @@ function ExpandableSettings(props) {
 	};
 	const unitsList = [metric, imperial, scientific];
 	const { selectedUnits } = props;
-	const [selectedIndex, setSelectedIndex] = React.useState(
+	const [selectedIndex, setSelectedIndex] = useState(
 		mapUnitsToIndex[selectedUnits.type]
 	);
 
@@ -72,7 +72,7 @@ function ExpandableSettings(props) {
 			<Menu
 				id="lock-menu"
 				anchorEl={anchorEl}
-				keepMounted
+				// keepMounted
 				open={Boolean(anchorEl)}
 				onClose={handleClose}
 			>

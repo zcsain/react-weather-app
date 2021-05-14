@@ -1,7 +1,7 @@
 /**
  * Formats unix timestamp to hour and minute representation (based on the
  * searched location local time and selected units)
- * @param {number} timestamp Unix Timestamp
+ * @param {number} timestamp Time of data calculation, unix, UTC
  * @param {number} offset Shift in seconds from UTC
  * @param {string} selectedUnits Currently selected units
  * @returns {string} Time formated to display: "h:min" or "h:min PM/AM"
