@@ -34,7 +34,16 @@ export const fetchCurrent = (location, units, lang = "en") => {
 				console.log("Error", error.message);
 			}
 
-			history.push("/error");
+			// Maybe chnage this to be specific to the search term
+			history.push({
+				pathname: "/error",
+				state: {
+					title: "Error",
+					message:
+						"Oops! Something went wrong. Please reload the page and try again, or come back later.",
+					buttonText: "Reload Page",
+				},
+			});
 		}
 	};
 };

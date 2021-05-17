@@ -10,6 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import Container from "@material-ui/core/Container";
 import { Typography } from "@material-ui/core";
+import Tooltip from "@material-ui/core/Tooltip";
 
 // Custom
 import { setSearchTerm } from "../../actions";
@@ -84,24 +85,26 @@ function HomeSearchField(props) {
 	};
 
 	return (
-		<Container className={classes.container}>
-			<Typography varinat="h1" className={classes.content} color="primary">
-				Simple Weather
-			</Typography>
-			<Paper component="form" className={classes.root}>
-				<IconButton className={classes.iconButton} aria-label="menu">
-					<SearchIcon />
-				</IconButton>
-				<InputBase
-					className={classes.input}
-					placeholder="Search"
-					inputProps={{ "aria-label": "search" }}
-					value={searchValue}
-					onChange={handleChange}
-					onKeyDown={handlePress}
-				/>
-			</Paper>
-		</Container>
+		<Tooltip title="For more specificity use this format: location name, state code, country code">
+			<Container className={classes.container}>
+				<Typography varinat="h1" className={classes.content} color="primary">
+					Simple Weather
+				</Typography>
+				<Paper component="form" className={classes.root}>
+					<IconButton className={classes.iconButton} aria-label="menu">
+						<SearchIcon />
+					</IconButton>
+					<InputBase
+						className={classes.input}
+						placeholder="Search"
+						inputProps={{ "aria-label": "search" }}
+						value={searchValue}
+						onChange={handleChange}
+						onKeyDown={handlePress}
+					/>
+				</Paper>
+			</Container>
+		</Tooltip>
 	);
 }
 

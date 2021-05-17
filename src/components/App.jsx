@@ -25,6 +25,7 @@ import NavigationTabs from "./navigation/NavigationTabs";
 import BottomNavigation from "./navigation/BottomNavigation";
 import NavigationButton from "./parts/NavigationButton";
 import ErrorView from "./views/ErrorView";
+import Loader from "./parts/Loader";
 
 const dark = createMuiTheme({
 	palette: {
@@ -56,12 +57,17 @@ const useStyles = makeStyles((theme) => ({
 			marginTop: theme.spacing(2),
 		},
 	},
+	error: {
+		minHeight: "80vh",
+	},
 }));
 
 function App(props) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 	const xsDevice = useMediaQuery(theme.breakpoints.down("xs"));
+
+	console.log(props);
 
 	return (
 		<ThemeProvider theme={props.selectedTheme ? blueLight : dark}>
@@ -109,8 +115,20 @@ function App(props) {
 						<Route path="/button" exact>
 							<NavigationButton />
 						</Route>
-						<Route path="/error" exact>
-							<ErrorView />
+						{/* <Route to="/loader" exact>
+							<Loader />
+						</Route> */}
+						<Route>
+							<Grid
+								container
+								item
+								direction="column"
+								justify="center"
+								alignItems="center"
+								className={classes.error}
+							>
+								<ErrorView />
+							</Grid>
 						</Route>
 					</Switch>
 					{xsDevice && <BottomNavigation />}

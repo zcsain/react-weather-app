@@ -1,5 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
 // Material UI
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,8 +26,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function ErrorView() {
+function ErrorView(props) {
 	const classes = useStyles();
+	const { title, message, buttonText } = props.location.state || props;
 
 	return (
 		<Card className={classes.root}>
@@ -35,13 +38,10 @@ function ErrorView() {
 						<PriorityHighIcon />
 					</Avatar>
 				}
-				title={<Typography variant="h4">Error</Typography>}
+				title={<Typography variant="h4">{title}</Typography>}
 			/>
 			<CardContent>
-				<Typography variant="body1">
-					Oops! Something went wrong. Please reload the page and try again, or
-					come back later.
-				</Typography>
+				<Typography variant="body1">{message}</Typography>
 			</CardContent>
 			<CardActions>
 				<Grid container item justify="flex-end">
@@ -50,10 +50,10 @@ function ErrorView() {
 						color="primary"
 						component={RouterLink}
 						to="/"
-						startIcon={<ReplayIcon />}
+						// startIcon={<ReplayIcon />}
 						disableElevation
 					>
-						Reload Page
+						{buttonText}
 					</Button>
 				</Grid>
 			</CardActions>
@@ -61,4 +61,17 @@ function ErrorView() {
 	);
 }
 
-export default ErrorView;
+ErrorView.propTypes = {
+	title: PropTypes.string,
+	message: PropTypes.string,
+	buttonText: PropTypes.string,
+};
+
+ErrorView.defaultProps = {
+	title: "Page Not Found",
+	message:
+		"The page you were looking for could not be found. It might have been removed, renamed, or did not exist in the first place.",
+	buttonText: "Return home",
+};
+
+export default withRouter(ErrorView);

@@ -18,7 +18,7 @@ import TableRow from "@material-ui/core/TableRow";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // Custom
-import iconsMap from "../../utils/iconsMap";
+import Loader from "../parts/Loader";
 import Backdrop from "../parts/Backdrop";
 import degToCompasDir from "../../utils/degToCompasDir";
 import titleCase from "../../utils/titleCase";
