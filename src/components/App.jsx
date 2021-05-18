@@ -25,7 +25,6 @@ import NavigationTabs from "./navigation/NavigationTabs";
 import BottomNavigation from "./navigation/BottomNavigation";
 import NavigationButton from "./parts/NavigationButton";
 import ErrorView from "./views/ErrorView";
-import Loader from "./parts/Loader";
 
 const dark = createMuiTheme({
 	palette: {
@@ -67,14 +66,13 @@ function App(props) {
 	const classes = useStyles(theme);
 	const xsDevice = useMediaQuery(theme.breakpoints.down("xs"));
 
-	console.log(props);
-
 	return (
 		<ThemeProvider theme={props.selectedTheme ? blueLight : dark}>
 			<CssBaseline />
 			<Router history={history}>
 				<Container maxWidth="md" className={classes.container}>
 					{!xsDevice && <Header searchFieldInAppBar={true} />}
+
 					<Switch>
 						{/* If no location is provide redirect to home */}
 						<Redirect exact from="/current" to="/" />
@@ -101,23 +99,24 @@ function App(props) {
 							</Grid>
 						</Route>
 						<Route path="/current/:location" exact>
-							<NavigationTabs />
+							{/* Tthere is definitely a better way to do this, then repeating components for each route */}
+							{!xsDevice && <NavigationTabs />}
 							<CurrentView />
+							{xsDevice && <BottomNavigation />}
 						</Route>
 						<Route path="/daily" exact>
-							<NavigationTabs />
+							{!xsDevice && <NavigationTabs />}
 							Daily
+							{xsDevice && <BottomNavigation />}
 						</Route>
 						<Route path="/hourly" exact>
-							<NavigationTabs />
+							{!xsDevice && <NavigationTabs />}
 							Hourly
+							{xsDevice && <BottomNavigation />}
 						</Route>
 						<Route path="/button" exact>
 							<NavigationButton />
 						</Route>
-						{/* <Route to="/loader" exact>
-							<Loader />
-						</Route> */}
 						<Route>
 							<Grid
 								container
@@ -131,7 +130,7 @@ function App(props) {
 							</Grid>
 						</Route>
 					</Switch>
-					{xsDevice && <BottomNavigation />}
+					{/* {xsDevice && <BottomNavigation />} */}
 				</Container>
 			</Router>
 		</ThemeProvider>

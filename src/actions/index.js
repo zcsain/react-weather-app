@@ -34,7 +34,7 @@ export const fetchCurrent = (location, units, lang = "en") => {
 				console.log("Error", error.message);
 			}
 
-			// Maybe chnage this to be specific to the search term
+			// Maybe change this to be specific to the search term
 			history.push({
 				pathname: "/error",
 				state: {

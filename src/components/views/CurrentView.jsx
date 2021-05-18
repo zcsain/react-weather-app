@@ -61,14 +61,16 @@ function CurrentView(props) {
 	const { type, units, multipliers } = selectedUnits;
 
 	// Bookmarked pages do do initiate searchTerm setting, so this line
-	// looks at the values received from reactRouter
+	// looks at the values received from reactRouter, this can be also
+	// done with direct component props <Component {...props}> but for
+	// that Router would need to be moved from App component
 	const locationToSearch = searchTerm || props.match.params.location;
 
 	useEffect(() => {
 		fetchCurrent(locationToSearch, selectedUnits.keyword);
 		// React throws a warning if "fetchCurrent" is not a dependency,
 		// even though it is a function and never changes
-	}, [searchTerm, selectedUnits, fetchCurrent]);
+	}, [locationToSearch, selectedUnits, fetchCurrent]);
 
 	const renderQuickViewCard = () => {
 		const { weather, sys, main, dt, timezone } = current;
@@ -87,8 +89,7 @@ function CurrentView(props) {
 		return (
 			<Card className={classes.card}>
 				<CardHeader
-					// title={`${props.match.params.location} - Current weather`}
-					title={`${locationToSearch} - Current weather`}
+					title={`${titleCase(locationToSearch)} - Current weather`}
 					subheader={date}
 				/>
 				<CardContent>

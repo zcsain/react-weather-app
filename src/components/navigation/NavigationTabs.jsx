@@ -28,19 +28,22 @@ function NavigationTabs(props) {
 		setSelectedTab(mapNameToIndex[url]);
 	}, [url]);
 
+	// Prefer redux state over params from url (params is for direct
+	// acces to parts of website from the address bar)
 	const linkSource = searchTerm || match.params.location;
 	var currentLink = `/current/${linkSource}`;
+	// var dailyLink;
+	// var hourlLink;
 	var mapNameToIndex = {
 		[currentLink]: 0,
 		"/daily": 1,
 		"/hourly": 2,
 	};
+
 	const [selectedTab, setSelectedTab] = useState(mapNameToIndex[url]);
-	console.log(url);
-	console.log(mapNameToIndex);
 
 	// Set appropriate tab to "selected" state
-	const handleChange = (event, newValue) => {
+	const handleTabChange = (event, newValue) => {
 		setSelectedTab(newValue);
 	};
 
@@ -48,7 +51,7 @@ function NavigationTabs(props) {
 		<Box className={classes.root}>
 			<Tabs
 				value={selectedTab}
-				onChange={handleChange}
+				onChange={handleTabChange}
 				indicatorColor="primary"
 				textColor="primary"
 				centered

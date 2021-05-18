@@ -14,45 +14,14 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Grid from "@material-ui/core/Grid";
 
 // Custom
-// import MoreCard from "./MoreCard";
 import ExpandableSettings from "../parts/ExpandableSettings";
 import GitHubButton from "../parts/GitHubButton";
+import NavigationButton from "../parts/NavigationButton";
 
 const useStyles = makeStyles((theme) => ({
-	text: {
-		padding: theme.spacing(2, 2, 0),
-	},
-	paper: {
-		paddingBottom: 50,
-	},
-	list: {
-		marginBottom: theme.spacing(2),
-	},
-	subheader: {
-		backgroundColor: theme.palette.background.paper,
-	},
 	appBar: {
 		top: "auto",
 		bottom: 0,
-	},
-	grow: {
-		flexGrow: 1,
-	},
-	fabButton: {
-		position: "absolute",
-		zIndex: 1,
-		top: -30,
-		left: 0,
-		right: 0,
-		margin: "0 auto",
-	},
-	settingsButton: {
-		marginLeft: "16px",
-	},
-	settingsButtonContent: {
-		paddingLeft: "8px",
-		paddingRight: "2px",
-		fontWeight: "bold",
 	},
 }));
 
@@ -72,21 +41,7 @@ function BottomNavigation(props) {
 				<Toolbar>
 					<Grid container justify="space-between" alignItems="center">
 						<Grid item>
-							<Button
-								style={{ marginLeft: theme.spacing(-1) }}
-								variant="text"
-								aria-label="change units"
-								color="inherit"
-								className={classes.settingsButton}
-							>
-								<Typography
-									variant="button"
-									className={classes.settingsButtonContent}
-								>
-									Current
-								</Typography>
-								<ExpandMoreIcon fontSize="small" />
-							</Button>
+							<NavigationButton />
 						</Grid>
 
 						<Grid item>
