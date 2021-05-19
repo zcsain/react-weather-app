@@ -7,29 +7,25 @@
  * @returns {string} Time formated to display: "h:min" or "h:min PM/AM"
  */
 
+import formatHours from "./formatHours";
+
 const formatTime = (timestamp, offset = 0, selectedUnits = "metric") => {
-	const formatHours = (hours) => {
-		if (selectedUnits === "imperial") {
-			if (hours === 0) {
-				return { num: 12, text: " AM" };
-			} else if (hours === 12) {
-				return { num: 12, text: " PM" };
-			} else if (hours >= 1 && hours <= 11) {
-				return { num: hours % 12, text: " AM" };
-			} else {
-				return { num: hours % 12, text: " PM" };
-			}
+	const leadingZero = (minutes) => {
+		if (minutes < 10) {
+			return "0" + minutes;
 		}
 
-		return { num: hours, text: "" };
+		return minutes;
 	};
 
 	const date = new Date((timestamp + offset) * 1000);
 	const hours = date.getUTCHours();
-	const hoursCorrection = formatHours(hours);
+	const hoursCorrection = formatHours(hours, selectedUnits);
 	const minutes = date.getUTCMinutes();
 
-	return hoursCorrection.num + ":" + minutes + hoursCorrection.text;
+	return (
+		hoursCorrection.num + ":" + leadingZero(minutes) + hoursCorrection.text
+	);
 };
 
 export default formatTime;
