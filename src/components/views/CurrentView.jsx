@@ -137,7 +137,14 @@ function CurrentView(props) {
 				<Table>
 					<TableBody>
 						{Object.keys(main).map((key) => {
-							if (key === "temp") {
+							{
+								/* Ignore the following keys (already used or redundant) */
+							}
+							if (
+								key === "temp" ||
+								key === "sea_level" ||
+								key === "grnd_level"
+							) {
 								return null;
 							}
 

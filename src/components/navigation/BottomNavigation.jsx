@@ -48,7 +48,7 @@ function BottomNavigation(props) {
 							<IconButton color="inherit">
 								<SearchIcon />
 							</IconButton>
-							<ExpandableSettings />
+							<ExpandableSettings denseList={false} />
 							<GitHubButton href="https://github.com/zcsain" edgeType="end" />
 						</Grid>
 					</Grid>

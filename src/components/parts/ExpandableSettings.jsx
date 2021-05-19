@@ -77,7 +77,7 @@ function ExpandableSettings(props) {
 				onClose={handleClose}
 			>
 				{props.viewOptions && (
-					<List dense>
+					<List dense={props.denseList}>
 						<ListItem>
 							<Typography
 								className={classes.title}
@@ -104,7 +104,7 @@ function ExpandableSettings(props) {
 					</List>
 				)}
 
-				<List dense>
+				<List dense={props.denseList}>
 					{props.viewOptions && (
 						<ListItem>
 							<Typography
@@ -136,10 +136,12 @@ function ExpandableSettings(props) {
 
 ExpandableSettings.propTypes = {
 	viewOptions: PropTypes.bool,
+	denseList: PropTypes.string,
 };
 
 ExpandableSettings.defaultProps = {
 	viewOptions: true,
+	denseList: true,
 };
 
 const mapStateToProps = (state) => {
