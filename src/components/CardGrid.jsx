@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+
+// Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -92,9 +94,14 @@ function CardGrid() {
 				<CardContent className={classes.content}>
 					<Grid container spacing={2} className={classes.container}>
 						<Grid item>
-							<Grid container direction="column" spacing={1} align="center">
+							<Grid
+								container
+								direction="column"
+								spacing={1}
+								alignItems="center"
+							>
 								<Grid item>
-									<Chip label="WED" />
+									<Chip label="16:00" />
 								</Grid>
 								<Grid item>
 									<Typography color="textSecondary">21/4</Typography>
@@ -111,7 +118,7 @@ function CardGrid() {
 						</Grid>
 						<Grid item className={classes.temp}>
 							<Typography variant="h3" component="p" display="inline">
-								17°
+								297°
 							</Typography>
 							<Typography
 								variatn="h5"
@@ -119,7 +126,7 @@ function CardGrid() {
 								display="inline"
 								color="textSecondary"
 							>
-								/44°
+								/214°
 							</Typography>
 						</Grid>
 						<Grid item>
@@ -145,7 +152,7 @@ function CardGrid() {
 			<Grid container spacing={3}>
 				<Grid item xs={12} sm={6}>
 					<TableContainer>
-						<Table>
+						<Table size="small">
 							<TableBody>
 								<TableRow>
 									<TableCell>DeZZert</TableCell>
@@ -220,10 +227,7 @@ function CardGrid() {
 					</Typography>
 					<Typography paragraph>
 						Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet
-						over medium-high heat. Add chicken, shrimp and chorizo, and cook,
-						stirring occasionally until lightly browned, 6 to 8 minutes.
-						Transfer shrimp to a large plate and set aside, leaving chicken and
-						chorizo in the pan.
+						over medium-high heat.
 					</Typography>
 					{dataGrid()}
 				</CardContent>

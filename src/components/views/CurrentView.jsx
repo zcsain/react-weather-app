@@ -39,16 +39,20 @@ const useStyles = makeStyles((theme) => ({
 		fontWeight: "bold",
 	},
 	card: {
-		padding: "10px",
+		padding: "4px",
 	},
 	table: {
-		padding: "0px 10px 0px 10px",
+		padding: "0px 12px",
+		// padding: "12px 8px",
 	},
 	tempUnit: {
 		fontWeight: "400",
 	},
 	mainTemp: {
 		fontWeight: "400",
+	},
+	iconGrow: {
+		flexGrow: 1,
 	},
 }));
 
@@ -87,14 +91,17 @@ function CurrentView(props) {
 		});
 
 		return (
-			<Card className={classes.card}>
+			<Card className={classes.card} raised>
 				<CardHeader
 					title={`${titleCase(locationToSearch)} - Current weather`}
 					subheader={date}
 				/>
 				<CardContent>
 					<Grid container spacing={2} className={classes.container}>
-						<Grid item style={{ flexGrow: 1 }}>
+						<Grid item className={classes.iconGrow}>
+							<i className={[classes.icon, icon].join(" ")} />
+						</Grid>
+						<Grid item>
 							<Typography
 								variant="h2"
 								component="p"
@@ -112,12 +119,6 @@ function CurrentView(props) {
 								{units.temp}
 							</Typography>
 						</Grid>
-						<Grid item>
-							<i
-								// className={[classes.icon, "wi wi-day-storm-showers"].join(" ")}
-								className={[classes.icon, icon].join(" ")}
-							/>
-						</Grid>
 					</Grid>
 				</CardContent>
 				<CardActions style={{ marginLeft: theme.spacing(1) }}>
@@ -133,7 +134,7 @@ function CurrentView(props) {
 		const { main } = current;
 
 		return (
-			<TableContainer component={Card} className={classes.table}>
+			<TableContainer component={Card} className={classes.table} raised>
 				<Table>
 					<TableBody>
 						{Object.keys(main).map((key) => {
@@ -182,7 +183,7 @@ function CurrentView(props) {
 		const { speed, deg } = wind;
 
 		return (
-			<TableContainer component={Card} className={classes.table}>
+			<TableContainer component={Card} className={classes.table} raised>
 				<Table>
 					<TableBody>
 						<TableRow>
@@ -220,7 +221,7 @@ function CurrentView(props) {
 		const { sunrise, sunset } = sys;
 
 		return (
-			<TableContainer component={Card} className={classes.table}>
+			<TableContainer component={Card} className={classes.table} raised>
 				<Table>
 					<TableBody>
 						<TableRow>

@@ -19,12 +19,14 @@ import Header from "./navigation/Header";
 import CardV1 from "./CardV1";
 import CardGrid from "./CardGrid";
 import CurrentView from "./views/CurrentView";
+import DailyView from "./views/DailyView";
 import history from "../history";
 import SearchField from "./parts/HomeSearchField";
 import NavigationTabs from "./navigation/NavigationTabs";
 import BottomNavigation from "./navigation/BottomNavigation";
 import NavigationButton from "./parts/NavigationButton";
 import ErrorView from "./views/ErrorView";
+import TestingGrounds from "./TestingGrounds";
 
 const dark = createMuiTheme({
 	palette: {
@@ -43,6 +45,21 @@ const blueLight = createMuiTheme({
 			main: "#1976d2",
 		},
 	},
+	overrides: {
+		MuiTableCell: {
+			root: {
+				//This can be referred from Material UI API documentation.
+				padding: "12px 8px",
+			},
+		},
+		MuiTableRow: {
+			root: {
+				"&:last-child td": {
+					borderBottom: 0,
+				},
+			},
+		},
+	},
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -57,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	error: {
-		minHeight: "80vh",
+		minHeight: "90vh",
 	},
 }));
 
@@ -98,6 +115,9 @@ function App(props) {
 								</Grid>
 							</Grid>
 						</Route>
+						<Route path="/testingGrounds">
+							<TestingGrounds />
+						</Route>
 						<Route path="/current/:location" exact>
 							{/* Tthere is definitely a better way to do this, then repeating components for each route */}
 							{!xsDevice && <NavigationTabs />}
@@ -106,7 +126,7 @@ function App(props) {
 						</Route>
 						<Route path="/daily" exact>
 							{!xsDevice && <NavigationTabs />}
-							Daily
+							<DailyView />
 							{xsDevice && <BottomNavigation />}
 						</Route>
 						<Route path="/hourly" exact>

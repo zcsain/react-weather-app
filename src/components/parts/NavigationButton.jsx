@@ -45,6 +45,7 @@ function NavigationButton(props) {
 	var dailyLink = `/daily/${linkSource}`;
 	var hourlyLink = `/hourly/${linkSource}`;
 	const options = ["Current", "Daily", "Hourly"];
+	const iconOptions = [<TodayIcon />, <EventNoteIcon />, <ScheduleIcon />];
 	var mapNameToIndex = {
 		[currentLink]: 0,
 		"/daily": 1,
@@ -74,7 +75,9 @@ function NavigationButton(props) {
 					className={classes.button}
 					onClick={handleClick}
 				>
-					{options[selectedView]}
+					{/* Text or just icons that is the question */}
+					{iconOptions[selectedView]}
+					{/* {options[selectedView]} */}
 					<ExpandMoreIcon fontSize="small" />
 				</Button>
 			</Tooltip>

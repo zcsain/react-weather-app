@@ -33,7 +33,7 @@ function FactsCards(props) {
 
 	const renderCard = (fact) => {
 		return (
-			<Card>
+			<Card raised>
 				<CardContent>
 					<Typography
 						className={classes.title}

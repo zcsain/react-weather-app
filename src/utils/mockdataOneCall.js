@@ -1,4 +1,4 @@
-export default onecall = {
+const onecall = {
 	lat: 45.8132,
 	lon: 15.977,
 	timezone: "Europe/Zagreb",
@@ -1704,3 +1704,5 @@ export default onecall = {
 		},
 	],
 };
+
+export default onecall;

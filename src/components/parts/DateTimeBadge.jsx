@@ -9,9 +9,9 @@ import Typography from "@material-ui/core/Typography";
 // Custom
 import formatHours from "../../utils/formatHours";
 
-function DateTimeBadge({ dt, offset, viewType, selectedUnits }) {
+function DateTimeBadge({ dt, timezoneOffset, viewType, selectedUnits }) {
 	const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-	const date = new Date((dt + offset) * 1000);
+	const date = new Date((dt + timezoneOffset) * 1000);
 	const hours = date.getUTCHours();
 	const { num, text } = formatHours(hours, selectedUnits.type, ":00");
 	const dayOfWeek = weekDays[date.getUTCDay()];
