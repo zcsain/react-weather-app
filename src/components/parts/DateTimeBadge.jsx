@@ -5,11 +5,20 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 // Custom
 import formatHours from "../../utils/formatHours";
 
+const useStyles = makeStyles((theme) => ({
+	chip: {
+		minWidth: "55px",
+	},
+}));
+
 function DateTimeBadge({ dt, timezoneOffset, viewType, selectedUnits }) {
+	const theme = useTheme();
+	const classes = useStyles(theme);
 	const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 	const date = new Date((dt + timezoneOffset) * 1000);
 	const hours = date.getUTCHours();
@@ -40,7 +49,7 @@ function DateTimeBadge({ dt, timezoneOffset, viewType, selectedUnits }) {
 	return (
 		<Grid container item direction="column" spacing={1} align="center">
 			<Grid item>
-				<Chip label={displayDayOfWeekOrTime()} />
+				<Chip label={displayDayOfWeekOrTime()} className={classes.chip} />
 			</Grid>
 			<Grid item>
 				<Typography color="textSecondary">{selectDateFormat()}</Typography>
