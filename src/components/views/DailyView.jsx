@@ -31,23 +31,6 @@ function DailyView(props) {
 			) : (
 				<Grid container spacing={2}>
 					<Grid container item direction="column" spacing={2} sm={8}>
-						<Grid item>
-							<TestCard
-								day={days[0]}
-								timezoneOffset={offset}
-								setTemp1={900}
-								setTemp2={900}
-							/>
-						</Grid>
-						<Grid item>
-							<TestCard
-								day={days[0]}
-								timezoneOffset={offset}
-								setTemp1={90}
-								setTemp2={90}
-							/>
-						</Grid>
-
 						{days.map((day) => (
 							<Grid item key={day.dt}>
 								<DailyCard day={day} timezoneOffset={offset} />
