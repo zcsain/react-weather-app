@@ -13,7 +13,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import PriorityHighIcon from "@material-ui/icons/PriorityHigh";
-import ReplayIcon from "@material-ui/icons/Replay";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 

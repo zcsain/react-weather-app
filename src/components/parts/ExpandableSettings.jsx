@@ -136,7 +136,7 @@ function ExpandableSettings(props) {
 
 ExpandableSettings.propTypes = {
 	viewOptions: PropTypes.bool,
-	denseList: PropTypes.string,
+	denseList: PropTypes.bool,
 };
 
 ExpandableSettings.defaultProps = {

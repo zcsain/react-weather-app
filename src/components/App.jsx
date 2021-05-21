@@ -16,7 +16,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // Custom
 import Header from "./navigation/Header";
-import CardV1 from "./CardV1";
 import CardGrid from "./CardGrid";
 import CurrentView from "./views/CurrentView";
 import DailyView from "./views/DailyView";
@@ -109,9 +108,6 @@ function App(props) {
 								</Grid>
 								<Grid item>
 									<CardGrid />
-								</Grid>
-								<Grid item>
-									<CardV1 />
 								</Grid>
 							</Grid>
 						</Route>

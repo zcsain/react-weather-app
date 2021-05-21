@@ -3,7 +3,7 @@ import { Link as RouterLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 // Material UI
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -42,9 +42,9 @@ function NavigationButton(props) {
 
 	const linkSource = searchTerm || match.params.location;
 	var currentLink = `/current/${linkSource}`;
-	var dailyLink = `/daily/${linkSource}`;
-	var hourlyLink = `/hourly/${linkSource}`;
-	const options = ["Current", "Daily", "Hourly"];
+	// var dailyLink = `/daily/${linkSource}`;
+	// var hourlyLink = `/hourly/${linkSource}`;
+	// const options = ["Current", "Daily", "Hourly"];
 	const iconOptions = [<TodayIcon />, <EventNoteIcon />, <ScheduleIcon />];
 	var mapNameToIndex = {
 		[currentLink]: 0,

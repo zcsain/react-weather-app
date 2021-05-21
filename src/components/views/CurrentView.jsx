@@ -18,7 +18,7 @@ import TableRow from "@material-ui/core/TableRow";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // Custom
-import Loader from "../parts/Loader";
+// import Loader from "../parts/Loader";
 import Backdrop from "../parts/Backdrop";
 import degToCompasDir from "../../utils/degToCompasDir";
 import titleCase from "../../utils/titleCase";
@@ -138,9 +138,6 @@ function CurrentView(props) {
 				<Table>
 					<TableBody>
 						{Object.keys(main).map((key) => {
-							{
-								/* Ignore the following keys (already used or redundant) */
-							}
 							if (
 								key === "temp" ||
 								key === "sea_level" ||

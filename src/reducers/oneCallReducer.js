@@ -1,5 +1,6 @@
 import { ONECALL_REQUEST, RESET_ONECALL } from "../actions/types";
 import onecall from "../utils/mockdataOneCall";
+import onecallKelvin from "../utils/mockdataOneCallKelvin";
 
 // not much of a reducer but state required in multiple components
 const oneCallReducer = (state = onecall, action) => {
