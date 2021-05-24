@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { connect } from "react-redux";
 
 // Material UI
@@ -21,6 +21,7 @@ import iconsMapper from "../../utils/iconsMapper";
 import formatTime from "../../utils/formatTime";
 import degToCompasDir from "../../utils/degToCompasDir";
 import InfoBoxLarge from "./InfoBoxLarge";
+import InfoBoxSmall from "./InfoBoxSmall";
 
 const useStyles = makeStyles((theme) => ({
 	expand: {
@@ -64,6 +65,28 @@ const useStyles = makeStyles((theme) => ({
 	listSpacing: {
 		marginLeft: -theme.spacing(1.5),
 	},
+	collapseGrid: {
+		padding: theme.spacing(2),
+	},
+	// Need to find a better way
+	paddingMoon: {
+		paddingLeft: "4px",
+	},
+	paddingHumidity: {
+		paddingLeft: "7px",
+	},
+	paddingPressure: {
+		paddingLeft: "5px",
+	},
+	paddingTemp: {
+		paddingLeft: "6px",
+	},
+	paddingFlag: {
+		paddingLeft: "8px",
+	},
+	paddingMoonrise: {
+		paddingLeft: "6px",
+	},
 }));
 
 function DailyCard({ day, timezoneOffset, selectedUnits }) {
@@ -106,7 +129,7 @@ function DailyCard({ day, timezoneOffset, selectedUnits }) {
 		const { day: dayTemp, night: nightTemp } = temp;
 		const icon = iconsMapper(id, sunrise, sunset, dt, timezoneOffset);
 
-		// Scientific temp minWidth correction
+		// Scientific temp view minWidth correction
 		const minWidth =
 			selectedUnits.type === "scientific" ? classes.scientific : classes.temp;
 
@@ -168,77 +191,163 @@ function DailyCard({ day, timezoneOffset, selectedUnits }) {
 
 	const renderCollapseAreaLarge = () => {
 		return (
-			<Collapse in={expanded} timeout="auto" unmountOnExit>
-				<Grid container spacing={1} style={{ padding: "16px" }}>
-					<Grid item xs={6} sm={4}>
-						<InfoBoxLarge
-							iconOne="wi wi-thermometer-exterior"
-							titleOne="High"
-							dataOne={temp.min.toFixed(0) + selectedUnits.units.temp}
-							iconTwo="wi wi-thermometer"
-							titleTwo="Low"
-							dataTwo={temp.max.toFixed(0) + selectedUnits.units.temp}
-						/>
-					</Grid>
-					<Grid item xs={6} sm={4}>
-						<InfoBoxLarge
-							iconOne="wi wi-day-sunny"
-							titleOne="Feels like"
-							dataOne={feelsLike.day.toFixed(0) + selectedUnits.units.temp}
-							iconTwo="wi wi-night-clear"
-							titleTwo="Feels like"
-							dataTwo={feelsLike.night.toFixed(0) + selectedUnits.units.temp}
-						/>
-					</Grid>
-					<Grid item xs={6} sm={4}>
-						<InfoBoxLarge
-							iconOne="wi wi-raindrop"
-							titleOne="Humidity"
-							dataOne={humidity + selectedUnits.units.humidity}
-							iconTwo="wi wi-barometer"
-							titleTwo="Pressure"
-							dataTwo={pressure + selectedUnits.units.pressure}
-						/>
-					</Grid>
-					<Grid item xs={6} sm={4}>
-						<InfoBoxLarge
-							iconOne="wi wi-strong-wind"
-							titleOne="Wind Speed"
-							dataOne={windSpeedMod + selectedUnits.units.speed}
-							iconTwo="wi wi-small-craft-advisory"
-							titleTwo="Wind Dir."
-							dataTwo={windDir + selectedUnits.units.wind}
-						/>
-					</Grid>
-					<Grid item xs={6} sm={4}>
-						<InfoBoxLarge
-							iconOne="wi wi-sunrise"
-							titleOne="Sunrise"
-							dataOne={formatTime(sunrise, timezoneOffset, selectedUnits.type)}
-							iconTwo="wi wi-sunset"
-							titleTwo="Sunset"
-							dataTwo={formatTime(sunset, timezoneOffset, selectedUnits.type)}
-						/>
-					</Grid>
-					<Grid item xs={6} sm={4}>
-						<InfoBoxLarge
-							iconOne="wi wi-moonrise"
-							titleOne="Moonrise"
-							dataOne={formatTime(moonrise, timezoneOffset, selectedUnits.type)}
-							iconTwo="wi wi-moonset"
-							titleTwo="Moonset"
-							dataTwo={formatTime(moonset, timezoneOffset, selectedUnits.type)}
-						/>
-					</Grid>
+			<Fragment>
+				<Grid item xs={6} sm={4}>
+					<InfoBoxLarge
+						iconOne="wi wi-thermometer-exterior"
+						iconStylingOne={classes.paddingTemp}
+						titleOne="High"
+						dataOne={temp.min.toFixed(0) + selectedUnits.units.temp}
+						iconTwo="wi wi-thermometer"
+						iconStylingTwo={classes.paddingTemp}
+						titleTwo="Low"
+						dataTwo={temp.max.toFixed(0) + selectedUnits.units.temp}
+					/>
 				</Grid>
-			</Collapse>
+				<Grid item xs={6} sm={4}>
+					<InfoBoxLarge
+						iconOne="wi wi-day-sunny"
+						titleOne="Feels like"
+						dataOne={feelsLike.day.toFixed(0) + selectedUnits.units.temp}
+						iconTwo="wi wi-night-clear"
+						iconStylingTwo={classes.paddingMoon}
+						titleTwo="Feels like"
+						dataTwo={feelsLike.night.toFixed(0) + selectedUnits.units.temp}
+					/>
+				</Grid>
+				<Grid item xs={6} sm={4}>
+					<InfoBoxLarge
+						iconOne="wi wi-raindrop"
+						iconStylingOne={classes.paddingHumidity}
+						titleOne="Humidity"
+						dataOne={humidity + selectedUnits.units.humidity}
+						iconTwo="wi wi-barometer"
+						iconStylingTwo={classes.paddingPressure}
+						titleTwo="Pressure"
+						dataTwo={pressure + selectedUnits.units.pressure}
+					/>
+				</Grid>
+				<Grid item xs={6} sm={4}>
+					<InfoBoxLarge
+						iconOne="wi wi-strong-wind"
+						titleOne="Wind Speed"
+						dataOne={windSpeedMod + selectedUnits.units.speed}
+						iconTwo="wi wi-small-craft-advisory"
+						iconStylingTwo={classes.paddingFlag}
+						titleTwo="Wind Dir."
+						dataTwo={windDir + selectedUnits.units.wind}
+					/>
+				</Grid>
+				<Grid item xs={6} sm={4}>
+					<InfoBoxLarge
+						iconOne="wi wi-sunrise"
+						titleOne="Sunrise"
+						dataOne={formatTime(sunrise, timezoneOffset, selectedUnits.type)}
+						iconTwo="wi wi-sunset"
+						titleTwo="Sunset"
+						dataTwo={formatTime(sunset, timezoneOffset, selectedUnits.type)}
+					/>
+				</Grid>
+				<Grid item xs={6} sm={4}>
+					<InfoBoxLarge
+						iconOne="wi wi-moonrise"
+						iconStylingOne={classes.paddingMoonrise}
+						titleOne="Moonrise"
+						dataOne={formatTime(moonrise, timezoneOffset, selectedUnits.type)}
+						iconTwo="wi wi-moonset"
+						iconStylingTwo={classes.paddingMoonrise}
+						titleTwo="Moonset"
+						dataTwo={formatTime(moonset, timezoneOffset, selectedUnits.type)}
+					/>
+				</Grid>
+			</Fragment>
+		);
+	};
+
+	const renderCollapseAreaSmall = () => {
+		return (
+			<Fragment>
+				<Grid item xs={12} sm={6}>
+					<InfoBoxSmall
+						iconOne="wi wi-thermometer-exterior"
+						iconStylingOne={classes.paddingTemp}
+						titleOne="High"
+						dataOne={temp.min.toFixed(0) + selectedUnits.units.temp}
+						iconTwo="wi wi-thermometer"
+						iconStylingTwo={classes.paddingTemp}
+						titleTwo="Low"
+						dataTwo={temp.max.toFixed(0) + selectedUnits.units.temp}
+					/>
+				</Grid>
+				<Grid item xs={12} sm={6}>
+					<InfoBoxSmall
+						iconOne="wi wi-day-sunny"
+						titleOne="Feels like"
+						dataOne={feelsLike.day.toFixed(0) + selectedUnits.units.temp}
+						iconTwo="wi wi-night-clear"
+						iconStylingTwo={classes.paddingMoon}
+						titleTwo="Feels like"
+						dataTwo={feelsLike.night.toFixed(0) + selectedUnits.units.temp}
+					/>
+				</Grid>
+				<Grid item xs={12} sm={6}>
+					<InfoBoxSmall
+						iconOne="wi wi-raindrop"
+						iconStylingOne={classes.paddingHumidity}
+						titleOne="Humidity"
+						dataOne={humidity + selectedUnits.units.humidity}
+						iconTwo="wi wi-barometer"
+						iconStylingTwo={classes.paddingPressure}
+						titleTwo="Pressure"
+						dataTwo={pressure + selectedUnits.units.pressure}
+					/>
+				</Grid>
+				<Grid item xs={12} sm={6}>
+					<InfoBoxSmall
+						iconOne="wi wi-strong-wind"
+						titleOne="Wind Speed"
+						dataOne={windSpeedMod + selectedUnits.units.speed}
+						iconTwo="wi wi-small-craft-advisory"
+						iconStylingTwo={classes.paddingFlag}
+						titleTwo="Wind Dir."
+						dataTwo={windDir + selectedUnits.units.wind}
+					/>
+				</Grid>
+				<Grid item xs={12} sm={6}>
+					<InfoBoxSmall
+						iconOne="wi wi-sunrise"
+						titleOne="Sunrise"
+						dataOne={formatTime(sunrise, timezoneOffset, selectedUnits.type)}
+						iconTwo="wi wi-sunset"
+						titleTwo="Sunset"
+						dataTwo={formatTime(sunset, timezoneOffset, selectedUnits.type)}
+					/>
+				</Grid>
+				<Grid item xs={12} sm={6}>
+					<InfoBoxSmall
+						iconOne="wi wi-moonrise"
+						iconStylingOne={classes.paddingMoonrise}
+						titleOne="Moonrise"
+						dataOne={formatTime(moonrise, timezoneOffset, selectedUnits.type)}
+						iconTwo="wi wi-moonset"
+						iconStylingTwo={classes.paddingMoonrise}
+						titleTwo="Moonset"
+						dataTwo={formatTime(moonset, timezoneOffset, selectedUnits.type)}
+					/>
+				</Grid>
+			</Fragment>
 		);
 	};
 
 	return (
 		<Card raised>
 			{renderActionArea()}
-			{renderCollapseAreaLarge()}
+			<Collapse in={expanded} timeout="auto" unmountOnExit>
+				<Grid container spacing={1} className={classes.collapseGrid}>
+					{/* {renderCollapseAreaLarge()} */}
+					{renderCollapseAreaSmall()}
+				</Grid>
+			</Collapse>
 		</Card>
 	);
 }

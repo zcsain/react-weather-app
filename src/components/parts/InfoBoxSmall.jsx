@@ -8,15 +8,19 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
 	iconSize: {
 		fontSize: "1.5em",
 	},
+	listSpacing: {
+		marginLeft: -theme.spacing(1.5),
+	},
 }));
 
-function InfoBoxLarge({
+function InfoBoxSmall({
 	iconOne,
 	titleOne,
 	dataOne,
@@ -27,7 +31,7 @@ function InfoBoxLarge({
 	iconStylingTwo,
 }) {
 	const theme = useTheme();
-	const classes = useStyles();
+	const classes = useStyles(theme);
 
 	// Dark theme - opacity adjust (there should be a way to do this with useStyles)
 	const darkThemeOpacity =
@@ -42,41 +46,48 @@ function InfoBoxLarge({
 					/>
 					<ListItemText
 						disableTypography
+						className={classes.listSpacing}
 						primary={
 							<Typography variant="body2" color="textSecondary">
 								{titleOne}
 							</Typography>
 						}
-						secondary={<Typography varaint="body1">{dataOne}</Typography>}
 					/>
+					<ListItemSecondaryAction>
+						<Typography varaint="body1">{dataOne}</Typography>
+					</ListItemSecondaryAction>
 				</ListItem>
+
 				<ListItem className={darkThemeOpacity}>
 					<ListItemIcon
 						className={[iconTwo, classes.iconSize, iconStylingTwo].join(" ")}
 					/>
 					<ListItemText
 						disableTypography
+						className={classes.listSpacing}
 						primary={
 							<Typography variant="body2" color="textSecondary">
 								{titleTwo}
 							</Typography>
 						}
-						secondary={<Typography variant="body1">{dataTwo}</Typography>}
 					/>
+					<ListItemSecondaryAction>
+						<Typography variant="body1">{dataTwo}</Typography>
+					</ListItemSecondaryAction>
 				</ListItem>
 			</List>
 		</Card>
 	);
 }
 
-InfoBoxLarge.propTypes = {
+InfoBoxSmall.propTypes = {
 	iconStylingOne: PropTypes.string,
 	conStylingTwo: PropTypes.string,
 };
 
-InfoBoxLarge.defaultProps = {
+InfoBoxSmall.defaultProps = {
 	iconStylingOne: "",
 	conStylingTwo: "",
 };
 
-export default InfoBoxLarge;
+export default InfoBoxSmall;
