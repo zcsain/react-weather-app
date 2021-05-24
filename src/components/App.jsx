@@ -16,7 +16,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // Custom
 import Header from "./navigation/Header";
-import CardGrid from "./CardGrid";
 import CurrentView from "./views/CurrentView";
 import DailyView from "./views/DailyView";
 import history from "../history";
@@ -25,7 +24,6 @@ import NavigationTabs from "./navigation/NavigationTabs";
 import BottomNavigation from "./navigation/BottomNavigation";
 import NavigationButton from "./parts/NavigationButton";
 import ErrorView from "./views/ErrorView";
-import TestingGrounds from "./TestingGrounds";
 
 const dark = createMuiTheme({
 	palette: {
@@ -92,27 +90,9 @@ function App(props) {
 					<Switch>
 						{/* If no location is provide redirect to home */}
 						<Redirect exact from="/current" to="/" />
+						<Redirect exact from="/daily" to="/" />
 						<Route path="/" exact>
 							<SearchField />
-						</Route>
-						<Route path="/explore/:location" exact>
-							<CurrentView />
-						</Route>
-						<Route path="/testArea" exact>
-							<Grid container spacing={2} direction="column">
-								<Grid item>
-									<CardGrid />
-								</Grid>
-								<Grid item>
-									<CardGrid />
-								</Grid>
-								<Grid item>
-									<CardGrid />
-								</Grid>
-							</Grid>
-						</Route>
-						<Route path="/testingGrounds">
-							<TestingGrounds />
 						</Route>
 						<Route path="/current/:location" exact>
 							{/* Tthere is definitely a better way to do this, then repeating components for each route */}
@@ -120,7 +100,7 @@ function App(props) {
 							<CurrentView />
 							{xsDevice && <BottomNavigation />}
 						</Route>
-						<Route path="/daily" exact>
+						<Route path="/daily/:location" exact>
 							{!xsDevice && <NavigationTabs />}
 							<DailyView />
 							{xsDevice && <BottomNavigation />}

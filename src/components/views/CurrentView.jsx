@@ -39,10 +39,10 @@ const useStyles = makeStyles((theme) => ({
 		fontWeight: "bold",
 	},
 	card: {
-		padding: "4px",
+		padding: "8px",
 	},
 	table: {
-		padding: "0px 12px",
+		padding: "0px 16px",
 		// padding: "12px 8px",
 	},
 	tempUnit: {

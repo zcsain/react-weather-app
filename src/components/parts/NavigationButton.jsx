@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link as RouterLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -34,25 +34,36 @@ function NavigationButton(props) {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const { match, searchTerm } = props;
 	const { url } = match;
+	const linkSource = searchTerm || match.params.location;
+	var currentLink = `/current/${linkSource}`;
+	var dailyLink = `/daily/${linkSource}`;
+	// var hourlyLink = `/hourly/${linkSource}`;
+	// const options = ["Current", "Daily", "Hourly"];
+	const iconOptions = [<TodayIcon />, <EventNoteIcon />, <ScheduleIcon />];
+
+	var mapNameToIndex = useMemo(() => {
+		return {
+			[currentLink]: 0,
+			[dailyLink]: 1,
+			"/hourly": 2,
+		};
+	}, [currentLink, dailyLink]);
+
+	console.log(mapNameToIndex);
+
+	const [selectedView, setSelectedView] = useState(mapNameToIndex[url]);
+
+	// var mapNameToIndex = {
+	// 	[currentLink]: 0,
+	// 	"/daily": 1,
+	// 	"/hourly": 2,
+	// };
 
 	// If url changed, adjust tab selection accordingly
 	useEffect(() => {
 		setSelectedView(mapNameToIndex[url]);
-	}, [url]);
-
-	const linkSource = searchTerm || match.params.location;
-	var currentLink = `/current/${linkSource}`;
-	// var dailyLink = `/daily/${linkSource}`;
-	// var hourlyLink = `/hourly/${linkSource}`;
-	// const options = ["Current", "Daily", "Hourly"];
-	const iconOptions = [<TodayIcon />, <EventNoteIcon />, <ScheduleIcon />];
-	var mapNameToIndex = {
-		[currentLink]: 0,
-		"/daily": 1,
-		"/hourly": 2,
-	};
-
-	const [selectedView, setSelectedView] = useState(mapNameToIndex[url]);
+		// React complains if "mapNameToIndex" is not a dependency
+	}, [url, mapNameToIndex]);
 
 	const handleMenuItemClick = (event, index) => {
 		setSelectedView(index);
@@ -111,7 +122,7 @@ function NavigationButton(props) {
 					<MenuItem
 						onClick={(event) => handleMenuItemClick(event, 1)}
 						component={RouterLink}
-						to="/daily"
+						to={dailyLink}
 						selected={1 === selectedView}
 					>
 						<ListItemIcon>

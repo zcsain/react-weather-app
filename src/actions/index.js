@@ -56,16 +56,16 @@ export const resetCurrent = () => {
 
 export const fetchOneCall = (location, units, lang = "en") => {
 	return async (dispatch, getState) => {
-		const unitsStatus = getState().units === units;
-		const locationStatus = getState().location === location;
-		const langStatus = getState().lang === lang;
+		// const unitsStatus = getState().units === units;
+		// const locationStatus = getState().location === location;
+		// const langStatus = getState().lang === lang;
 
-		if (unitsStatus || locationStatus || langStatus) {
-			// MAKE REQUEST
-		} else {
-			// DONT'T MAKE REQUEST (KEEP STATE AS IS)
-			dispatch({ type: null });
-		}
+		// if (unitsStatus || locationStatus || langStatus) {
+		// 	// MAKE REQUEST
+		// } else {
+		// 	// DONT'T MAKE REQUEST (KEEP STATE AS IS)
+		// 	dispatch({ type: null });
+		// }
 
 		try {
 			const response = await openWeather.post("/onecall", {

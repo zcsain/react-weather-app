@@ -8,20 +8,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Collapse from "@material-ui/core/Collapse";
-// import Table from "@material-ui/core/Table";
-// import TableBody from "@material-ui/core/TableBody";
-// import TableCell from "@material-ui/core/TableCell";
-// import TableContainer from "@material-ui/core/TableContainer";
-// import TableRow from "@material-ui/core/TableRow";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Icon from "@material-ui/core/Icon";
 import Tooltip from "@material-ui/core/Tooltip";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -32,6 +20,7 @@ import capitalize from "../../utils/capitalize";
 import iconsMapper from "../../utils/iconsMapper";
 import formatTime from "../../utils/formatTime";
 import degToCompasDir from "../../utils/degToCompasDir";
+import InfoBoxLarge from "./InfoBoxLarge";
 
 const useStyles = makeStyles((theme) => ({
 	expand: {
@@ -54,10 +43,7 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: "center",
 	},
 	darkTheme: {
-		opacity: "87%",
-		[theme.palette.type === "dark"]: {
-			color: "	#FF0000",
-		},
+		opacity: "93%",
 	},
 	description: {
 		[theme.breakpoints.up("sm")]: {
@@ -75,10 +61,10 @@ const useStyles = makeStyles((theme) => ({
 	scientific: {
 		minWidth: "112px",
 	},
+	listSpacing: {
+		marginLeft: -theme.spacing(1.5),
+	},
 }));
-
-const loremIpsum =
-	"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut. ";
 
 function DailyCard({ day, timezoneOffset, selectedUnits }) {
 	const theme = useTheme();
@@ -99,6 +85,17 @@ function DailyCard({ day, timezoneOffset, selectedUnits }) {
 		wind_deg: windDeg,
 	} = day;
 
+	const windSpeedMod =
+		selectedUnits.type === "scientific"
+			? windSpeed
+			: (windSpeed * selectedUnits.multipliers.speed).toFixed(0);
+	const windDir =
+		selectedUnits.type === "scientific" ? windDeg : degToCompasDir(windDeg);
+
+	// Dark theme - opacity adjust (could not find how to do this with useStyles)
+	const darkThemeOpacity =
+		theme.palette.type === "dark" ? classes.darkTheme : null;
+
 	const handleExpandeClick = () => {
 		setExpanded(!expanded);
 	};
@@ -109,10 +106,7 @@ function DailyCard({ day, timezoneOffset, selectedUnits }) {
 		const { day: dayTemp, night: nightTemp } = temp;
 		const icon = iconsMapper(id, sunrise, sunset, dt, timezoneOffset);
 
-		// Dark theme - opacity adjust (could not find how to do this with useStyles)
-		const darkThemeOpacity =
-			theme.palette.type === "dark" ? classes.darkTheme : null;
-		// Scientific temp midWidth adjust
+		// Scientific temp minWidth correction
 		const minWidth =
 			selectedUnits.type === "scientific" ? classes.scientific : classes.temp;
 
@@ -172,209 +166,79 @@ function DailyCard({ day, timezoneOffset, selectedUnits }) {
 		);
 	};
 
-	const renderCollapseArea = () => {
+	const renderCollapseAreaLarge = () => {
 		return (
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
-				<Grid container spacing={2} style={{ padding: "16px" }}>
+				<Grid container spacing={1} style={{ padding: "16px" }}>
 					<Grid item xs={6} sm={4}>
-						<Card variant="outlined">{minMaxTemp()}</Card>
+						<InfoBoxLarge
+							iconOne="wi wi-thermometer-exterior"
+							titleOne="High"
+							dataOne={temp.min.toFixed(0) + selectedUnits.units.temp}
+							iconTwo="wi wi-thermometer"
+							titleTwo="Low"
+							dataTwo={temp.max.toFixed(0) + selectedUnits.units.temp}
+						/>
 					</Grid>
 					<Grid item xs={6} sm={4}>
-						<Card variant="outlined">{feelsLikeTemp()}</Card>
+						<InfoBoxLarge
+							iconOne="wi wi-day-sunny"
+							titleOne="Feels like"
+							dataOne={feelsLike.day.toFixed(0) + selectedUnits.units.temp}
+							iconTwo="wi wi-night-clear"
+							titleTwo="Feels like"
+							dataTwo={feelsLike.night.toFixed(0) + selectedUnits.units.temp}
+						/>
 					</Grid>
 					<Grid item xs={6} sm={4}>
-						<Card variant="outlined">{humidityPressure()}</Card>
+						<InfoBoxLarge
+							iconOne="wi wi-raindrop"
+							titleOne="Humidity"
+							dataOne={humidity + selectedUnits.units.humidity}
+							iconTwo="wi wi-barometer"
+							titleTwo="Pressure"
+							dataTwo={pressure + selectedUnits.units.pressure}
+						/>
 					</Grid>
 					<Grid item xs={6} sm={4}>
-						<Card variant="outlined">{windList()}</Card>
+						<InfoBoxLarge
+							iconOne="wi wi-strong-wind"
+							titleOne="Wind Speed"
+							dataOne={windSpeedMod + selectedUnits.units.speed}
+							iconTwo="wi wi-small-craft-advisory"
+							titleTwo="Wind Dir."
+							dataTwo={windDir + selectedUnits.units.wind}
+						/>
 					</Grid>
 					<Grid item xs={6} sm={4}>
-						<Card variant="outlined">{sunriseSunset()}</Card>
+						<InfoBoxLarge
+							iconOne="wi wi-sunrise"
+							titleOne="Sunrise"
+							dataOne={formatTime(sunrise, timezoneOffset, selectedUnits.type)}
+							iconTwo="wi wi-sunset"
+							titleTwo="Sunset"
+							dataTwo={formatTime(sunset, timezoneOffset, selectedUnits.type)}
+						/>
 					</Grid>
 					<Grid item xs={6} sm={4}>
-						<Card variant="outlined">{moonriseMoonset()}</Card>
+						<InfoBoxLarge
+							iconOne="wi wi-moonrise"
+							titleOne="Moonrise"
+							dataOne={formatTime(moonrise, timezoneOffset, selectedUnits.type)}
+							iconTwo="wi wi-moonset"
+							titleTwo="Moonset"
+							dataTwo={formatTime(moonset, timezoneOffset, selectedUnits.type)}
+						/>
 					</Grid>
 				</Grid>
 			</Collapse>
 		);
 	};
 
-	const sunriseSunset = () => {
-		return (
-			<List dense subheader={<ListSubheader>Sunrise/Sunset</ListSubheader>}>
-				<ListItem>
-					<ListItemIcon
-						className="wi wi-sunrise"
-						style={{ fontSize: "1.5em" }}
-					/>
-					<ListItemText
-						primary={formatTime(sunrise, timezoneOffset, selectedUnits.type)}
-						style={{ textAlign: "right" }}
-					/>
-				</ListItem>
-				<ListItem>
-					<ListItemIcon
-						className="wi wi-sunset"
-						style={{ fontSize: "1.5em" }}
-					/>
-					<ListItemText
-						primary={formatTime(sunset, timezoneOffset, selectedUnits.type)}
-						style={{ textAlign: "right" }}
-					/>
-				</ListItem>
-			</List>
-		);
-	};
-
-	const moonriseMoonset = () => {
-		return (
-			<List dense subheader={<ListSubheader>Moonrise/Moonset</ListSubheader>}>
-				<ListItem>
-					<ListItemIcon
-						className="wi wi-moonrise"
-						style={{ fontSize: "1.5em" }}
-					/>
-					<ListItemText
-						primary={formatTime(moonrise, timezoneOffset, selectedUnits.type)}
-						style={{ textAlign: "right" }}
-					/>
-				</ListItem>
-				<ListItem>
-					<ListItemIcon
-						className="wi wi-moonset"
-						style={{ fontSize: "1.5em" }}
-					/>
-					<ListItemText
-						primary={formatTime(moonset, timezoneOffset, selectedUnits.type)}
-						style={{ textAlign: "right" }}
-					/>
-				</ListItem>
-			</List>
-		);
-	};
-
-	const humidityPressure = () => {
-		return (
-			<List dense subheader={<ListSubheader>Humidity/Pressure</ListSubheader>}>
-				<ListItem>
-					<ListItemIcon
-						className="wi wi-raindrop"
-						style={{ fontSize: "1.5em", paddingLeft: "2px" }}
-					/>
-					<ListItemText
-						primary={humidity + selectedUnits.units.humidity}
-						style={{ textAlign: "right" }}
-					/>
-				</ListItem>
-				<ListItem>
-					<ListItemIcon
-						className="wi wi-barometer"
-						style={{ fontSize: "1.5em" }}
-					/>
-					<ListItemText
-						primary={pressure + selectedUnits.units.pressure}
-						style={{ textAlign: "right" }}
-					/>
-				</ListItem>
-			</List>
-		);
-	};
-
-	const minMaxTemp = () => {
-		return (
-			<List dense subheader={<ListSubheader>Min/Max Temp.</ListSubheader>}>
-				<ListItem>
-					<ListItemIcon
-						className="wi wi-thermometer-exterior"
-						style={{ fontSize: "1.4em" }}
-					/>
-					<ListItemText
-						primary={temp.min.toFixed(0) + selectedUnits.units.temp}
-						style={{ textAlign: "right" }}
-					/>
-				</ListItem>
-				<ListItem>
-					<ListItemIcon
-						className="wi wi-thermometer"
-						style={{ fontSize: "1.4em" }}
-					/>
-					<ListItemText
-						primary={temp.max.toFixed(0) + selectedUnits.units.temp}
-						style={{ textAlign: "right" }}
-					/>
-				</ListItem>
-			</List>
-		);
-	};
-
-	const feelsLikeTemp = () => {
-		return (
-			<List
-				dense
-				subheader={<ListSubheader>Feels Like Day/Night</ListSubheader>}
-			>
-				<ListItem>
-					<ListItemIcon
-						className="wi wi-day-sunny"
-						style={{ fontSize: "1.5em", marginLeft: "-4px" }}
-					/>
-					<ListItemText
-						primary={feelsLike.day.toFixed(0) + selectedUnits.units.temp}
-						style={{ textAlign: "right" }}
-					/>
-				</ListItem>
-				<ListItem>
-					<ListItemIcon
-						className="wi wi-night-clear"
-						style={{ fontSize: "1.5em" }}
-					/>
-					<ListItemText
-						primary={feelsLike.night.toFixed(0) + selectedUnits.units.temp}
-						style={{ textAlign: "right" }}
-					/>
-				</ListItem>
-			</List>
-		);
-	};
-
-	const windList = () => {
-		const windSpeedMod =
-			selectedUnits.type === "scientific"
-				? windSpeed
-				: (windSpeed * selectedUnits.multipliers.speed).toFixed(0);
-		const windDir =
-			selectedUnits.type === "scientific" ? windDeg : degToCompasDir(windDeg);
-
-		return (
-			<List dense subheader={<ListSubheader>Wind Speed/Dir.</ListSubheader>}>
-				<ListItem>
-					<ListItemIcon
-						className="wi wi-strong-wind"
-						style={{ fontSize: "1.5em" }}
-					/>
-					<ListItemText
-						primary={windSpeedMod + selectedUnits.units.speed}
-						style={{ textAlign: "right" }}
-					/>
-				</ListItem>
-				<ListItem>
-					<ListItemIcon
-						className="wi wi-small-craft-advisory"
-						style={{ fontSize: "1.5em", paddingLeft: "4px" }}
-					/>
-					<ListItemText
-						primary={windDir + selectedUnits.units.wind}
-						style={{ textAlign: "right" }}
-					/>
-				</ListItem>
-			</List>
-		);
-	};
-
 	return (
 		<Card raised>
 			{renderActionArea()}
-			{renderCollapseArea()}
+			{renderCollapseAreaLarge()}
 		</Card>
 	);
 }

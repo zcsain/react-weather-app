@@ -32,11 +32,11 @@ function NavigationTabs(props) {
 	// acces to parts of website from the address bar)
 	const linkSource = searchTerm || match.params.location;
 	var currentLink = `/current/${linkSource}`;
-	// var dailyLink;
+	var dailyLink = `/daily/${linkSource}`;
 	// var hourlLink;
 	var mapNameToIndex = {
 		[currentLink]: 0,
-		"/daily": 1,
+		[dailyLink]: 1,
 		"/hourly": 2,
 	};
 
@@ -59,7 +59,7 @@ function NavigationTabs(props) {
 			>
 				{/* <Tab label="Current" component={RouterLink} to="/current/Zagreb" /> */}
 				<Tab label="Current" component={RouterLink} to={currentLink} />
-				<Tab label="Daily" component={RouterLink} to="/daily" />
+				<Tab label="Daily" component={RouterLink} to={dailyLink} />
 				<Tab label="Houry" component={RouterLink} to="/hourly" />
 			</Tabs>
 		</Box>
