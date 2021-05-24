@@ -3,7 +3,7 @@ import onecall from "../utils/mockdataOneCall";
 import onecallKelvin from "../utils/mockdataOneCallKelvin";
 
 // not much of a reducer but state required in multiple components
-const oneCallReducer = (state = onecall, action) => {
+const oneCallReducer = (state = {}, action) => {
 	switch (action.type) {
 		case ONECALL_REQUEST:
 			return action.payload;
