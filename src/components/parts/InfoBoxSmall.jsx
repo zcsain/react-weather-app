@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
 	listSpacing: {
 		marginLeft: -theme.spacing(1.5),
 	},
+	darkTheme: {
+		opacity: "87%",
+	},
 }));
 
 function InfoBoxSmall({
@@ -40,9 +43,14 @@ function InfoBoxSmall({
 	return (
 		<Card variant="outlined">
 			<List dense>
-				<ListItem className={darkThemeOpacity}>
+				<ListItem>
 					<ListItemIcon
-						className={[iconOne, classes.iconSize, iconStylingOne].join(" ")}
+						className={[
+							iconOne,
+							classes.iconSize,
+							iconStylingOne,
+							darkThemeOpacity,
+						].join(" ")}
 					/>
 					<ListItemText
 						disableTypography
@@ -53,14 +61,19 @@ function InfoBoxSmall({
 							</Typography>
 						}
 					/>
-					<ListItemSecondaryAction>
+					<ListItemSecondaryAction className={darkThemeOpacity}>
 						<Typography varaint="body1">{dataOne}</Typography>
 					</ListItemSecondaryAction>
 				</ListItem>
 
-				<ListItem className={darkThemeOpacity}>
+				<ListItem>
 					<ListItemIcon
-						className={[iconTwo, classes.iconSize, iconStylingTwo].join(" ")}
+						className={[
+							iconTwo,
+							classes.iconSize,
+							iconStylingTwo,
+							darkThemeOpacity,
+						].join(" ")}
 					/>
 					<ListItemText
 						disableTypography
@@ -71,7 +84,7 @@ function InfoBoxSmall({
 							</Typography>
 						}
 					/>
-					<ListItemSecondaryAction>
+					<ListItemSecondaryAction className={darkThemeOpacity}>
 						<Typography variant="body1">{dataTwo}</Typography>
 					</ListItemSecondaryAction>
 				</ListItem>

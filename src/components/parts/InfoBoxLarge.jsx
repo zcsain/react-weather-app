@@ -14,6 +14,9 @@ const useStyles = makeStyles(() => ({
 	iconSize: {
 		fontSize: "1.5em",
 	},
+	darkTheme: {
+		opacity: "87%",
+	},
 }));
 
 function InfoBoxLarge({
