@@ -9,9 +9,11 @@ export const metric = {
 		tempOnly: " C",
 		wind: "",
 		pressure: " hPa",
+		rain: " mm",
 	},
 	multipliers: {
 		speed: 3.6,
+		rain: 1,
 	},
 };
 
@@ -26,9 +28,11 @@ export const imperial = {
 		tempOnly: " F",
 		wind: "",
 		pressure: " hPa",
+		rain: " in",
 	},
 	multipliers: {
 		speed: 1,
+		rain: 0.0393701,
 	},
 };
 
@@ -43,8 +47,10 @@ export const scientific = {
 		tempOnly: " K",
 		wind: "°",
 		pressure: " hPa",
+		rain: " mm",
 	},
 	multipliers: {
 		speed: 1,
+		rain: 1,
 	},
 };
