@@ -34,7 +34,7 @@ function DailyView(props) {
 		// React complains if "fetchOneCall" is not a dependency, even do
 		// it is a function and does not change, not sure why that is
 		// required
-	}, [locationToSearch, selectedUnits, fetchOneCall]);
+	}, [locationToSearch, selectedUnits, fetchOneCall, setSearchTerm]);
 
 	return (
 		<React.Fragment>

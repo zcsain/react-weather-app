@@ -81,7 +81,7 @@ function CurrentView(props) {
 		setSearchTerm(locationToSearch);
 		// React throws a warning if "fetchCurrent" is not a dependency,
 		// even though it is a function and never changes
-	}, [locationToSearch, selectedUnits, fetchCurrent]);
+	}, [locationToSearch, selectedUnits, fetchCurrent, setSearchTerm]);
 
 	const renderQuickViewCard = () => {
 		const { weather, sys, main, dt, timezone } = current;
