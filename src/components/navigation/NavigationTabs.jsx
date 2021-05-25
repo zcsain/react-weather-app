@@ -60,7 +60,7 @@ function NavigationTabs(props) {
 				{/* <Tab label="Current" component={RouterLink} to="/current/Zagreb" /> */}
 				<Tab label="Current" component={RouterLink} to={currentLink} />
 				<Tab label="Daily" component={RouterLink} to={dailyLink} />
-				<Tab label="Houry" component={RouterLink} to="/hourly" />
+				<Tab label="Hourly" component={RouterLink} to="/hourly" />
 			</Tabs>
 		</Box>
 	);
