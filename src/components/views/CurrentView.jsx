@@ -24,7 +24,7 @@ import degToCompasDir from "../../utils/degToCompasDir";
 import titleCase from "../../utils/titleCase";
 import formatTime from "../../utils/formatTime";
 import FactsCards from "../parts/FactsCard";
-import { fetchCurrent } from "../../actions";
+import { fetchCurrent, setSearchTerm } from "../../actions";
 import iconsMapper from "../../utils/iconsMapper";
 
 const useStyles = makeStyles((theme) => ({
@@ -61,7 +61,13 @@ function CurrentView(props) {
 	const classes = useStyles(theme);
 	const showFacts = useMediaQuery(theme.breakpoints.up("sm"));
 
-	const { current, selectedUnits, searchTerm, fetchCurrent } = props;
+	const {
+		current,
+		selectedUnits,
+		searchTerm,
+		fetchCurrent,
+		setSearchTerm,
+	} = props;
 	const { type, units, multipliers } = selectedUnits;
 
 	// Bookmarked pages do do initiate searchTerm setting, so this line
@@ -72,6 +78,7 @@ function CurrentView(props) {
 
 	useEffect(() => {
 		fetchCurrent(locationToSearch, selectedUnits.keyword);
+		setSearchTerm(locationToSearch);
 		// React throws a warning if "fetchCurrent" is not a dependency,
 		// even though it is a function and never changes
 	}, [locationToSearch, selectedUnits, fetchCurrent]);
@@ -278,6 +285,6 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { fetchCurrent })(
+export default connect(mapStateToProps, { fetchCurrent, setSearchTerm })(
 	withRouter(CurrentView)
 );

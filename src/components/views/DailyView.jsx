@@ -11,19 +11,26 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // import Loader from "../parts/Loader";
 import Backdrop from "../parts/Backdrop";
 import FactsCards from "../parts/FactsCard";
-import { fetchOneCall } from "../../actions";
+import { fetchOneCall, setSearchTerm } from "../../actions";
 import DailyCard from "../parts/DailyCard";
 
 function DailyView(props) {
 	const theme = useTheme();
 	const showFacts = useMediaQuery(theme.breakpoints.up("sm"));
-	const { oneCall, selectedUnits, searchTerm, fetchOneCall } = props;
+	const {
+		oneCall,
+		selectedUnits,
+		searchTerm,
+		fetchOneCall,
+		setSearchTerm,
+	} = props;
 	const { daily: days, timezone_offset: offset } = oneCall;
 
 	const locationToSearch = searchTerm || props.match.params.location;
 
 	useEffect(() => {
 		fetchOneCall(locationToSearch, selectedUnits.keyword);
+		setSearchTerm(locationToSearch);
 		// React complains if "fetchOneCall" is not a dependency, even do
 		// it is a function and does not change, not sure why that is
 		// required
@@ -61,6 +68,6 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { fetchOneCall })(
+export default connect(mapStateToProps, { fetchOneCall, setSearchTerm })(
 	withRouter(DailyView)
 );

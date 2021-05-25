@@ -33,6 +33,21 @@ const dark = createMuiTheme({
 			main: "#fff",
 		},
 	},
+	overrides: {
+		MuiTableCell: {
+			root: {
+				//This can be referred from Material UI API documentation.
+				padding: "12px 8px",
+			},
+		},
+		MuiTableRow: {
+			root: {
+				"&:last-child td": {
+					borderBottom: 0,
+				},
+			},
+		},
+	},
 });
 
 const blueLight = createMuiTheme({

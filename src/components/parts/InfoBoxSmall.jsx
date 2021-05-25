@@ -10,13 +10,14 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme) => ({
 	iconSize: {
 		fontSize: "1.5em",
 	},
 	listSpacing: {
-		marginLeft: -theme.spacing(1.5),
+		marginLeft: -theme.spacing(2),
 	},
 	darkTheme: {
 		opacity: "87%",
@@ -65,7 +66,6 @@ function InfoBoxSmall({
 						<Typography varaint="body1">{dataOne}</Typography>
 					</ListItemSecondaryAction>
 				</ListItem>
-
 				<ListItem>
 					<ListItemIcon
 						className={[

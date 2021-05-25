@@ -87,9 +87,19 @@ const useStyles = makeStyles((theme) => ({
 	paddingMoonrise: {
 		paddingLeft: "6px",
 	},
+	precipitation: {
+		paddingLeft: "6px",
+		fontSize: "2em",
+	},
+	paddingCloud: {
+		paddingLeft: "2px",
+	},
+	paddingSun: {
+		paddingLeft: "1px",
+	},
 }));
 
-function DailyCard({ day, timezoneOffset, selectedUnits }) {
+function DailyCard({ day, timezoneOffset, selectedUnits, searchTerm }) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 	const showShortDescription = useMediaQuery(theme.breakpoints.up("sm"));
@@ -106,7 +116,13 @@ function DailyCard({ day, timezoneOffset, selectedUnits }) {
 		feels_like: feelsLike,
 		wind_speed: windSpeed,
 		wind_deg: windDeg,
+		weather,
+		clouds,
+		pop,
+		rain,
+		uvi,
 	} = day;
+	const { description } = weather[0];
 
 	const windSpeedMod =
 		selectedUnits.type === "scientific"
@@ -267,15 +283,26 @@ function DailyCard({ day, timezoneOffset, selectedUnits }) {
 	const renderCollapseAreaSmall = () => {
 		return (
 			<Fragment>
+				<Grid item xs={12}>
+					<Typography
+						variant="h6"
+						component="p"
+						// className={classes.darkTheme}
+						style={{ opacity: "80%" }}
+					>
+						{capitalize(searchTerm)}
+						{!showShortDescription && [",", capitalize(description)].join(" ")}
+					</Typography>
+				</Grid>
 				<Grid item xs={12} sm={6}>
 					<InfoBoxSmall
 						iconOne="wi wi-thermometer-exterior"
 						iconStylingOne={classes.paddingTemp}
-						titleOne="High"
+						titleOne="Low"
 						dataOne={temp.min.toFixed(0) + selectedUnits.units.temp}
 						iconTwo="wi wi-thermometer"
 						iconStylingTwo={classes.paddingTemp}
-						titleTwo="Low"
+						titleTwo="High"
 						dataTwo={temp.max.toFixed(0) + selectedUnits.units.temp}
 					/>
 				</Grid>
@@ -288,6 +315,35 @@ function DailyCard({ day, timezoneOffset, selectedUnits }) {
 						iconStylingTwo={classes.paddingMoon}
 						titleTwo="Feels like"
 						dataTwo={feelsLike.night.toFixed(0) + selectedUnits.units.temp}
+					/>
+				</Grid>
+				<Grid item xs={12} sm={6}>
+					<InfoBoxSmall
+						iconOne="wi wi-raindrops"
+						iconStylingOne={classes.precipitation}
+						titleOne="Rain (%)"
+						dataOne={pop * 100 + selectedUnits.units.humidity}
+						iconTwo="wi wi-raindrops"
+						iconStylingTwo={classes.precipitation}
+						titleTwo="Rain"
+						dataTwo={
+							isNaN(rain)
+								? "-/--"
+								: (rain * selectedUnits.multipliers.rain).toFixed(2) +
+								  selectedUnits.units.rain
+						}
+					/>
+				</Grid>
+				<Grid item xs={12} sm={6}>
+					<InfoBoxSmall
+						iconOne="wi wi-cloud"
+						iconStylingOne={classes.paddingCloud}
+						titleOne="Cloudiness"
+						dataOne={clouds + selectedUnits.units.humidity}
+						iconTwo="wi wi-hot"
+						iconStylingTwo={classes.paddingSun}
+						titleTwo="UV Index"
+						dataTwo={uvi}
 					/>
 				</Grid>
 				<Grid item xs={12} sm={6}>
@@ -305,7 +361,7 @@ function DailyCard({ day, timezoneOffset, selectedUnits }) {
 				<Grid item xs={12} sm={6}>
 					<InfoBoxSmall
 						iconOne="wi wi-strong-wind"
-						titleOne="Wind Speed"
+						titleOne="Wind Spe."
 						dataOne={windSpeedMod + selectedUnits.units.speed}
 						iconTwo="wi wi-small-craft-advisory"
 						iconStylingTwo={classes.paddingFlag}
@@ -342,6 +398,7 @@ function DailyCard({ day, timezoneOffset, selectedUnits }) {
 	return (
 		<Card raised>
 			{renderActionArea()}
+
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<Grid container spacing={1} className={classes.collapseGrid}>
 					{/* {renderCollapseAreaLarge()} */}
@@ -355,6 +412,7 @@ function DailyCard({ day, timezoneOffset, selectedUnits }) {
 const mapStateToProps = (state) => {
 	return {
 		selectedUnits: state.units,
+		searchTerm: state.location,
 	};
 };
 
