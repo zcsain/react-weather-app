@@ -18,7 +18,12 @@ import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 
 // Custom
-import { setUnits, toggleTheme } from "../../actions";
+import {
+	setUnits,
+	toggleTheme,
+	resetCurrent,
+	resetOneCall,
+} from "../../actions";
 import { metric, imperial, scientific } from "../../actions/unitsPayload";
 
 const useStyles = makeStyles((theme) => ({
@@ -53,6 +58,8 @@ function ExpandableSettings(props) {
 
 	const handleMenuItemClick = (event, index, preferedUnits) => {
 		props.setUnits(preferedUnits);
+		props.resetCurrent();
+		props.resetOneCall();
 		setSelectedIndex(index);
 		setAnchorEl(null);
 	};
@@ -151,6 +158,9 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { setUnits, toggleTheme })(
-	ExpandableSettings
-);
+export default connect(mapStateToProps, {
+	setUnits,
+	toggleTheme,
+	resetCurrent,
+	resetOneCall,
+})(ExpandableSettings);

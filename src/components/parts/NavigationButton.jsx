@@ -17,6 +17,9 @@ import ScheduleIcon from "@material-ui/icons/Schedule";
 import TodayIcon from "@material-ui/icons/Today";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 
+// Custom
+import { resetCurrent, resetOneCall } from "../../actions";
+
 const useStyles = makeStyles((theme) => ({
 	menu: {
 		minWidth: "180px",
@@ -64,6 +67,8 @@ function NavigationButton(props) {
 	}, [url, mapNameToIndex]);
 
 	const handleMenuItemClick = (event, index) => {
+		props.resetCurrent();
+		props.resetOneCall();
 		setSelectedView(index);
 		setAnchorEl(null);
 	};
@@ -152,4 +157,6 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps)(withRouter(NavigationButton));
+export default connect(mapStateToProps, { resetCurrent, resetOneCall })(
+	withRouter(NavigationButton)
+);

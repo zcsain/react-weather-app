@@ -9,6 +9,9 @@ import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
+// Custom
+import { resetCurrent, resetOneCall } from "../../actions";
+
 const useStyles = makeStyles({
 	root: {
 		flexGrow: 1,
@@ -44,6 +47,8 @@ function NavigationTabs(props) {
 
 	// Set appropriate tab to "selected" state
 	const handleTabChange = (event, newValue) => {
+		props.resetCurrent();
+		props.resetOneCall();
 		setSelectedTab(newValue);
 	};
 
@@ -72,4 +77,6 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps)(withRouter(NavigationTabs));
+export default connect(mapStateToProps, { resetOneCall, resetCurrent })(
+	withRouter(NavigationTabs)
+);
