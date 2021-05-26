@@ -17,6 +17,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Custom
 import Header from "./navigation/Header";
 import CurrentView from "./views/CurrentView";
+import CurrentViewV2 from "./views/CurrentViewV2";
 import DailyView from "./views/DailyView";
 import HourlyView from "./views/HourlyView";
 import history from "../history";
@@ -114,6 +115,7 @@ function App(props) {
 						<Route path="/current/:location" exact>
 							{!xsDevice && <NavigationTabs />}
 							<CurrentView />
+							{/* <CurrentViewV2 /> */}
 							{xsDevice && <BottomNavigation />}
 						</Route>
 						<Route path="/daily/:location" exact>

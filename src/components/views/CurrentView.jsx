@@ -16,6 +16,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Collapse from "@material-ui/core/Collapse";
 
 // Custom
 // import Loader from "../parts/Loader";
@@ -26,6 +27,7 @@ import formatTime from "../../utils/formatTime";
 import FactsCards from "../parts/FactsCard";
 import { fetchCurrent, setSearchTerm } from "../../actions";
 import iconsMapper from "../../utils/iconsMapper";
+import InfoBoxSmall from "../parts/InfoBoxSmall";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -53,6 +55,21 @@ const useStyles = makeStyles((theme) => ({
 	},
 	iconGrow: {
 		flexGrow: 1,
+	},
+	collapseGrid: {
+		padding: theme.spacing(1),
+	},
+	paddingTemp: {
+		paddingLeft: "6px",
+	},
+	paddingHumidity: {
+		paddingLeft: "7px",
+	},
+	paddingPressure: {
+		paddingLeft: "5px",
+	},
+	paddingFlag: {
+		paddingLeft: "8px",
 	},
 }));
 
@@ -137,6 +154,63 @@ function CurrentView(props) {
 					</Typography>
 				</CardActions>
 			</Card>
+		);
+	};
+
+	const renderQuickViewCardV2 = () => {
+		const { weather, sys, main, dt, timezone } = current;
+		const { id } = weather[0];
+		const { sunrise, sunset } = sys;
+
+		const icon = iconsMapper(id, sunrise, sunset, dt, timezone);
+
+		// Check if this shows correct date for different locations
+		const date = new Date((dt + timezone) * 1000).toLocaleDateString(
+			"default",
+			{
+				month: "long",
+				day: "numeric",
+				year: "numeric",
+			}
+		);
+
+		return (
+			<CardContent className={classes.card} raised>
+				<CardHeader
+					title={`${titleCase(locationToSearch)} - Current weather`}
+					subheader={date}
+				/>
+				<CardContent>
+					<Grid container spacing={2} className={classes.container}>
+						<Grid item className={classes.iconGrow}>
+							<i className={[classes.icon, icon].join(" ")} />
+						</Grid>
+						<Grid item>
+							<Typography
+								variant="h2"
+								component="p"
+								display="inline"
+								className={classes.mainTemp}
+							>
+								{main.temp.toFixed(0)}
+							</Typography>
+							<Typography
+								variant="h3"
+								color="textSecondary"
+								display="inline"
+								className={classes.tempUnit}
+							>
+								{units.temp}
+							</Typography>
+						</Grid>
+					</Grid>
+				</CardContent>
+				<CardActions style={{ marginLeft: theme.spacing(1) }}>
+					<Typography variant="h6" component="p" color="textSecondary">
+						{weather[0].main + ", " + titleCase(weather[0].description)}
+					</Typography>
+				</CardActions>
+			</CardContent>
 		);
 	};
 
@@ -257,6 +331,77 @@ function CurrentView(props) {
 		);
 	};
 
+	const renderContent = () => {
+		const { main, wind, clouds } = current;
+		const { speed: windSpeed, deg: windDeg } = wind;
+		const { all: cloud } = clouds;
+		const {
+			feels_like: feelsLike,
+			temp_min: tempMin,
+			temp_max: tempMax,
+			pressure,
+			humidity,
+		} = main;
+
+		const windSpeedMod =
+			selectedUnits.type === "scientific"
+				? windSpeed
+				: (windSpeed * selectedUnits.multipliers.speed).toFixed(0);
+		const windDir =
+			selectedUnits.type === "scientific" ? windDeg : degToCompasDir(windDeg);
+
+		return (
+			<Grid container spacing={1} className={classes.collapseGrid}>
+				<Grid item xs={12} sm={6}>
+					<InfoBoxSmall
+						iconOne="wi wi-thermometer-exterior"
+						iconStylingOne={classes.paddingTemp}
+						titleOne="Low"
+						dataOne={tempMin.toFixed(0) + selectedUnits.units.temp}
+						iconTwo="wi wi-thermometer"
+						iconStylingTwo={classes.paddingTemp}
+						titleTwo="High"
+						dataTwo={tempMax.toFixed(0) + selectedUnits.units.temp}
+					/>
+				</Grid>
+				<Grid item xs={12} sm={6}>
+					<InfoBoxSmall
+						iconOne="wi wi-raindrop"
+						iconStylingOne={classes.paddingHumidity}
+						titleOne="Humidity"
+						dataOne={humidity + selectedUnits.units.humidity}
+						iconTwo="wi wi-barometer"
+						iconStylingTwo={classes.paddingPressure}
+						titleTwo="Pressure"
+						dataTwo={pressure + selectedUnits.units.pressure}
+					/>
+				</Grid>
+				<Grid item xs={12} sm={6}>
+					<InfoBoxSmall
+						iconOne="wi wi-strong-wind"
+						titleOne="Wind Spe."
+						dataOne={windSpeedMod + selectedUnits.units.speed}
+						iconTwo="wi wi-small-craft-advisory"
+						iconStylingTwo={classes.paddingFlag}
+						titleTwo="Wind Dir."
+						dataTwo={windDir + selectedUnits.units.wind}
+					/>
+				</Grid>
+				<Grid item xs={12} sm={6}>
+					<InfoBoxSmall
+						iconOne="wi wi-day-sunny"
+						titleOne="Feels like"
+						dataOne={feelsLike.toFixed(0) + selectedUnits.units.temp}
+						iconTwo="wi wi-cloud"
+						iconStylingTwo={classes.paddingCloud}
+						titleTwo="Cloudiness"
+						dataTwo={cloud + selectedUnits.units.humidity}
+					/>
+				</Grid>
+			</Grid>
+		);
+	};
+
 	return (
 		<React.Fragment>
 			{Object.keys(props.current).length === 0 ? (
@@ -266,6 +411,7 @@ function CurrentView(props) {
 					<Grid container item direction="column" spacing={2} sm={8}>
 						<Grid item>{renderQuickViewCard()}</Grid>
 						<Grid item>{renderInfoCard()}</Grid>
+						{/* {renderContent()} */}
 						<Grid item>{renderWindTable()}</Grid>
 						<Grid item>{renderSunsetTable()}</Grid>
 					</Grid>
