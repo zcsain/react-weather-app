@@ -22,9 +22,9 @@ function DateTimeBadge({ dt, timezoneOffset, viewType, selectedUnits }) {
 	const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 	const date = new Date((dt + timezoneOffset) * 1000);
 	const hours = date.getUTCHours();
-	console.log("NO OFFSET", new Date(dt * 1000).getHours());
-	console.log("SOMETHING", new Date((dt + timezoneOffset) * 1000).getHours());
-	console.log("UTC", new Date((dt + timezoneOffset) * 1000).getUTCHours());
+	// console.log("NO OFFSET", new Date(dt * 1000).getHours());
+	// console.log("SOMETHING", new Date((dt + timezoneOffset) * 1000).getHours());
+	// console.log("UTC", new Date((dt + timezoneOffset) * 1000).getUTCHours());
 	const { num, text } = formatHours(hours, selectedUnits.type, ":00");
 	const dayOfWeek = weekDays[date.getUTCDay()];
 	const dayOfMonth = date.getUTCDate();

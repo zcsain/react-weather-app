@@ -2,11 +2,11 @@ import createLocalDate from "./createLocalDate";
 
 const hoursWithSunriseSunsetData = (hours, sunriseSunsetData, offset) => {
 	return hours.map((hour) => {
-		const dtDay = createLocalDate(hour.dt, offset).getUTCDate();
+		const dtDay = createLocalDate(hour.dt, offset).getDate();
 		// const dtDay = new Date(hour.dt * 1000).getDate();
 
 		for (const element of sunriseSunsetData) {
-			const sunriseDay = createLocalDate(element.sunrise, offset).getUTCDate();
+			const sunriseDay = createLocalDate(element.sunrise, offset).getDate();
 			// const sunriseDay = new Date(element.sunrise * 1000).getDate();
 
 			if (dtDay === sunriseDay) {
