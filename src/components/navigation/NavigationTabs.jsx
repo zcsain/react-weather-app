@@ -33,11 +33,11 @@ function NavigationTabs(props) {
 	const linkSource = searchTerm || match.params.location;
 	var currentLink = `/current/${linkSource}`;
 	var dailyLink = `/daily/${linkSource}`;
-	// var hourlLink;
+	var hourlLink = `/hourly/${linkSource}`;
 	var mapNameToIndex = {
 		[currentLink]: 0,
 		[dailyLink]: 1,
-		"/hourly": 2,
+		[hourlLink]: 2,
 	};
 
 	const [selectedTab, setSelectedTab] = useState(mapNameToIndex[url]);
@@ -60,7 +60,7 @@ function NavigationTabs(props) {
 				{/* <Tab label="Current" component={RouterLink} to="/current/Zagreb" /> */}
 				<Tab label="Current" component={RouterLink} to={currentLink} />
 				<Tab label="Daily" component={RouterLink} to={dailyLink} />
-				<Tab label="Hourly" component={RouterLink} to="/hourly" />
+				<Tab label="Hourly" component={RouterLink} to={hourlLink} />
 			</Tabs>
 		</Box>
 	);

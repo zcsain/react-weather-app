@@ -9,6 +9,7 @@ import {
 } from "./types";
 import history from "../history";
 import openWeather from "../apis/openWeather";
+import modifyOneCall from "../utils/modifyOneCall";
 
 export const fetchCurrent = (location, units, lang = "en") => {
 	return async (dispatch) => {
@@ -74,7 +75,11 @@ export const fetchOneCall = (location, units, lang = "en") => {
 				lang: lang,
 			});
 
-			dispatch({ type: ONECALL_REQUEST, payload: response.data });
+			dispatch({
+				type: ONECALL_REQUEST,
+				// Adds "sunrise, sunset" timestamps to "hourly" weather predictions
+				payload: modifyOneCall(response.data),
+			});
 		} catch (error) {
 			if (error.response) {
 				// Request made and server responded

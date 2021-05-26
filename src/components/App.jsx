@@ -18,11 +18,11 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Header from "./navigation/Header";
 import CurrentView from "./views/CurrentView";
 import DailyView from "./views/DailyView";
+import HourlyView from "./views/HourlyView";
 import history from "../history";
 import SearchField from "./parts/HomeSearchField";
 import NavigationTabs from "./navigation/NavigationTabs";
 import BottomNavigation from "./navigation/BottomNavigation";
-import NavigationButton from "./parts/NavigationButton";
 import ErrorView from "./views/ErrorView";
 
 const dark = createMuiTheme({
@@ -106,11 +106,12 @@ function App(props) {
 						{/* If no location is provide redirect to home */}
 						<Redirect exact from="/current" to="/" />
 						<Redirect exact from="/daily" to="/" />
+						<Redirect exact from="/hourly" to="/" />
 						<Route path="/" exact>
 							<SearchField />
 						</Route>
+						{/* Tthere is definitely a better way to do this, then repeating components for each route */}
 						<Route path="/current/:location" exact>
-							{/* Tthere is definitely a better way to do this, then repeating components for each route */}
 							{!xsDevice && <NavigationTabs />}
 							<CurrentView />
 							{xsDevice && <BottomNavigation />}
@@ -120,13 +121,10 @@ function App(props) {
 							<DailyView />
 							{xsDevice && <BottomNavigation />}
 						</Route>
-						<Route path="/hourly" exact>
+						<Route path="/hourly/:location" exact>
 							{!xsDevice && <NavigationTabs />}
-							Hourly
+							<HourlyView />
 							{xsDevice && <BottomNavigation />}
-						</Route>
-						<Route path="/button" exact>
-							<NavigationButton />
 						</Route>
 						<Route>
 							<Grid

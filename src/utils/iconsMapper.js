@@ -1,8 +1,9 @@
 import openWeatherIconsMap from "./openWeatherIconsMap.json";
+import createLocalDate from "./createLocalDate";
 
-const createLocalDate = (timestamp, offset) => {
-	return new Date((timestamp + offset) * 1000);
-};
+// export const createLocalDate = (timestamp, offset) => {
+// 	return new Date((timestamp + offset) * 1000);
+// };
 
 const getIcon = (id) => {
 	return openWeatherIconsMap[id.toString()];

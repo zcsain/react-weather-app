@@ -91,11 +91,14 @@ function CurrentView(props) {
 		const icon = iconsMapper(id, sunrise, sunset, dt, timezone);
 
 		// Check if this shows correct date for different locations
-		const date = new Date(dt * 1000).toLocaleDateString("default", {
-			month: "long",
-			day: "numeric",
-			year: "numeric",
-		});
+		const date = new Date((dt + timezone) * 1000).toLocaleDateString(
+			"default",
+			{
+				month: "long",
+				day: "numeric",
+				year: "numeric",
+			}
+		);
 
 		return (
 			<Card className={classes.card} raised>

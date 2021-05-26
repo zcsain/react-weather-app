@@ -37,7 +37,7 @@ function NavigationButton(props) {
 	const linkSource = searchTerm || match.params.location;
 	var currentLink = `/current/${linkSource}`;
 	var dailyLink = `/daily/${linkSource}`;
-	// var hourlyLink = `/hourly/${linkSource}`;
+	var hourlyLink = `/hourly/${linkSource}`;
 	// const options = ["Current", "Daily", "Hourly"];
 	const iconOptions = [<TodayIcon />, <EventNoteIcon />, <ScheduleIcon />];
 
@@ -45,11 +45,9 @@ function NavigationButton(props) {
 		return {
 			[currentLink]: 0,
 			[dailyLink]: 1,
-			"/hourly": 2,
+			[hourlyLink]: 2,
 		};
-	}, [currentLink, dailyLink]);
-
-	console.log(mapNameToIndex);
+	}, [currentLink, dailyLink, hourlyLink]);
 
 	const [selectedView, setSelectedView] = useState(mapNameToIndex[url]);
 
@@ -134,7 +132,7 @@ function NavigationButton(props) {
 					<MenuItem
 						onClick={(event) => handleMenuItemClick(event, 2)}
 						component={RouterLink}
-						to="/hourly"
+						to={hourlyLink}
 						selected={2 === selectedView}
 					>
 						<ListItemIcon>
