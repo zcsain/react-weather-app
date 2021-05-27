@@ -99,7 +99,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function DailyCard({ day, timezoneOffset, selectedUnits, searchTerm }) {
+function DailyCard({
+	day,
+	timezoneOffset,
+	timezone,
+	selectedUnits,
+	searchTerm,
+}) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 	const showShortDescription = useMediaQuery(theme.breakpoints.up("sm"));

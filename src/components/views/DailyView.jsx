@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import { DateTime } from "luxon";
 
 // Material UI
 import { useTheme } from "@material-ui/core/styles";
@@ -24,7 +25,7 @@ function DailyView(props) {
 		fetchOneCall,
 		setSearchTerm,
 	} = props;
-	const { daily: days, timezone_offset: offset } = oneCall;
+	const { daily: days, timezone_offset: offset, timezone } = oneCall;
 
 	const locationToSearch = searchTerm || props.match.params.location;
 
@@ -45,7 +46,11 @@ function DailyView(props) {
 					<Grid container item direction="column" spacing={2} sm={8}>
 						{days.map((day) => (
 							<Grid item key={day.dt}>
-								<DailyCard day={day} timezoneOffset={offset} />
+								<DailyCard
+									day={day}
+									timezoneOffset={offset}
+									timezone={timezone}
+								/>
 							</Grid>
 						))}
 					</Grid>

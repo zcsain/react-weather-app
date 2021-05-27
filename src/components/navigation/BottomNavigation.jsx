@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import { useTheme } from "@material-ui/core/styles";
@@ -40,6 +41,14 @@ function BottomNavigation(props) {
 						<Grid item>
 							<NavigationButton />
 						</Grid>
+						{/* <Grid item>
+							<TextField
+								id="search-field"
+								label="Search"
+								variant="filled"
+								margin="dense"
+							/>
+						</Grid> */}
 
 						<Grid item>
 							<IconButton color="inherit">
