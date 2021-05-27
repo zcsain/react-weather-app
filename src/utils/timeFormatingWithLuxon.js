@@ -51,6 +51,19 @@ export const getTime = (timestamp, timezone, unitsType) => {
  *
  * @param {number} timestamp Timestamp, unix, UTC
  * @param {string} timezone Target timezone name (e.g. "Europe/Paris")
+ * @returns {string} Hours in short format (e.g. "2 AM", "5 PM")
+ */
+
+export const getShortTime = (timestamp, timezone) => {
+	const time = setTime(timestamp, timezone);
+
+	return time.toFormat("h a");
+};
+
+/**
+ *
+ * @param {number} timestamp Timestamp, unix, UTC
+ * @param {string} timezone Target timezone name (e.g. "Europe/Paris")
  * @param {string} unitsType Selected units name (e.g. "metric")
  * @returns {string} Date representation based on the selected units (metric/scientific: "day/month", imperial: "month/day")
  */
