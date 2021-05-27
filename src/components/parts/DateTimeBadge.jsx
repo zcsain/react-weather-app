@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 
 // Material UI
 import Grid from "@material-ui/core/Grid";
@@ -8,7 +7,12 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 // Custom
-import formatHours from "../../utils/formatHours";
+import {
+	shortDayOfWeek,
+	getTime,
+	getShortTime,
+	getDate,
+} from "../../utils/timeFormatingWithLuxon";
 
 const useStyles = makeStyles((theme) => ({
 	chip: {
@@ -16,37 +20,21 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function DateTimeBadge({ dt, timezoneOffset, viewType, selectedUnits }) {
+function DateTimeBadge({ dt, timezone, viewType, unitsType }) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
-	const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-	const date = new Date((dt + timezoneOffset) * 1000);
-	const hours = date.getUTCHours();
-	// console.log("NO OFFSET", new Date(dt * 1000).getHours());
-	// console.log("SOMETHING", new Date((dt + timezoneOffset) * 1000).getHours());
-	// console.log("UTC", new Date((dt + timezoneOffset) * 1000).getUTCHours());
-	const { num, text } = formatHours(hours, selectedUnits.type, ":00");
-	const dayOfWeek = weekDays[date.getUTCDay()];
-	const dayOfMonth = date.getUTCDate();
-	const month = date.getUTCMonth();
 
 	const displayDayOfWeekOrTime = () => {
 		switch (viewType) {
 			case "hourly":
-				return num + text;
+				return unitsType === "imperial"
+					? getShortTime(dt, timezone, unitsType)
+					: getTime(dt, timezone, unitsType);
 			case "daily":
-				return dayOfWeek;
+				return shortDayOfWeek(dt, timezone).toUpperCase();
 			default:
 				return NaN;
 		}
-	};
-
-	const selectDateFormat = () => {
-		if (selectedUnits.type === "imperial") {
-			return `${month}/${dayOfMonth}`;
-		}
-
-		return `${dayOfMonth}/${month}`;
 	};
 
 	return (
@@ -55,16 +43,13 @@ function DateTimeBadge({ dt, timezoneOffset, viewType, selectedUnits }) {
 				<Chip label={displayDayOfWeekOrTime()} className={classes.chip} />
 			</Grid>
 			<Grid item>
-				<Typography color="textSecondary">{selectDateFormat()}</Typography>
+				{/* <Typography color="textSecondary">{selectDateFormat()}</Typography> */}
+				<Typography color="textSecondary">
+					{getDate(dt, timezone, unitsType)}
+				</Typography>
 			</Grid>
 		</Grid>
 	);
 }
 
-const mapStateToProps = (state) => {
-	return {
-		selectedUnits: state.units,
-	};
-};
-
-export default connect(mapStateToProps)(DateTimeBadge);
+export default DateTimeBadge;
