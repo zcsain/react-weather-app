@@ -39,10 +39,10 @@ const useStyles = makeStyles((theme) => ({
 		opacity: "93%",
 	},
 	temp: {
-		minWidth: "60px",
+		minWidth: "85px",
 	},
 	scientific: {
-		minWidth: "75px",
+		minWidth: "105px",
 	},
 	description: {
 		[theme.breakpoints.up("sm")]: {
