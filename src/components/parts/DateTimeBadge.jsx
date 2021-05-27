@@ -43,7 +43,6 @@ function DateTimeBadge({ dt, timezone, viewType, unitsType }) {
 				<Chip label={displayDayOfWeekOrTime()} className={classes.chip} />
 			</Grid>
 			<Grid item>
-				{/* <Typography color="textSecondary">{selectDateFormat()}</Typography> */}
 				<Typography color="textSecondary">
 					{getDate(dt, timezone, unitsType)}
 				</Typography>
