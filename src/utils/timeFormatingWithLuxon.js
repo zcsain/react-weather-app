@@ -10,7 +10,7 @@ import { METRIC, IMPERIAL, SCIENTIFIC } from "./types";
  * @returns Luxon time object, with target timezone
  */
 
-const setTime = (timestamp, timezone) => {
+export const setTime = (timestamp, timezone) => {
 	return DateTime.fromSeconds(timestamp, { zone: timezone });
 };
 
@@ -41,9 +41,10 @@ export const getTime = (timestamp, timezone, unitsType) => {
 
 	switch (unitsType) {
 		case IMPERIAL:
-			return time.toLocaleString(DateTime.TIME_SIMPLE);
+			return time.toFormat("h:mm a");
+		// return time.toLocaleString(DateTime.TIME_SIMPLE);
 		default:
-			return time.toFormat("HH:mm");
+			return time.toFormat("H:mm");
 		// There is a bug in some browsers that formats 00:xx as 24:xx when
 		// using .TIME_24_SIMPLE, .toFormat used as workaround
 		// read more here: https://github.com/moment/luxon/issues/726
