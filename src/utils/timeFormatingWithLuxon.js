@@ -33,7 +33,7 @@ export const shortDayOfWeek = (timestamp, timezone) => {
  * @param {number} timestamp Timestamp, unix, UTC
  * @param {string} timezone Target timezone name (e.g. "Europe/Paris")
  * @param {string} unitsType Selected units name (e.g. "metric")
- * @returns {string} Hour and minute representation of time based on the selected units (e.g. "20:32" for metric/scientific, "8:32" for imperial)
+ * @returns {string} Hour and minute representation of time based on the selected units (e.g. "20:32" for metric/scientific, "8:32 PM" for imperial)
  */
 
 export const getTime = (timestamp, timezone, unitsType) => {
