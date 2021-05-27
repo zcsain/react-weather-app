@@ -10,19 +10,15 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import Collapse from "@material-ui/core/Collapse";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Tooltip from "@material-ui/core/Tooltip";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // Custom
 import DateTimeBadge from "../parts/DateTimeBadge";
 import capitalize from "../../utils/capitalize";
-import iconsMapper from "../../utils/iconsMapper";
-import formatTime from "../../utils/formatTime";
+import iconsMapperLuxon from "../../utils/iconsMapperLuxon";
 import degToCompasDir from "../../utils/degToCompasDir";
-import InfoBoxLarge from "../parts/InfoBoxLarge";
 import InfoBoxSmall from "../parts/InfoBoxSmall";
-import createLocalDate from "../../utils/createLocalDate";
 
 const useStyles = makeStyles((theme) => ({
 	collapseGrid: {
@@ -90,13 +86,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function HourlyCard({
-	hour,
-	timezoneOffset,
-	sunriseData,
-	selectedUnits,
-	searchTerm,
-}) {
+function HourlyCard({ hour, timezone, selectedUnits, searchTerm }) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 	const showShortDescription = useMediaQuery(theme.breakpoints.up("sm"));
@@ -112,7 +102,8 @@ function HourlyCard({
 	const renderActionArea = () => {
 		const { dt, weather, sunrise, sunset, temp } = hour;
 		const { id, description } = weather[0];
-		const icon = iconsMapper(id, sunrise, sunset, dt, timezoneOffset);
+		const icon = iconsMapperLuxon(id, sunrise, sunset, dt, timezone);
+		// const icon = iconsMapper(id, sunrise, sunset, dt, timezoneOffset);
 
 		// Scientific temp view minWidth correction
 		const minWidth =
@@ -125,8 +116,9 @@ function HourlyCard({
 						<Grid item>
 							<DateTimeBadge
 								dt={dt}
-								timezoneOffset={timezoneOffset}
+								timezone={timezone}
 								viewType="hourly"
+								unitsType={selectedUnits.type}
 							/>
 						</Grid>
 						<Grid item className={classes.iconContainer}>

@@ -1,5 +1,4 @@
 import openWeatherIconsMap from "./openWeatherIconsMap.json";
-import createLocalDate from "./createLocalDate";
 import { setTime } from "./timeFormatingWithLuxon";
 
 const getIcon = (id) => {
@@ -21,13 +20,18 @@ const iconsMapperLuxon = (id, sunrise, sunset, timestamp, timezone) => {
 	const dateOrigin = setTime(timestamp, timezone);
 	const sunriseOrigin = setTime(sunrise, timezone);
 	const sunsetOrigin = setTime(sunset, timezone);
-	const iconObject = getIcon(id);
+	var iconObject = getIcon(id);
 	var infix;
 
 	if (dateOrigin > sunriseOrigin && dateOrigin < sunsetOrigin) {
 		infix = "day-";
 	} else if (dateOrigin > sunsetOrigin || dateOrigin < sunriseOrigin) {
-		infix = "night-";
+		infix = "night-alt-";
+
+		if (id === 800) {
+			iconObject = { label: "night cloudy", icon: "clear" };
+			infix = "night-";
+		}
 	}
 
 	return ["wi ", "wi-", infix, iconObject.icon].join("");

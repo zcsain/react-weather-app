@@ -9,7 +9,6 @@ import Grid from "@material-ui/core/Grid";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // Custom
-// import Loader from "../parts/Loader";
 import Backdrop from "../parts/Backdrop";
 import FactsCards from "../parts/FactsCard";
 import { fetchOneCall, setSearchTerm } from "../../actions";
@@ -25,7 +24,7 @@ function DailyView(props) {
 		fetchOneCall,
 		setSearchTerm,
 	} = props;
-	const { daily: days, timezone_offset: offset, timezone } = oneCall;
+	const { daily: days, timezone } = oneCall;
 
 	const locationToSearch = searchTerm || props.match.params.location;
 
@@ -46,11 +45,7 @@ function DailyView(props) {
 					<Grid container item direction="column" spacing={2} sm={8}>
 						{days.map((day) => (
 							<Grid item key={day.dt}>
-								<DailyCard
-									day={day}
-									timezoneOffset={offset}
-									timezone={timezone}
-								/>
+								<DailyCard day={day} timezone={timezone} />
 							</Grid>
 						))}
 					</Grid>

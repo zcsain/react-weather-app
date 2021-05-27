@@ -12,7 +12,6 @@ import Backdrop from "../parts/Backdrop";
 import FactsCards from "../parts/FactsCard";
 import { fetchOneCall, setSearchTerm } from "../../actions";
 import HourlyCard from "../cards/HourlyCard";
-import hoursWithSunriseSunsetData from "../../utils/hoursWithSunriseSunsetData";
 
 function HourlyView({
 	oneCall,
@@ -24,7 +23,7 @@ function HourlyView({
 }) {
 	const theme = useTheme();
 	const showFacts = useMediaQuery(theme.breakpoints.up("sm"));
-	const { hourly: hours, timezone_offset: offset } = oneCall;
+	const { hourly: hours, timezone } = oneCall;
 
 	const locationToSearch = searchTerm || match.params.location;
 
@@ -42,7 +41,7 @@ function HourlyView({
 					<Grid container item direction="column" spacing={2} sm={8}>
 						{hours.map((hour) => (
 							<Grid item key={hour.dt}>
-								<HourlyCard hour={hour} timezoneOffset={offset} />
+								<HourlyCard hour={hour} timezone={timezone} />
 							</Grid>
 						))}
 					</Grid>

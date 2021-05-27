@@ -17,11 +17,10 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Custom
 import DateTimeBadge from "./DateTimeBadge";
 import capitalize from "../../utils/capitalize";
-import iconsMapper from "../../utils/iconsMapper";
-import formatTime from "../../utils/formatTime";
+import iconsMapperLuxon from "../../utils/iconsMapperLuxon";
 import degToCompasDir from "../../utils/degToCompasDir";
-import InfoBoxLarge from "./InfoBoxLarge";
 import InfoBoxSmall from "./InfoBoxSmall";
+import { getTime } from "../../utils/timeFormatingWithLuxon";
 
 const useStyles = makeStyles((theme) => ({
 	expand: {
@@ -99,13 +98,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function DailyCard({
-	day,
-	timezoneOffset,
-	timezone,
-	selectedUnits,
-	searchTerm,
-}) {
+function DailyCard({ day, timezone, selectedUnits, searchTerm }) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 	const showShortDescription = useMediaQuery(theme.breakpoints.up("sm"));
@@ -130,6 +123,7 @@ function DailyCard({
 	} = day;
 	const { description } = weather[0];
 
+	// Wind info correction (should move this to its own function)
 	const windSpeedMod =
 		selectedUnits.type === "scientific"
 			? windSpeed
@@ -149,7 +143,7 @@ function DailyCard({
 		const { dt, weather } = day;
 		const { id, description } = weather[0];
 		const { day: dayTemp, night: nightTemp } = temp;
-		const icon = iconsMapper(id, sunrise, sunset, dt, timezoneOffset);
+		const icon = iconsMapperLuxon(id, sunrise, sunset, dt, timezone);
 
 		// Scientific temp view minWidth correction
 		const minWidth =
@@ -162,8 +156,9 @@ function DailyCard({
 						<Grid item>
 							<DateTimeBadge
 								dt={dt}
-								timezoneOffset={timezoneOffset}
+								timezone={timezone}
 								viewType="daily"
+								unitsType={selectedUnits.type}
 							/>
 						</Grid>
 						<Grid item className={classes.iconContainer}>
@@ -211,206 +206,128 @@ function DailyCard({
 		);
 	};
 
-	const renderCollapseAreaLarge = () => {
+	const renderCollapseArea = () => {
 		return (
-			<Fragment>
-				<Grid item xs={6} sm={4}>
-					<InfoBoxLarge
-						iconOne="wi wi-thermometer-exterior"
-						iconStylingOne={classes.paddingTemp}
-						titleOne="High"
-						dataOne={temp.min.toFixed(0) + selectedUnits.units.temp}
-						iconTwo="wi wi-thermometer"
-						iconStylingTwo={classes.paddingTemp}
-						titleTwo="Low"
-						dataTwo={temp.max.toFixed(0) + selectedUnits.units.temp}
-					/>
+			<Collapse in={expanded} timeout="auto" unmountOnExit>
+				<Grid container spacing={1} className={classes.collapseGrid}>
+					<Grid item xs={12}>
+						<Typography
+							variant="h6"
+							component="p"
+							// className={classes.darkTheme}
+							style={{ opacity: "80%" }}
+						>
+							{capitalize(searchTerm)}
+							{!showShortDescription &&
+								[",", capitalize(description)].join(" ")}
+						</Typography>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<InfoBoxSmall
+							iconOne="wi wi-thermometer-exterior"
+							iconStylingOne={classes.paddingTemp}
+							titleOne="Low"
+							dataOne={temp.min.toFixed(0) + selectedUnits.units.temp}
+							iconTwo="wi wi-thermometer"
+							iconStylingTwo={classes.paddingTemp}
+							titleTwo="High"
+							dataTwo={temp.max.toFixed(0) + selectedUnits.units.temp}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<InfoBoxSmall
+							iconOne="wi wi-day-sunny"
+							titleOne="Feels like"
+							dataOne={feelsLike.day.toFixed(0) + selectedUnits.units.temp}
+							iconTwo="wi wi-night-clear"
+							iconStylingTwo={classes.paddingMoon}
+							titleTwo="Feels like"
+							dataTwo={feelsLike.night.toFixed(0) + selectedUnits.units.temp}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<InfoBoxSmall
+							iconOne="wi wi-raindrops"
+							iconStylingOne={classes.precipitation}
+							titleOne="Rain (%)"
+							dataOne={pop * 100 + selectedUnits.units.humidity}
+							iconTwo="wi wi-raindrops"
+							iconStylingTwo={classes.precipitation}
+							titleTwo="Rain"
+							dataTwo={
+								isNaN(rain)
+									? "-/--"
+									: (rain * selectedUnits.multipliers.rain).toFixed(2) +
+									  selectedUnits.units.rain
+							}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<InfoBoxSmall
+							iconOne="wi wi-cloud"
+							iconStylingOne={classes.paddingCloud}
+							titleOne="Cloudiness"
+							dataOne={clouds + selectedUnits.units.humidity}
+							iconTwo="wi wi-hot"
+							iconStylingTwo={classes.paddingSun}
+							titleTwo="UV Index"
+							dataTwo={uvi}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<InfoBoxSmall
+							iconOne="wi wi-raindrop"
+							iconStylingOne={classes.paddingHumidity}
+							titleOne="Humidity"
+							dataOne={humidity + selectedUnits.units.humidity}
+							iconTwo="wi wi-barometer"
+							iconStylingTwo={classes.paddingPressure}
+							titleTwo="Pressure"
+							dataTwo={pressure + selectedUnits.units.pressure}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<InfoBoxSmall
+							iconOne="wi wi-strong-wind"
+							titleOne="Wind Spe."
+							dataOne={windSpeedMod + selectedUnits.units.speed}
+							iconTwo="wi wi-small-craft-advisory"
+							iconStylingTwo={classes.paddingFlag}
+							titleTwo="Wind Dir."
+							dataTwo={windDir + selectedUnits.units.wind}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<InfoBoxSmall
+							iconOne="wi wi-sunrise"
+							titleOne="Sunrise"
+							dataOne={getTime(sunrise, timezone, selectedUnits.type)}
+							iconTwo="wi wi-sunset"
+							titleTwo="Sunset"
+							dataTwo={getTime(sunset, timezone, selectedUnits.type)}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<InfoBoxSmall
+							iconOne="wi wi-moonrise"
+							iconStylingOne={classes.paddingMoonrise}
+							titleOne="Moonrise"
+							dataOne={getTime(moonrise, timezone, selectedUnits.type)}
+							iconTwo="wi wi-moonset"
+							iconStylingTwo={classes.paddingMoonrise}
+							titleTwo="Moonset"
+							dataTwo={getTime(moonset, timezone, selectedUnits.type)}
+						/>
+					</Grid>
 				</Grid>
-				<Grid item xs={6} sm={4}>
-					<InfoBoxLarge
-						iconOne="wi wi-day-sunny"
-						titleOne="Feels like"
-						dataOne={feelsLike.day.toFixed(0) + selectedUnits.units.temp}
-						iconTwo="wi wi-night-clear"
-						iconStylingTwo={classes.paddingMoon}
-						titleTwo="Feels like"
-						dataTwo={feelsLike.night.toFixed(0) + selectedUnits.units.temp}
-					/>
-				</Grid>
-				<Grid item xs={6} sm={4}>
-					<InfoBoxLarge
-						iconOne="wi wi-raindrop"
-						iconStylingOne={classes.paddingHumidity}
-						titleOne="Humidity"
-						dataOne={humidity + selectedUnits.units.humidity}
-						iconTwo="wi wi-barometer"
-						iconStylingTwo={classes.paddingPressure}
-						titleTwo="Pressure"
-						dataTwo={pressure + selectedUnits.units.pressure}
-					/>
-				</Grid>
-				<Grid item xs={6} sm={4}>
-					<InfoBoxLarge
-						iconOne="wi wi-strong-wind"
-						titleOne="Wind Speed"
-						dataOne={windSpeedMod + selectedUnits.units.speed}
-						iconTwo="wi wi-small-craft-advisory"
-						iconStylingTwo={classes.paddingFlag}
-						titleTwo="Wind Dir."
-						dataTwo={windDir + selectedUnits.units.wind}
-					/>
-				</Grid>
-				<Grid item xs={6} sm={4}>
-					<InfoBoxLarge
-						iconOne="wi wi-sunrise"
-						titleOne="Sunrise"
-						dataOne={formatTime(sunrise, timezoneOffset, selectedUnits.type)}
-						iconTwo="wi wi-sunset"
-						titleTwo="Sunset"
-						dataTwo={formatTime(sunset, timezoneOffset, selectedUnits.type)}
-					/>
-				</Grid>
-				<Grid item xs={6} sm={4}>
-					<InfoBoxLarge
-						iconOne="wi wi-moonrise"
-						iconStylingOne={classes.paddingMoonrise}
-						titleOne="Moonrise"
-						dataOne={formatTime(moonrise, timezoneOffset, selectedUnits.type)}
-						iconTwo="wi wi-moonset"
-						iconStylingTwo={classes.paddingMoonrise}
-						titleTwo="Moonset"
-						dataTwo={formatTime(moonset, timezoneOffset, selectedUnits.type)}
-					/>
-				</Grid>
-			</Fragment>
-		);
-	};
-
-	const renderCollapseAreaSmall = () => {
-		return (
-			<Fragment>
-				<Grid item xs={12}>
-					<Typography
-						variant="h6"
-						component="p"
-						// className={classes.darkTheme}
-						style={{ opacity: "80%" }}
-					>
-						{capitalize(searchTerm)}
-						{!showShortDescription && [",", capitalize(description)].join(" ")}
-					</Typography>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<InfoBoxSmall
-						iconOne="wi wi-thermometer-exterior"
-						iconStylingOne={classes.paddingTemp}
-						titleOne="Low"
-						dataOne={temp.min.toFixed(0) + selectedUnits.units.temp}
-						iconTwo="wi wi-thermometer"
-						iconStylingTwo={classes.paddingTemp}
-						titleTwo="High"
-						dataTwo={temp.max.toFixed(0) + selectedUnits.units.temp}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<InfoBoxSmall
-						iconOne="wi wi-day-sunny"
-						titleOne="Feels like"
-						dataOne={feelsLike.day.toFixed(0) + selectedUnits.units.temp}
-						iconTwo="wi wi-night-clear"
-						iconStylingTwo={classes.paddingMoon}
-						titleTwo="Feels like"
-						dataTwo={feelsLike.night.toFixed(0) + selectedUnits.units.temp}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<InfoBoxSmall
-						iconOne="wi wi-raindrops"
-						iconStylingOne={classes.precipitation}
-						titleOne="Rain (%)"
-						dataOne={pop * 100 + selectedUnits.units.humidity}
-						iconTwo="wi wi-raindrops"
-						iconStylingTwo={classes.precipitation}
-						titleTwo="Rain"
-						dataTwo={
-							isNaN(rain)
-								? "-/--"
-								: (rain * selectedUnits.multipliers.rain).toFixed(2) +
-								  selectedUnits.units.rain
-						}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<InfoBoxSmall
-						iconOne="wi wi-cloud"
-						iconStylingOne={classes.paddingCloud}
-						titleOne="Cloudiness"
-						dataOne={clouds + selectedUnits.units.humidity}
-						iconTwo="wi wi-hot"
-						iconStylingTwo={classes.paddingSun}
-						titleTwo="UV Index"
-						dataTwo={uvi}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<InfoBoxSmall
-						iconOne="wi wi-raindrop"
-						iconStylingOne={classes.paddingHumidity}
-						titleOne="Humidity"
-						dataOne={humidity + selectedUnits.units.humidity}
-						iconTwo="wi wi-barometer"
-						iconStylingTwo={classes.paddingPressure}
-						titleTwo="Pressure"
-						dataTwo={pressure + selectedUnits.units.pressure}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<InfoBoxSmall
-						iconOne="wi wi-strong-wind"
-						titleOne="Wind Spe."
-						dataOne={windSpeedMod + selectedUnits.units.speed}
-						iconTwo="wi wi-small-craft-advisory"
-						iconStylingTwo={classes.paddingFlag}
-						titleTwo="Wind Dir."
-						dataTwo={windDir + selectedUnits.units.wind}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<InfoBoxSmall
-						iconOne="wi wi-sunrise"
-						titleOne="Sunrise"
-						dataOne={formatTime(sunrise, timezoneOffset, selectedUnits.type)}
-						iconTwo="wi wi-sunset"
-						titleTwo="Sunset"
-						dataTwo={formatTime(sunset, timezoneOffset, selectedUnits.type)}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<InfoBoxSmall
-						iconOne="wi wi-moonrise"
-						iconStylingOne={classes.paddingMoonrise}
-						titleOne="Moonrise"
-						dataOne={formatTime(moonrise, timezoneOffset, selectedUnits.type)}
-						iconTwo="wi wi-moonset"
-						iconStylingTwo={classes.paddingMoonrise}
-						titleTwo="Moonset"
-						dataTwo={formatTime(moonset, timezoneOffset, selectedUnits.type)}
-					/>
-				</Grid>
-			</Fragment>
+			</Collapse>
 		);
 	};
 
 	return (
 		<Card raised>
 			{renderActionArea()}
-
-			<Collapse in={expanded} timeout="auto" unmountOnExit>
-				<Grid container spacing={1} className={classes.collapseGrid}>
-					{/* {renderCollapseAreaLarge()} */}
-					{renderCollapseAreaSmall()}
-				</Grid>
-			</Collapse>
+			{renderCollapseArea()}
 		</Card>
 	);
 }

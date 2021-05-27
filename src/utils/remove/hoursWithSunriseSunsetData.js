@@ -1,4 +1,4 @@
-import createLocalDate from "./createLocalDate";
+import createLocalDate from "../createLocalDate";
 
 const hoursWithSunriseSunsetData = (hours, sunriseSunsetData, offset) => {
 	return hours.map((hour) => {
