@@ -1,40 +1,39 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router";
-import { DateTime } from "luxon";
+import { withRouter } from "react-router-dom";
 
 // Material UI
 import { useTheme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Fab from "@material-ui/core/Fab";
+import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 
 // Custom
 import Backdrop from "../parts/Backdrop";
 import FactsCards from "../parts/FactsCard";
 import { fetchOneCall, setSearchTerm } from "../../actions";
-import DailyCard from "../parts/DailyCard";
+import HourlyCard from "../cards/HourlyCard";
+import ScrollTop from "../parts/ScrollTop";
 
-function DailyView(props) {
+function HourlyViewV2({
+	oneCall,
+	selecteUnits,
+	searchTerm,
+	fetchOneCall,
+	setSearchTerm,
+	match,
+}) {
 	const theme = useTheme();
 	const showFacts = useMediaQuery(theme.breakpoints.up("sm"));
-	const {
-		oneCall,
-		selectedUnits,
-		searchTerm,
-		fetchOneCall,
-		setSearchTerm,
-	} = props;
-	const { daily: days, timezone } = oneCall;
+	const { hourly: hours, timezone } = oneCall;
 
-	const locationToSearch = searchTerm || props.match.params.location;
+	const locationToSearch = searchTerm || match.params.location;
 
 	useEffect(() => {
-		fetchOneCall(locationToSearch, selectedUnits.keyword);
+		fetchOneCall(locationToSearch, selecteUnits.keyword);
 		setSearchTerm(locationToSearch);
-		// React complains if "fetchOneCall" is not a dependency, even do
-		// it is a function and does not change, not sure why that is
-		// required
-	}, [locationToSearch, selectedUnits, fetchOneCall, setSearchTerm]);
+	}, [locationToSearch, selecteUnits, fetchOneCall, setSearchTerm]);
 
 	return (
 		<React.Fragment>
@@ -43,13 +42,13 @@ function DailyView(props) {
 			) : (
 				<Grid container spacing={2}>
 					<Grid container item direction="column" spacing={2} sm={8}>
-						{days.map((day, index) => (
+						{hours.map((hour, index) => (
 							<Grid
 								item
-								key={day.dt}
+								key={hour.dt}
 								id={index === 0 ? "back-to-top-anchor" : null}
 							>
-								<DailyCard day={day} timezone={timezone} />
+								<HourlyCard hour={hour} timezone={timezone} />
 							</Grid>
 						))}
 					</Grid>
@@ -67,11 +66,11 @@ function DailyView(props) {
 const mapStateToProps = (state) => {
 	return {
 		oneCall: state.oneCall,
-		selectedUnits: state.units,
+		selecteUnits: state.units,
 		searchTerm: state.location,
 	};
 };
 
 export default connect(mapStateToProps, { fetchOneCall, setSearchTerm })(
-	withRouter(DailyView)
+	withRouter(HourlyViewV2)
 );

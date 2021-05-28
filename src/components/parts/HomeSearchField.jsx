@@ -20,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
 		padding: "2px 4px",
 		display: "flex",
 		alignItems: "center",
+		marginLeft: theme.spacing(2),
+		marginRight: theme.spacing(2),
 	},
 	input: {
 		marginLeft: theme.spacing(1),
@@ -87,7 +89,12 @@ function HomeSearchField(props) {
 	return (
 		<Tooltip title="For more specificity use this format: location name, state code, country code">
 			<Container className={classes.container}>
-				<Typography varinat="h1" className={classes.content} color="primary">
+				<Typography
+					varinat="h1"
+					className={classes.content}
+					style={{ opacity: "93%" }}
+					color="primary"
+				>
 					Simple Weather
 				</Typography>
 				<Paper component="form" className={classes.root}>

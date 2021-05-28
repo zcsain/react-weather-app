@@ -15,6 +15,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // Custom
 import DateTimeBadge from "../parts/DateTimeBadge";
+import titleCase from "../../utils/titleCase";
 import capitalize from "../../utils/capitalize";
 import iconsMapperLuxon from "../../utils/iconsMapperLuxon";
 import degToCompasDir from "../../utils/degToCompasDir";
@@ -186,9 +187,11 @@ function HourlyCard({ hour, timezone, selectedUnits, searchTerm }) {
 							// className={classes.darkTheme}
 							style={{ opacity: "80%" }}
 						>
-							{capitalize(searchTerm)}
+							{/* {capitalize(searchTerm)} */}
 							{!showShortDescription &&
-								[",", capitalize(description)].join(" ")}
+								[titleCase(searchTerm), " - ", capitalize(description)].join(
+									""
+								)}
 						</Typography>
 					</Grid>
 					<Grid item xs={12} sm={6}>

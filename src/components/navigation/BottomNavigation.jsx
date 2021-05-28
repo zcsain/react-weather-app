@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import { useTheme } from "@material-ui/core/styles";
@@ -15,6 +14,7 @@ import Grid from "@material-ui/core/Grid";
 import ExpandableSettings from "../parts/ExpandableSettings";
 import GitHubButton from "../parts/GitHubButton";
 import NavigationButton from "../parts/NavigationButton";
+import FormDialog from "../parts/FormDialog";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -41,19 +41,11 @@ function BottomNavigation(props) {
 						<Grid item>
 							<NavigationButton />
 						</Grid>
-						{/* <Grid item>
-							<TextField
-								id="search-field"
-								label="Search"
-								variant="filled"
-								margin="dense"
-							/>
-						</Grid> */}
-
 						<Grid item>
-							<IconButton color="inherit">
+							{/* <IconButton color="inherit">
 								<SearchIcon />
-							</IconButton>
+							</IconButton> */}
+							<FormDialog />
 							<ExpandableSettings denseList={false} />
 							<GitHubButton href="https://github.com/zcsain" edgeType="end" />
 						</Grid>

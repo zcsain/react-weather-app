@@ -6,6 +6,7 @@ import {
 	TOGGLE_THEME,
 	RESET_CURRENT,
 	RESET_ONECALL,
+	RESET_SEARCH_TERM,
 } from "./types";
 import history from "../history";
 import openWeather from "../apis/openWeather";
@@ -93,6 +94,17 @@ export const fetchOneCall = (location, units, lang = "en") => {
 				// Something happened in setting up the request that triggered an Error
 				console.log("Error", error.message);
 			}
+
+			// Maybe change this to be specific to the search term
+			history.push({
+				pathname: "/error",
+				state: {
+					title: "Error",
+					message:
+						"Oops! Something went wrong. Please reload the page and try again, or come back later.",
+					buttonText: "Reload Page",
+				},
+			});
 		}
 	};
 };
@@ -107,6 +119,12 @@ export const setSearchTerm = (term) => {
 	return {
 		type: SEARCH_TERM,
 		payload: term,
+	};
+};
+
+export const resetSearchTerm = () => {
+	return {
+		type: RESET_SEARCH_TERM,
 	};
 };
 

@@ -13,6 +13,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Fab from "@material-ui/core/Fab";
+import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 
 // Custom
 import Header from "./navigation/Header";
@@ -20,11 +22,13 @@ import CurrentView from "./views/CurrentView";
 import CurrentViewV2 from "./views/CurrentViewV2";
 import DailyView from "./views/DailyView";
 import HourlyView from "./views/HourlyView";
+import HourlyViewV2 from "./views/HourlyViewV2";
 import history from "../history";
 import SearchField from "./parts/HomeSearchField";
 import NavigationTabs from "./navigation/NavigationTabs";
 import BottomNavigation from "./navigation/BottomNavigation";
 import ErrorView from "./views/ErrorView";
+import ScrollTop from "./parts/ScrollTop";
 
 const dark = createMuiTheme({
 	palette: {
@@ -101,7 +105,7 @@ function App(props) {
 			<CssBaseline />
 			<Router history={history}>
 				<Container maxWidth="md" className={classes.container}>
-					{!xsDevice && <Header searchFieldInAppBar={true} />}
+					{/* {!xsDevice && <Header searchFieldInAppBar={true} />} */}
 
 					<Switch>
 						{/* If no location is provide redirect to home */}
@@ -109,23 +113,28 @@ function App(props) {
 						<Redirect exact from="/daily" to="/" />
 						<Redirect exact from="/hourly" to="/" />
 						<Route path="/" exact>
+							{!xsDevice && <Header searchFieldInAppBar={false} />}
 							<SearchField />
 						</Route>
-						{/* Tthere is definitely a better way to do this, then repeating components for each route */}
+						{/* There is definitely a better way to do this, then repeating components for each route */}
 						<Route path="/current/:location" exact>
+							{!xsDevice && <Header searchFieldInAppBar={true} />}
 							{!xsDevice && <NavigationTabs />}
 							<CurrentView />
 							{/* <CurrentViewV2 /> */}
 							{xsDevice && <BottomNavigation />}
 						</Route>
 						<Route path="/daily/:location" exact>
+							{!xsDevice && <Header searchFieldInAppBar={true} />}
 							{!xsDevice && <NavigationTabs />}
 							<DailyView />
 							{xsDevice && <BottomNavigation />}
 						</Route>
 						<Route path="/hourly/:location" exact>
+							{!xsDevice && <Header searchFieldInAppBar={true} />}
 							{!xsDevice && <NavigationTabs />}
-							<HourlyView />
+							<HourlyViewV2 />
+							{/* <HourlyView /> */}
 							{xsDevice && <BottomNavigation />}
 						</Route>
 						<Route>
@@ -142,6 +151,13 @@ function App(props) {
 						</Route>
 					</Switch>
 					{/* {xsDevice && <BottomNavigation />} */}
+					{useMediaQuery(theme.breakpoints.up("sm")) && (
+						<ScrollTop>
+							<Fab color="primary" size="small" aria-label="scroll back to top">
+								<KeyboardArrowUpIcon />
+							</Fab>
+						</ScrollTop>
+					)}
 				</Container>
 			</Router>
 		</ThemeProvider>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Link as RouterLink, useHistory } from "react-router-dom";
+import { Link as RouterLink, useHistory, withRouter } from "react-router-dom";
+import clsx from "clsx";
 
 // Material UI
 import AppBar from "@material-ui/core/AppBar";
@@ -15,6 +16,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles";
 import { InputBase } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import Icon from "@material-ui/core/Icon";
 
 // Custom
 import {
@@ -22,9 +24,11 @@ import {
 	toggleTheme,
 	resetCurrent,
 	resetOneCall,
+	resetSearchTerm,
 } from "../../actions";
 import GitHubButton from "../parts/GitHubButton";
 import ExpandableSettings from "../parts/ExpandableSettings";
+import titleCase from "../../utils/titleCase";
 
 const useStyles = makeStyles((theme) => ({
 	spacing: {
@@ -34,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1,
 	},
 	title: {
-		flexGrow: 1,
-		display: "none",
+		// flexGrow: 1,
+		// display: "none",
 		textDecoration: "none",
 		color: "white",
 		[theme.breakpoints.up("sm")]: {
@@ -82,6 +86,11 @@ const useStyles = makeStyles((theme) => ({
 			},
 		},
 	},
+	logo: {
+		marginRight: theme.spacing(2),
+		textDecoration: "none",
+		color: "white",
+	},
 }));
 
 function Header(props) {
@@ -96,14 +105,15 @@ function Header(props) {
 	const handlePress = (event) => {
 		if (event.key === "Enter") {
 			event.preventDefault();
-			console.log(
-				"Enter was pressed, the search term is (from header): " + searchValue
-			);
 			props.setSearchTerm(searchValue);
 			resetData();
-			// This will redirect to "current view" only, but needs to redirect
-			// to whatever view is active
-			history.push(`/current/${searchValue}`);
+
+			// Redirects to selected view
+			const currentUrl = props.match.url;
+			const currentLocation = props.match.params.location;
+			const redirectTo = currentUrl.replace(currentLocation, searchValue);
+			history.push(redirectTo);
+
 			setSearchValue("");
 			event.target.blur();
 		}
@@ -112,6 +122,7 @@ function Header(props) {
 	const resetData = () => {
 		props.resetCurrent();
 		props.resetOneCall();
+		props.resetSearchTerm();
 	};
 
 	return (
@@ -122,16 +133,30 @@ function Header(props) {
 				color={props.selectedTheme ? "primary" : "inherit"}
 			>
 				<Toolbar>
-					<Typography
-						className={classes.title}
-						variant="h6"
-						noWrap
+					<Icon
+						className={clsx(classes.logo, "wi wi-windy")}
+						fontSize="large"
 						component={RouterLink}
 						to="/"
 						onClick={resetData}
-					>
-						Simple Weather
-					</Typography>
+					/>
+					{!props.searchTerm ? (
+						<Typography
+							className={classes.title}
+							variant="h6"
+							noWrap
+							component={RouterLink}
+							to="/"
+							onClick={resetData}
+						>
+							Simple Weather
+						</Typography>
+					) : (
+						<Typography className={classes.title} variant="h6" noWrap>
+							{titleCase(props.searchTerm)}
+						</Typography>
+					)}
+					<div style={{ flexGrow: 1 }} />
 
 					{props.searchFieldInAppBar ? (
 						<div className={classes.search}>
@@ -163,7 +188,10 @@ function Header(props) {
 							{!props.selectedTheme ? <Brightness7Icon /> : <Brightness4Icon />}
 						</IconButton>
 					</Tooltip>
-					<GitHubButton href="https://github.com/zcsain" edgeType="end" />
+					<GitHubButton
+						href="https://github.com/zcsain/react-weather-app"
+						edgeType="end"
+					/>
 				</Toolbar>
 			</AppBar>
 			{/* Here to offset AppBar postion so it does not obscure othere elemetns */}
@@ -183,6 +211,7 @@ Header.defaultProps = {
 const mapStateToProps = (state) => {
 	return {
 		selectedTheme: state.theme,
+		searchTerm: state.location,
 	};
 };
 
@@ -191,4 +220,5 @@ export default connect(mapStateToProps, {
 	toggleTheme,
 	resetCurrent,
 	resetOneCall,
-})(Header);
+	resetSearchTerm,
+})(withRouter(Header));

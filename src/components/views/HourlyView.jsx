@@ -39,8 +39,12 @@ function HourlyView({
 			) : (
 				<Grid container spacing={2}>
 					<Grid container item direction="column" spacing={2} sm={8}>
-						{hours.map((hour) => (
-							<Grid item key={hour.dt}>
+						{hours.map((hour, index) => (
+							<Grid
+								item
+								key={hour.dt}
+								id={index === 0 ? "back-to-top-anchor" : null}
+							>
 								<HourlyCard hour={hour} timezone={timezone} />
 							</Grid>
 						))}
