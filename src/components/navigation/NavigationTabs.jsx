@@ -8,6 +8,10 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import ScheduleIcon from "@material-ui/icons/Schedule";
+import TodayIcon from "@material-ui/icons/Today";
+import EventNoteIcon from "@material-ui/icons/EventNote";
+import Typography from "@material-ui/core/Typography";
 
 // Custom
 import { resetCurrent, resetOneCall } from "../../actions";
@@ -16,6 +20,13 @@ const useStyles = makeStyles({
 	root: {
 		flexGrow: 1,
 		marginBottom: "24px",
+	},
+	tabIcon: {
+		verticalAlign: "top",
+	},
+	tabTypography: {
+		paddingLeft: "10px",
+		display: "inline",
 	},
 });
 
@@ -63,9 +74,42 @@ function NavigationTabs(props) {
 				variant={xsDevice ? "fullWidth" : "standard"}
 			>
 				{/* <Tab label="Current" component={RouterLink} to="/current/Zagreb" /> */}
-				<Tab label="Current" component={RouterLink} to={currentLink} />
-				<Tab label="Daily" component={RouterLink} to={dailyLink} />
-				<Tab label="Hourly" component={RouterLink} to={hourlLink} />
+				<Tab
+					label={
+						<div>
+							<TodayIcon className={classes.tabIcon} />
+							<Typography variant="button" className={classes.tabTypography}>
+								Current
+							</Typography>
+						</div>
+					}
+					component={RouterLink}
+					to={currentLink}
+				/>
+				<Tab
+					label={
+						<div>
+							<EventNoteIcon className={classes.tabIcon} />
+							<Typography variant="button" className={classes.tabTypography}>
+								Daily
+							</Typography>
+						</div>
+					}
+					component={RouterLink}
+					to={dailyLink}
+				/>
+				<Tab
+					label={
+						<div>
+							<ScheduleIcon className={classes.tabIcon} />
+							<Typography variant="button" className={classes.tabTypography}>
+								Hourly
+							</Typography>
+						</div>
+					}
+					component={RouterLink}
+					to={hourlLink}
+				/>
 			</Tabs>
 		</Box>
 	);
