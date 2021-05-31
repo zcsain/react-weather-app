@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 // Material UI
 import {
@@ -15,20 +16,20 @@ import Container from "@material-ui/core/Container";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Fab from "@material-ui/core/Fab";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import Button from "@material-ui/core/Button";
 
 // Custom
 import Header from "./navigation/Header";
 import CurrentView from "./views/CurrentView";
-import CurrentViewV2 from "./views/CurrentViewV2";
 import DailyView from "./views/DailyView";
 import HourlyView from "./views/HourlyView";
-import HourlyViewV2 from "./views/HourlyViewV2";
 import history from "../history";
 import SearchField from "./parts/HomeSearchField";
 import NavigationTabs from "./navigation/NavigationTabs";
 import BottomNavigation from "./navigation/BottomNavigation";
 import ErrorView from "./views/ErrorView";
 import ScrollTop from "./parts/ScrollTop";
+import { setTheme, setUnits } from "../actions";
 
 const dark = createMuiTheme({
 	palette: {
@@ -95,18 +96,37 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function App(props) {
+function App({ selectedTheme, selectedUnits, setTheme, setUnits }) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 	const xsDevice = useMediaQuery(theme.breakpoints.down("xs"));
+	const cookies = new Cookies();
+
+	useEffect(() => {
+		// Load cookies
+		const cookie = cookies.get("SimpleWeather");
+
+		if (cookie !== undefined) {
+			setTheme(cookie.preferredTheme);
+			setUnits(cookie.preferredUnits);
+		}
+	}, []);
+
+	// Update cookies when the theme or units type changes
+	useEffect(() => {
+		cookies.set(
+			"SimpleWeather",
+			{ preferredTheme: selectedTheme, preferredUnits: selectedUnits },
+			{ path: "/" }
+		);
+	}, [selectedTheme, selectedUnits]);
 
 	return (
-		<ThemeProvider theme={props.selectedTheme ? blueLight : dark}>
+		<ThemeProvider theme={selectedTheme ? blueLight : dark}>
 			<CssBaseline />
 			<Router history={history}>
 				<Container maxWidth="md" className={classes.container}>
 					{/* {!xsDevice && <Header searchFieldInAppBar={true} />} */}
-
 					<Switch>
 						{/* If no location is provide redirect to home */}
 						<Redirect exact from="/current" to="/" />
@@ -121,7 +141,6 @@ function App(props) {
 							{!xsDevice && <Header searchFieldInAppBar={true} />}
 							{!xsDevice && <NavigationTabs />}
 							<CurrentView />
-							{/* <CurrentViewV2 /> */}
 							{xsDevice && <BottomNavigation />}
 						</Route>
 						<Route path="/daily/:location" exact>
@@ -133,8 +152,7 @@ function App(props) {
 						<Route path="/hourly/:location" exact>
 							{!xsDevice && <Header searchFieldInAppBar={true} />}
 							{!xsDevice && <NavigationTabs />}
-							<HourlyViewV2 />
-							{/* <HourlyView /> */}
+							<HourlyView />
 							{xsDevice && <BottomNavigation />}
 						</Route>
 						<Route>
@@ -167,7 +185,8 @@ function App(props) {
 const mapStateToProps = (state) => {
 	return {
 		selectedTheme: state.theme,
+		selectedUnits: state.units,
 	};
 };
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { setTheme, setUnits })(App);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 function ExpandableSettings(props) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
-	const [anchorEl, setAnchorEl] = React.useState(null);
+	const [anchorEl, setAnchorEl] = useState(null);
 	const options = [
 		"Metric (°C, km/h, mm)",
 		"Imperial (°F, mph, in)",
@@ -51,6 +51,11 @@ function ExpandableSettings(props) {
 	const [selectedIndex, setSelectedIndex] = useState(
 		mapUnitsToIndex[selectedUnits.type]
 	);
+
+	useEffect(() => {
+		// When units are set from cookies, the component does not update, so this is needed
+		// Maybe re-write this component
+	}, [selectedUnits]);
 
 	const handleClickListItem = (event) => {
 		setAnchorEl(event.currentTarget);

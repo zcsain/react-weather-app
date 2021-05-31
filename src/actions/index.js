@@ -7,6 +7,9 @@ import {
 	RESET_CURRENT,
 	RESET_ONECALL,
 	RESET_SEARCH_TERM,
+	SET_DARK_THEME,
+	SET_LIGHT_THEME,
+	SET_THEME,
 } from "./types";
 import history from "../history";
 import openWeather from "../apis/openWeather";
@@ -138,5 +141,24 @@ export const setUnits = (units) => {
 export const toggleTheme = () => {
 	return {
 		type: TOGGLE_THEME,
+	};
+};
+
+export const setDarkTheme = () => {
+	return {
+		type: SET_DARK_THEME,
+	};
+};
+
+export const setLightTheme = () => {
+	return {
+		type: SET_LIGHT_THEME,
+	};
+};
+
+export const setTheme = (themeType) => {
+	return {
+		type: SET_THEME,
+		payload: themeType,
 	};
 };
