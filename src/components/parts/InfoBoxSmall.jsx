@@ -41,6 +41,14 @@ function InfoBoxSmall({
 	const darkThemeOpacity =
 		theme.palette.type === "dark" ? classes.darkTheme : null;
 
+	const checkInput = (input) => {
+		if (!input) {
+			return "No data";
+		}
+
+		return input;
+	};
+
 	return (
 		<Card variant="outlined">
 			<List dense>
@@ -85,7 +93,7 @@ function InfoBoxSmall({
 						}
 					/>
 					<ListItemSecondaryAction className={darkThemeOpacity}>
-						<Typography variant="body1">{dataTwo}</Typography>
+						<Typography variant="body1">{checkInput(dataTwo)}</Typography>
 					</ListItemSecondaryAction>
 				</ListItem>
 			</List>

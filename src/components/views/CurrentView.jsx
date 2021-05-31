@@ -23,11 +23,11 @@ import Collapse from "@material-ui/core/Collapse";
 import Backdrop from "../parts/Backdrop";
 import degToCompasDir from "../../utils/degToCompasDir";
 import titleCase from "../../utils/titleCase";
-import formatTime from "../../utils/formatTime";
 import FactsCards from "../parts/FactsCard";
-import { fetchCurrent, setSearchTerm } from "../../actions";
-import iconsMapper from "../../utils/iconsMapper";
+import { fetchCurrent, fetchOneCall, setSearchTerm } from "../../actions";
+import iconsMapperLuxon from "../../utils/iconsMapperLuxon";
 import InfoBoxSmall from "../parts/InfoBoxSmall";
+import { getTime, getLongDate } from "../../utils/timeFormatingWithLuxon";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 		fontWeight: "bold",
 	},
 	card: {
-		padding: "8px",
+		padding: theme.spacing(1),
 	},
 	table: {
 		padding: "0px 16px",
@@ -71,51 +71,56 @@ const useStyles = makeStyles((theme) => ({
 	paddingFlag: {
 		paddingLeft: "8px",
 	},
+	paddingCloud: {
+		paddingLeft: "2px",
+	},
+	paddingSun: {
+		paddingLeft: "1px",
+	},
 }));
 
-function CurrentView(props) {
+function CurrentView({
+	current,
+	oneCall,
+	selectedUnits,
+	searchTerm,
+	fetchCurrent,
+	fetchOneCall,
+	setSearchTerm,
+	match,
+}) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 	const showFacts = useMediaQuery(theme.breakpoints.up("sm"));
-
-	const {
-		current,
-		selectedUnits,
-		searchTerm,
-		fetchCurrent,
-		setSearchTerm,
-	} = props;
-	const { type, units, multipliers } = selectedUnits;
 
 	// Bookmarked pages do do initiate searchTerm setting, so this line
 	// looks at the values received from reactRouter, this can be also
 	// done with direct component props <Component {...props}> but for
 	// that Router would need to be moved from App component
-	const locationToSearch = searchTerm || props.match.params.location;
+	const locationToSearch = searchTerm || match.params.location;
 
 	useEffect(() => {
 		fetchCurrent(locationToSearch, selectedUnits.keyword);
+		fetchOneCall(locationToSearch, selectedUnits.keyword);
 		setSearchTerm(locationToSearch);
 		// React throws a warning if "fetchCurrent" is not a dependency,
 		// even though it is a function and never changes
-	}, [locationToSearch, selectedUnits, fetchCurrent, setSearchTerm]);
+	}, [
+		locationToSearch,
+		selectedUnits,
+		fetchCurrent,
+		fetchOneCall,
+		setSearchTerm,
+	]);
 
 	const renderQuickViewCard = () => {
-		const { weather, sys, main, dt, timezone } = current;
+		const { weather, sys, main, dt } = current;
+		const { timezone } = oneCall;
 		const { id } = weather[0];
 		const { sunrise, sunset } = sys;
 
-		const icon = iconsMapper(id, sunrise, sunset, dt, timezone);
-
-		// Check if this shows correct date for different locations
-		const date = new Date((dt + timezone) * 1000).toLocaleDateString(
-			"default",
-			{
-				month: "long",
-				day: "numeric",
-				year: "numeric",
-			}
-		);
+		const icon = iconsMapperLuxon(id, sunrise, sunset, dt, timezone);
+		const date = getLongDate(dt, timezone, selectedUnits.type);
 
 		return (
 			<Card className={classes.card} raised>
@@ -143,7 +148,7 @@ function CurrentView(props) {
 								display="inline"
 								className={classes.tempUnit}
 							>
-								{units.temp}
+								{selectedUnits.units.temp}
 							</Typography>
 						</Grid>
 					</Grid>
@@ -157,191 +162,25 @@ function CurrentView(props) {
 		);
 	};
 
-	const renderQuickViewCardV2 = () => {
-		const { weather, sys, main, dt, timezone } = current;
-		const { id } = weather[0];
-		const { sunrise, sunset } = sys;
-
-		const icon = iconsMapper(id, sunrise, sunset, dt, timezone);
-
-		// Check if this shows correct date for different locations
-		const date = new Date((dt + timezone) * 1000).toLocaleDateString(
-			"default",
-			{
-				month: "long",
-				day: "numeric",
-				year: "numeric",
-			}
-		);
-
-		return (
-			<CardContent className={classes.card} raised>
-				<CardHeader
-					title={`${titleCase(locationToSearch)} - Current weather`}
-					subheader={date}
-				/>
-				<CardContent>
-					<Grid container spacing={2} className={classes.container}>
-						<Grid item className={classes.iconGrow}>
-							<i className={[classes.icon, icon].join(" ")} />
-						</Grid>
-						<Grid item>
-							<Typography
-								variant="h2"
-								component="p"
-								display="inline"
-								className={classes.mainTemp}
-							>
-								{main.temp.toFixed(0)}
-							</Typography>
-							<Typography
-								variant="h3"
-								color="textSecondary"
-								display="inline"
-								className={classes.tempUnit}
-							>
-								{units.temp}
-							</Typography>
-						</Grid>
-					</Grid>
-				</CardContent>
-				<CardActions style={{ marginLeft: theme.spacing(1) }}>
-					<Typography variant="h6" component="p" color="textSecondary">
-						{weather[0].main + ", " + titleCase(weather[0].description)}
-					</Typography>
-				</CardActions>
-			</CardContent>
-		);
-	};
-
-	const renderInfoCard = () => {
-		const { main } = current;
-
-		return (
-			<TableContainer component={Card} className={classes.table} raised>
-				<Table>
-					<TableBody>
-						{Object.keys(main).map((key) => {
-							if (
-								key === "temp" ||
-								key === "sea_level" ||
-								key === "grnd_level"
-							) {
-								return null;
-							}
-
-							const description = titleCase(key.replace("_", " "));
-							let unit = units.deg;
-
-							if (key === "humidity") {
-								unit = units.humidity;
-							} else if (key === "pressure") {
-								unit = units.pressure;
-							}
-
-							return (
-								<TableRow key={key}>
-									<TableCell>
-										<Typography variant="body1">{description}</Typography>
-									</TableCell>
-									<TableCell align="right">
-										<Typography variant="body1" className={classes.rightText}>
-											{main[key].toFixed(0)}
-											{unit}
-										</Typography>
-									</TableCell>
-								</TableRow>
-							);
-						})}
-					</TableBody>
-				</Table>
-			</TableContainer>
-		);
-	};
-
-	const renderWindTable = () => {
-		const { wind } = current;
-		const { speed, deg } = wind;
-
-		return (
-			<TableContainer component={Card} className={classes.table} raised>
-				<Table>
-					<TableBody>
-						<TableRow>
-							<TableCell>
-								<Typography variant="body1">Wind Speed</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography variant="body1" className={classes.rightText}>
-									{type === "scientific"
-										? speed
-										: (speed * multipliers.speed).toFixed(0)}
-									{units.speed}
-								</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell>
-								<Typography variant="body1">Wind Direction</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography variant="body1" className={classes.rightText}>
-									{type === "scientific" ? deg : degToCompasDir(deg)}
-									{units.wind}
-								</Typography>
-							</TableCell>
-						</TableRow>
-					</TableBody>
-				</Table>
-			</TableContainer>
-		);
-	};
-
-	const renderSunsetTable = () => {
-		const { sys, timezone } = current;
-		const { sunrise, sunset } = sys;
-
-		return (
-			<TableContainer component={Card} className={classes.table} raised>
-				<Table>
-					<TableBody>
-						<TableRow>
-							<TableCell>
-								<Typography variant="body1">Sunrise</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography variant="body1" className={classes.rightText}>
-									{formatTime(sunrise, timezone, selectedUnits.type)}
-								</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell>
-								<Typography variant="body1">Sunset</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography variant="body1" className={classes.rightText}>
-									{formatTime(sunset, timezone, selectedUnits.type)}
-								</Typography>
-							</TableCell>
-						</TableRow>
-					</TableBody>
-				</Table>
-			</TableContainer>
-		);
-	};
-
 	const renderContent = () => {
-		const { main, wind, clouds } = current;
-		const { speed: windSpeed, deg: windDeg } = wind;
-		const { all: cloud } = clouds;
+		// From OneCall fetch
+		const { timezone, current: currentOneCall } = oneCall;
 		const {
-			feels_like: feelsLike,
-			temp_min: tempMin,
-			temp_max: tempMax,
+			temp,
+			sunrise,
+			sunset,
 			pressure,
 			humidity,
-		} = main;
+			feels_like: feelsLike,
+			wind_speed: windSpeed,
+			wind_deg: windDeg,
+			uvi,
+			clouds,
+		} = currentOneCall;
+
+		// From Current fetch
+		const { main } = current;
+		const { temp_min: tempMin, temp_max: tempMax } = main;
 
 		const windSpeedMod =
 			selectedUnits.type === "scientific"
@@ -352,6 +191,17 @@ function CurrentView(props) {
 
 		return (
 			<Grid container spacing={1} className={classes.collapseGrid}>
+				<Grid item xs={12} sm={6}>
+					<InfoBoxSmall
+						iconOne="wi wi-thermometer"
+						iconStylingOne={classes.paddingTemp}
+						titleOne="Temp."
+						dataOne={temp.toFixed(0) + selectedUnits.units.temp}
+						iconTwo="wi wi-day-sunny"
+						titleTwo="Feels like"
+						dataTwo={feelsLike.toFixed(0) + selectedUnits.units.temp}
+					/>
+				</Grid>
 				<Grid item xs={12} sm={6}>
 					<InfoBoxSmall
 						iconOne="wi wi-thermometer-exterior"
@@ -387,15 +237,27 @@ function CurrentView(props) {
 						dataTwo={windDir + selectedUnits.units.wind}
 					/>
 				</Grid>
+
 				<Grid item xs={12} sm={6}>
 					<InfoBoxSmall
-						iconOne="wi wi-day-sunny"
-						titleOne="Feels like"
-						dataOne={feelsLike.toFixed(0) + selectedUnits.units.temp}
-						iconTwo="wi wi-cloud"
-						iconStylingTwo={classes.paddingCloud}
-						titleTwo="Cloudiness"
-						dataTwo={cloud + selectedUnits.units.humidity}
+						iconOne="wi wi-cloud"
+						iconStylingOne={classes.paddingCloud}
+						titleOne="Cloudiness"
+						dataOne={clouds + selectedUnits.units.humidity}
+						iconTwo="wi wi-hot"
+						iconStylingTwo={classes.paddingSun}
+						titleTwo="UV Index"
+						dataTwo={uvi}
+					/>
+				</Grid>
+				<Grid item xs={12} sm={6}>
+					<InfoBoxSmall
+						iconOne="wi wi-sunrise"
+						titleOne="Sunrise"
+						dataOne={getTime(sunrise, timezone, selectedUnits.type)}
+						iconTwo="wi wi-sunset"
+						titleTwo="Sunset"
+						dataTwo={getTime(sunset, timezone, selectedUnits.type)}
 					/>
 				</Grid>
 			</Grid>
@@ -404,20 +266,22 @@ function CurrentView(props) {
 
 	return (
 		<React.Fragment>
-			{Object.keys(props.current).length === 0 ? (
+			{Object.keys(oneCall).length === 0 ||
+			Object.keys(current).length === 0 ? (
 				<Backdrop />
 			) : (
 				<Grid container direction="row" spacing={2}>
 					<Grid container item direction="column" spacing={2} sm={8}>
 						<Grid item>{renderQuickViewCard()}</Grid>
-						<Grid item>{renderInfoCard()}</Grid>
-						{/* {renderContent()} */}
-						<Grid item>{renderWindTable()}</Grid>
-						<Grid item>{renderSunsetTable()}</Grid>
+						<Grid item>
+							<Card raised className={classes.card}>
+								{renderContent()}
+							</Card>
+						</Grid>
 					</Grid>
 					{showFacts && (
 						<Grid container item direction="column" spacing={2} xs>
-							<FactsCards n={3} />
+							<FactsCards n={2} />
 						</Grid>
 					)}
 				</Grid>
@@ -429,11 +293,14 @@ function CurrentView(props) {
 const mapStateToProps = (state) => {
 	return {
 		current: state.current,
+		oneCall: state.oneCall,
 		selectedUnits: state.units,
 		searchTerm: state.location,
 	};
 };
 
-export default connect(mapStateToProps, { fetchCurrent, setSearchTerm })(
-	withRouter(CurrentView)
-);
+export default connect(mapStateToProps, {
+	fetchCurrent,
+	fetchOneCall,
+	setSearchTerm,
+})(withRouter(CurrentView));

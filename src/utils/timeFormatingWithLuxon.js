@@ -83,3 +83,21 @@ export const getDate = (timestamp, timezone, unitsType) => {
 			return time.toFormat("d/M");
 	}
 };
+
+/**
+ *
+ * @param {number} timestamp Timestamp, unix, UTC
+ * @param {string} timezone Target timezone name (e.g. "Europe/Paris")
+ * @returns {string} Abbreviated date with weekday (e.g "Fri, Oct 14, 1983")
+ */
+
+export const getLongDate = (timestamp, timezone, unitsType) => {
+	const time = setTime(timestamp, timezone);
+
+	switch (unitsType) {
+		case IMPERIAL:
+			return time.toFormat("cccc, LLLL d, y");
+		default:
+			return time.toFormat("cccc, d LLLL, y");
+	}
+};
