@@ -5,6 +5,7 @@ import currentReducer from "./currentReducer";
 import oneCallReducer from "./oneCallReducer";
 import unitsReducer from "./unitsReducer";
 import themeReducer from "./themeReducer";
+import geolocationReducer from "./geolocationReducer";
 
 export default combineReducers({
 	location: termReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
 	oneCall: oneCallReducer,
 	units: unitsReducer,
 	theme: themeReducer,
+	geolocation: geolocationReducer,
 });

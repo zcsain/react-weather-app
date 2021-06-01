@@ -10,6 +10,7 @@ import {
 	SET_DARK_THEME,
 	SET_LIGHT_THEME,
 	SET_THEME,
+	GEOLOCATE_REQUEST,
 } from "./types";
 import history from "../history";
 import openWeather from "../apis/openWeather";
@@ -105,6 +106,45 @@ export const fetchOneCall = (location, units, lang = "en") => {
 					title: "Error",
 					message:
 						"Oops! Something went wrong. Please reload the page and try again, or come back later.",
+					buttonText: "Reload Page",
+				},
+			});
+		}
+	};
+};
+
+export const fetchGeolocation = (location) => {
+	return async (dispatch, getState) => {
+		try {
+			const response = await openWeather.post("/geolocate", {
+				location: location,
+			});
+
+			dispatch({
+				type: GEOLOCATE_REQUEST,
+				payload: response.data,
+			});
+		} catch (error) {
+			if (error.response) {
+				// Request made and server responded
+				console.log(error.response.data);
+				console.log(error.response.status);
+				console.log(error.response.headers);
+			} else if (error.request) {
+				// The request was made but no response was received
+				console.log(error.request);
+			} else {
+				// Something happened in setting up the request that triggered an Error
+				console.log("Error", error.message);
+			}
+
+			// Maybe change this to be specific to the search term
+			history.push({
+				pathname: "/error",
+				state: {
+					title: "Error",
+					message:
+						"Oops! Something went wrong (Geolocation). Please reload the page and try again, or come back later.",
 					buttonText: "Reload Page",
 				},
 			});

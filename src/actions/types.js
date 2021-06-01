@@ -9,3 +9,4 @@ export const RESET_SEARCH_TERM = "RESET_SEARCH_TERM";
 export const SET_DARK_THEME = "SET_DARK_THEME";
 export const SET_LIGHT_THEME = "SET_LIGHT_THEME";
 export const SET_THEME = "SET_THEME";
+export const GEOLOCATE_REQUEST = "GEOLOCATE_REQUEST";
