@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 
 // Custom
-import { METRIC, IMPERIAL, SCIENTIFIC } from "./types";
+import { IMPERIAL } from "./types";
 
 /**
  *

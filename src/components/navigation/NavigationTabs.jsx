@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link as RouterLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -37,24 +37,31 @@ function NavigationTabs(props) {
 	const { match, searchTerm } = props;
 	const { url } = match;
 
-	// If url changed, adjust tab selection accordingly
-	useEffect(() => {
-		setSelectedTab(mapNameToIndex[url]);
-	}, [url]);
-
 	// Prefer redux state over params from url (params is for direct
 	// acces to parts of website from the address bar)
 	const linkSource = searchTerm || match.params.location;
 	var currentLink = `/current/${linkSource}`;
 	var dailyLink = `/daily/${linkSource}`;
-	var hourlLink = `/hourly/${linkSource}`;
-	var mapNameToIndex = {
-		[currentLink]: 0,
-		[dailyLink]: 1,
-		[hourlLink]: 2,
-	};
+	var hourlyLink = `/hourly/${linkSource}`;
+	// var mapNameToIndex = {
+	// 	[currentLink]: 0,
+	// 	[dailyLink]: 1,
+	// 	[hourlLink]: 2,
+	// };
+	var mapNameToIndex = useMemo(() => {
+		return {
+			[currentLink]: 0,
+			[dailyLink]: 1,
+			[hourlyLink]: 2,
+		};
+	}, [currentLink, dailyLink, hourlyLink]);
 
 	const [selectedTab, setSelectedTab] = useState(mapNameToIndex[url]);
+
+	// If url changed, adjust tab selection accordingly
+	useEffect(() => {
+		setSelectedTab(mapNameToIndex[url]);
+	}, [url, mapNameToIndex]);
 
 	// Set appropriate tab to "selected" state
 	const handleTabChange = (event, newValue) => {
@@ -108,7 +115,7 @@ function NavigationTabs(props) {
 						</div>
 					}
 					component={RouterLink}
-					to={hourlLink}
+					to={hourlyLink}
 				/>
 			</Tabs>
 		</Box>

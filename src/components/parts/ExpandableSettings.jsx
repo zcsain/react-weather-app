@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -41,11 +41,14 @@ function ExpandableSettings(props) {
 		"Imperial (°F, mph, in)",
 		"Scientific (°K, m/s, mm)",
 	];
-	const mapUnitsToIndex = {
-		metric: 0,
-		imperial: 1,
-		scientific: 2,
-	};
+	// Again useMemo doesn't do much here, just stop react from complaining
+	const mapUnitsToIndex = useMemo(() => {
+		return {
+			metric: 0,
+			imperial: 1,
+			scientific: 2,
+		};
+	}, []);
 	const unitsList = [metric, imperial, scientific];
 	const { selectedUnits } = props;
 	const [selectedIndex, setSelectedIndex] = useState(
@@ -56,7 +59,7 @@ function ExpandableSettings(props) {
 		// When units are set from cookies, the component does not update, so this is needed
 		// Maybe re-write this component
 		setSelectedIndex(mapUnitsToIndex[selectedUnits.type]);
-	}, [selectedUnits]);
+	}, [selectedUnits, mapUnitsToIndex]);
 
 	const handleClickListItem = (event) => {
 		setAnchorEl(event.currentTarget);

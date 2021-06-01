@@ -79,10 +79,8 @@ function HomeSearchField(props) {
 	const handlePress = (event) => {
 		if (event.key === "Enter") {
 			event.preventDefault();
-			console.log("Enter was pressed, the search term is: " + searchValue);
 			props.setSearchTerm(searchValue);
 			history.push(`/current/${searchValue}`);
-			// setSearchValue("");
 		}
 	};
 

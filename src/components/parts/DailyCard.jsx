@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
 // Material UI
@@ -39,8 +39,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	iconContainer: {
 		minWidth: "60px",
-		// display: "grid",
-		// justifyContent: "center",
 		textAlign: "center",
 	},
 	darkTheme: {
@@ -55,9 +53,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	temp: {
-		// minWidth: "112px",
 		minWidth: "85px",
-		// textAlign: "right",
 	},
 	scientific: {
 		minWidth: "112px",

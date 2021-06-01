@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { connect } from "react-redux";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import Cookies from "universal-cookie";
@@ -16,7 +16,6 @@ import Container from "@material-ui/core/Container";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Fab from "@material-ui/core/Fab";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import Button from "@material-ui/core/Button";
 
 // Custom
 import Header from "./navigation/Header";
@@ -100,7 +99,9 @@ function App({ selectedTheme, selectedUnits, setTheme, setUnits }) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 	const xsDevice = useMediaQuery(theme.breakpoints.down("xs"));
-	const cookies = new Cookies();
+	// const cookies = new Cookies();
+	// This doesn't do much, but react stops complaining
+	const cookies = useMemo(() => new Cookies(), []);
 
 	useEffect(() => {
 		// Load cookies
@@ -110,7 +111,7 @@ function App({ selectedTheme, selectedUnits, setTheme, setUnits }) {
 			setTheme(cookie.preferredTheme);
 			setUnits(cookie.preferredUnits);
 		}
-	}, []);
+	}, [cookies, setTheme, setUnits]);
 
 	// Update cookies when the theme or units type changes
 	useEffect(() => {
@@ -119,7 +120,8 @@ function App({ selectedTheme, selectedUnits, setTheme, setUnits }) {
 			{ preferredTheme: selectedTheme, preferredUnits: selectedUnits },
 			{ path: "/" }
 		);
-	}, [selectedTheme, selectedUnits]);
+		// Again not sure why react wants "cookies" as a dependency
+	}, [selectedTheme, selectedUnits, cookies]);
 
 	return (
 		<ThemeProvider theme={selectedTheme ? blueLight : dark}>

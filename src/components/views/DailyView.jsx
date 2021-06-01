@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { DateTime } from "luxon";
 
 // Material UI
 import { useTheme } from "@material-ui/core/styles";

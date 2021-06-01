@@ -10,16 +10,9 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableRow from "@material-ui/core/TableRow";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Collapse from "@material-ui/core/Collapse";
 
 // Custom
-// import Loader from "../parts/Loader";
 import Backdrop from "../parts/Backdrop";
 import degToCompasDir from "../../utils/degToCompasDir";
 import titleCase from "../../utils/titleCase";
@@ -35,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	icon: {
 		fontSize: 56,
-		// display: "inline-table",
 	},
 	rightText: {
 		fontWeight: "bold",
@@ -45,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	table: {
 		padding: "0px 16px",
-		// padding: "12px 8px",
 	},
 	tempUnit: {
 		fontWeight: "400",
