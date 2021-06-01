@@ -55,6 +55,7 @@ function ExpandableSettings(props) {
 	useEffect(() => {
 		// When units are set from cookies, the component does not update, so this is needed
 		// Maybe re-write this component
+		setSelectedIndex(mapUnitsToIndex[selectedUnits.type]);
 	}, [selectedUnits]);
 
 	const handleClickListItem = (event) => {
