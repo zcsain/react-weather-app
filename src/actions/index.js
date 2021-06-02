@@ -127,24 +127,32 @@ export const fetchGeolocation = (location) => {
 		} catch (error) {
 			if (error.response) {
 				// Request made and server responded
+				console.group("error.response");
+				console.log("error.response.data: ");
 				console.log(error.response.data);
-				console.log(error.response.status);
+				console.log("error.response.status: ", error.response.status);
+				console.log("error.response.headers: ");
 				console.log(error.response.headers);
+				console.groupEnd();
 			} else if (error.request) {
 				// The request was made but no response was received
+				console.group("error.request");
+				console.log("error.request: ");
 				console.log(error.request);
+				console.groupEnd();
 			} else {
 				// Something happened in setting up the request that triggered an Error
-				console.log("Error", error.message);
+				console.group("catch else");
+				console.log("Error (setting up request): ", error.message);
+				console.groupEnd();
 			}
 
 			// Maybe change this to be specific to the search term
 			history.push({
 				pathname: "/error",
 				state: {
-					title: "Error",
-					message:
-						"Oops! Something went wrong (Geolocation). Please reload the page and try again, or come back later.",
+					title: "Not found",
+					message: "No location with specified name found.",
 					buttonText: "Reload Page",
 				},
 			});

@@ -30,6 +30,8 @@ import ErrorView from "./views/ErrorView";
 import ScrollTop from "./parts/ScrollTop";
 import { setTheme, setUnits } from "../actions";
 import TestView from "./views/TestView";
+import AutoCompleSearchField from "./parts/AutoCompleSearchField";
+import SearchFieldAsync from "./parts/SearchFieldAsync";
 
 const dark = createMuiTheme({
 	palette: {
@@ -61,6 +63,9 @@ const blueLight = createMuiTheme({
 		type: "light",
 		primary: {
 			main: "#1976d2",
+		},
+		secondary: {
+			main: "#fff",
 		},
 	},
 	overrides: {
@@ -159,7 +164,9 @@ function App({ selectedTheme, selectedUnits, setTheme, setUnits }) {
 							{xsDevice && <BottomNavigation />}
 						</Route>
 						<Route path="/testview" exact>
-							<TestView />
+							<AutoCompleSearchField />
+							{/* <TestView /> */}
+							<SearchFieldAsync />
 						</Route>
 						<Route>
 							<Grid

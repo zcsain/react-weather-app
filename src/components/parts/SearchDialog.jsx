@@ -19,48 +19,11 @@ import {
 	resetOneCall,
 	resetSearchTerm,
 } from "../../actions";
-import SearchFieldAsync from "./SearchFieldAsync";
-import AutoCompleSearchField from "./AutoCompleSearchField";
 
-function FormDialog(props) {
+function SearchDialog() {
 	const [open, setOpen] = useState(false);
 	const [searchValue, setSearchValue] = useState("");
 	const history = useHistory();
-
-	const handleChange = (event) => {
-		setSearchValue(event.target.value);
-	};
-
-	const handlePress = (event) => {
-		if (event.key === "Enter") {
-			event.preventDefault();
-			props.setSearchTerm(searchValue);
-			resetData();
-
-			// Redirects to selected view
-			const currentUrl = props.match.url;
-			const currentLocation = props.match.params.location;
-			const redirectTo = currentUrl.replace(currentLocation, searchValue);
-			history.push(redirectTo);
-
-			setSearchValue("");
-			handleClose();
-		}
-	};
-
-	const resetData = () => {
-		props.resetCurrent();
-		props.resetOneCall();
-		props.resetSearchTerm();
-	};
-
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-	};
 
 	return (
 		<Fragment>
@@ -74,7 +37,7 @@ function FormDialog(props) {
 			>
 				{/* <DialogTitle id="form-dialog-title">Search</DialogTitle> */}
 				<DialogContent>
-					{/* <TextField
+					<TextField
 						value={searchValue}
 						onChange={handleChange}
 						onKeyDown={handlePress}
@@ -88,9 +51,7 @@ function FormDialog(props) {
 						inputProps={{
 							autoComplete: "off",
 						}}
-					/> */}
-					{/* <SearchFieldAsync /> */}
-					<AutoCompleSearchField whenClicked={handleClose} />
+					/>
 				</DialogContent>
 				<DialogContent>
 					<DialogContentText>Search city by name.</DialogContentText>
@@ -112,15 +73,4 @@ function FormDialog(props) {
 	);
 }
 
-const mapStateToProps = (state) => {
-	return {
-		searchTerm: state.location,
-	};
-};
-
-export default connect(mapStateToProps, {
-	setSearchTerm,
-	resetCurrent,
-	resetOneCall,
-	resetSearchTerm,
-})(withRouter(FormDialog));
+export default SearchDialog;

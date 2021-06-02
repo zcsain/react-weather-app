@@ -29,6 +29,7 @@ import {
 import GitHubButton from "../parts/GitHubButton";
 import ExpandableSettings from "../parts/ExpandableSettings";
 import titleCase from "../../utils/titleCase";
+import AutoCompleSearchField from "../parts/AutoCompleSearchField";
 
 const useStyles = makeStyles((theme) => ({
 	spacing: {
@@ -177,6 +178,7 @@ function Header(props) {
 							/>
 						</div>
 					) : null}
+					{/* <AutoCompleSearchField /> */}
 					<ExpandableSettings viewOptions={false} />
 					<Tooltip title="Toggle light/dark theme">
 						<IconButton
