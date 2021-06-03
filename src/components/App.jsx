@@ -29,10 +29,6 @@ import BottomNavigation from "./navigation/BottomNavigation";
 import ErrorView from "./views/ErrorView";
 import ScrollTop from "./parts/ScrollTop";
 import { setTheme, setUnits } from "../actions";
-import TestView from "./views/TestView";
-import AutoCompleSearchField from "./parts/AutoCompleSearchField";
-import SearchFieldAsync from "./parts/SearchFieldAsync";
-import SearchPopover from "./parts/SearchPopover";
 
 const dark = createMuiTheme({
 	palette: {
@@ -163,12 +159,6 @@ function App({ selectedTheme, selectedUnits, setTheme, setUnits }) {
 							{!xsDevice && <NavigationTabs />}
 							<HourlyView />
 							{xsDevice && <BottomNavigation />}
-						</Route>
-						<Route path="/testview" exact>
-							{/* <AutoCompleSearchField /> */}
-							{/* <TestView /> */}
-							{/* <SearchFieldAsync /> */}
-							<SearchPopover />
 						</Route>
 						<Route>
 							<Grid

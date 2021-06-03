@@ -19,8 +19,6 @@ import {
 	resetOneCall,
 	resetSearchTerm,
 } from "../../actions";
-import SearchFieldAsync from "./SearchFieldAsync";
-import AutoCompleSearchField from "./AutoCompleSearchField";
 
 function FormDialog(props) {
 	const [open, setOpen] = useState(false);

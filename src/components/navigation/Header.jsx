@@ -29,8 +29,6 @@ import {
 import GitHubButton from "../parts/GitHubButton";
 import ExpandableSettings from "../parts/ExpandableSettings";
 import titleCase from "../../utils/titleCase";
-import AutoCompleSearchField from "../parts/AutoCompleSearchField";
-import SearchPopover from "../parts/SearchPopover";
 
 const useStyles = makeStyles((theme) => ({
 	spacing: {

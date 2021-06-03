@@ -14,7 +14,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 // Custom
 import { setSearchTerm } from "../../actions";
-import SearchPopover from "../parts/SearchPopover";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -108,7 +107,6 @@ function HomeSearchField(props) {
 						onChange={handleChange}
 						onKeyDown={handlePress}
 					/>
-					{/* <SearchPopover barStyle={{ height: "45px", width: "100%" }} /> */}
 				</Paper>
 			</Container>
 		</Tooltip>

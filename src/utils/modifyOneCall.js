@@ -21,6 +21,10 @@ const hoursWithSunriseSunsetData = (hours, sunriseSunsetData, timezone) => {
 				return { ...hour, ...element };
 			}
 		}
+
+		// This will never be reached, but is here so react doesn't complain, and "Netlify"
+		// treats warnings as error (can't deploy if there are warnings)
+		return null;
 	});
 };
 

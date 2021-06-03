@@ -1,36 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { Link as RouterLink, useHistory, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import clsx from "clsx";
 
 // Material UI
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
-import Tooltip from "@material-ui/core/Tooltip";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles";
-import { InputBase } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import Icon from "@material-ui/core/Icon";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Input from "@material-ui/core/Input";
 
 // Custom
 import {
 	setSearchTerm,
-	toggleTheme,
 	resetCurrent,
 	resetOneCall,
-	resetSearchTerm,
 	fetchGeolocation,
 } from "../../actions";
-import GitHubButton from "../parts/GitHubButton";
-import ExpandableSettings from "../parts/ExpandableSettings";
-import titleCase from "../../utils/titleCase";
 
 const useStyles = makeStyles((theme) => ({
 	search: {
@@ -112,7 +97,7 @@ function AutoCompleSearchField({
 		if (debouncedValue) {
 			fetchGeolocation(debouncedValue);
 		}
-	}, [debouncedValue]);
+	}, [debouncedValue, fetchGeolocation]);
 
 	// Update "options" when geolocation data changes
 	useEffect(() => {
@@ -135,7 +120,7 @@ function AutoCompleSearchField({
 			setValue(null);
 			setInputValue("");
 		}
-	}, [value]);
+	}, [value, resetCurrent, resetOneCall, setSearchTerm]);
 
 	return (
 		<Autocomplete

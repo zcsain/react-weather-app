@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Link as RouterLink, useHistory, withRouter } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 
 // Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import TextField from "@material-ui/core/TextField";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { fade } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
@@ -98,7 +93,6 @@ function SearchPopover({
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [searchValue, setSearchValue] = useState("");
 	const [debouncedValue, setDebouncedValue] = useState(searchValue);
-	const [options, setOptions] = useState(geolocation);
 
 	useEffect(() => {
 		const timerId = setTimeout(() => {
@@ -119,7 +113,7 @@ function SearchPopover({
 		if (debouncedValue) {
 			fetchGeolocation(debouncedValue);
 		}
-	}, [debouncedValue]);
+	}, [debouncedValue, fetchGeolocation]);
 
 	const handleChange = (event) => {
 		setSearchValue(event.target.value);
