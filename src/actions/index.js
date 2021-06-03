@@ -11,6 +11,7 @@ import {
 	SET_LIGHT_THEME,
 	SET_THEME,
 	GEOLOCATE_REQUEST,
+	RESET_GEOLOCATION,
 } from "./types";
 import history from "../history";
 import openWeather from "../apis/openWeather";
@@ -113,6 +114,12 @@ export const fetchOneCall = (location, units, lang = "en") => {
 	};
 };
 
+export const resetOneCall = () => {
+	return {
+		type: RESET_ONECALL,
+	};
+};
+
 export const fetchGeolocation = (location) => {
 	return async (dispatch, getState) => {
 		try {
@@ -160,9 +167,9 @@ export const fetchGeolocation = (location) => {
 	};
 };
 
-export const resetOneCall = () => {
+export const resetGeolocation = () => {
 	return {
-		type: RESET_ONECALL,
+		type: RESET_GEOLOCATION,
 	};
 };
 

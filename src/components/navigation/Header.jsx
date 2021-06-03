@@ -160,7 +160,7 @@ function Header(props) {
 					)}
 					<div style={{ flexGrow: 1 }} />
 
-					{/* {props.searchFieldInAppBar ? (
+					{props.searchFieldInAppBar ? (
 						<div className={classes.search}>
 							<div className={classes.searchIcon}>
 								<SearchIcon />
@@ -178,8 +178,8 @@ function Header(props) {
 								onKeyDown={handlePress}
 							/>
 						</div>
-					) : null} */}
-					<SearchPopover />
+					) : null}
+					{/* <SearchPopover /> */}
 					{/* <AutoCompleSearchField /> */}
 					<ExpandableSettings viewOptions={false} />
 					<Tooltip title="Toggle light/dark theme">

@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { Link as RouterLink, useHistory, withRouter } from "react-router-dom";
+
+// Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
@@ -12,6 +16,16 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { fade } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import { InputBase } from "@material-ui/core";
+
+// Custom
+import {
+	fetchGeolocation,
+	setSearchTerm,
+	resetCurrent,
+	resetOneCall,
+	resetSearchTerm,
+	resetGeolocation,
+} from "../../actions";
 
 const useStyles = makeStyles((theme) => ({
 	typography: {
@@ -58,19 +72,54 @@ const useStyles = makeStyles((theme) => ({
 		transition: theme.transitions.create("width"),
 		width: "100%",
 		[theme.breakpoints.up("sm")]: {
-			width: "12ch",
-			"&:focus": {
-				width: "20ch",
-			},
+			// width: "88ch",
+			width: "18ch",
+			// width: "12ch",
+			// "&:focus": {
+			// 	width: "20ch",
+			// },
 		},
 	},
 }));
 
-function SearchPopover() {
+function SearchPopover({
+	barStyle,
+	fetchGeolocation,
+	geolocation,
+	setSearchTerm,
+	resetCurrent,
+	resetOneCall,
+	resetSearchTerm,
+	match,
+	resetGeolocation,
+}) {
 	const classes = useStyles();
+	const history = useHistory();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [searchValue, setSearchValue] = useState("");
-	const [showContentOrLoader, setShowContentOrLoader] = useState(false);
+	const [debouncedValue, setDebouncedValue] = useState(searchValue);
+	const [options, setOptions] = useState(geolocation);
+
+	useEffect(() => {
+		const timerId = setTimeout(() => {
+			// Run only if "searchValue" is not empty
+			if (searchValue) {
+				setDebouncedValue(searchValue);
+			}
+		}, 500);
+
+		// Clear timer if user continues to write within timeout period
+		return () => {
+			clearTimeout(timerId);
+		};
+	}, [searchValue]);
+
+	useEffect(() => {
+		// Only fetch if "debouncedValue" is not empty
+		if (debouncedValue) {
+			fetchGeolocation(debouncedValue);
+		}
+	}, [debouncedValue]);
 
 	const handleChange = (event) => {
 		setSearchValue(event.target.value);
@@ -78,137 +127,33 @@ function SearchPopover() {
 
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
-		// For test only
-		setTimeout(function () {
-			setShowContentOrLoader(true);
-		}, 2000);
 	};
 
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
 
-	const [options, setOptions] = useState([
-		{
-			name: "London",
-			local_names: {
-				af: "Londen",
-				ar: "لندن",
-				ascii: "London",
-				az: "London",
-				bg: "Лондон",
-				ca: "Londres",
-				da: "London",
-				de: "London",
-				el: "Λονδίνο",
-				en: "London",
-				eu: "Londres",
-				fa: "لندن",
-				feature_name: "London",
-				fi: "Lontoo",
-				fr: "Londres",
-				gl: "Londres",
-				he: "לונדון",
-				hi: "लंदन",
-				hr: "London",
-				hu: "London",
-				id: "London",
-				it: "Londra",
-				ja: "ロンドン",
-				la: "Londinium",
-				lt: "Londonas",
-				mk: "Лондон",
-				nl: "Londen",
-				no: "London",
-				pl: "Londyn",
-				pt: "Londres",
-				ro: "Londra",
-				ru: "Лондон",
-				sk: "Londýn",
-				sl: "London",
-				sr: "Лондон",
-				th: "ลอนดอน",
-				tr: "Londra",
-				vi: "Luân Đôn",
-				zu: "ILondon",
-			},
-			lat: 51.5085,
-			lon: -0.1257,
-			country: "GB",
-		},
-		{
-			name: "London",
-			local_names: {
-				ar: "لندن",
-				ascii: "London",
-				bg: "Лондон",
-				de: "London",
-				en: "London",
-				fa: "لندن، انتاریو",
-				feature_name: "London",
-				fi: "London",
-				fr: "London",
-				he: "לונדון",
-				ja: "ロンドン",
-				lt: "Londonas",
-				nl: "London",
-				pl: "London",
-				pt: "London",
-				ru: "Лондон",
-				sr: "Лондон",
-			},
-			lat: 42.9834,
-			lon: -81.233,
-			country: "CA",
-		},
-		{
-			name: "London",
-			local_names: {
-				ar: "لندن",
-				ascii: "London",
-				en: "London",
-				fa: "لندن، اوهایو",
-				feature_name: "London",
-				sr: "Ландон",
-			},
-			lat: 39.8865,
-			lon: -83.4483,
-			country: "US",
-			state: "OH",
-		},
-		{
-			name: "London",
-			local_names: {
-				ar: "لندن",
-				ascii: "London",
-				en: "London",
-				fa: "لندن، کنتاکی",
-				feature_name: "London",
-				sr: "Ландон",
-			},
-			lat: 37.129,
-			lon: -84.0833,
-			country: "US",
-			state: "KY",
-		},
-		{
-			name: "London",
-			local_names: {
-				ascii: "London",
-				ca: "Londres",
-				en: "London",
-				feature_name: "London",
-			},
-			lat: 36.4761,
-			lon: -119.4432,
-			country: "US",
-			state: "CA",
-		},
-	]);
-
-	const handleListItemClick = (item) => {
+	const handleListItemClick = (event, searchText) => {
 		handleClose();
-		setSearchValue(item);
+
+		setSearchTerm(searchText);
+		resetData();
+
+		// Redirects to selected view
+		const currentUrl = match.url;
+		const currentLocation = match.params.location;
+		const redirectTo = currentUrl.replace(currentLocation, searchValue);
+		history.push(redirectTo);
+
+		setSearchValue("");
+		event.target.blur();
+	};
+
+	const resetData = () => {
+		resetCurrent();
+		resetOneCall();
+		resetGeolocation();
+		// resetSearchTerm();
 	};
 
 	const open = Boolean(anchorEl);
@@ -221,6 +166,8 @@ function SearchPopover() {
 					<SearchIcon />
 				</div>
 				<InputBase
+					// style={{ height: "45px", width: "100%" }}
+					style={barStyle}
 					autoFocus={false}
 					placeholder="Search"
 					classes={{
@@ -248,23 +195,28 @@ function SearchPopover() {
 				anchorEl={anchorEl}
 				onClose={handleClose}
 				anchorOrigin={{
+					// vertical: "bottom",
+					// horizontal: "center",
 					vertical: "bottom",
-					horizontal: "center",
+					horizontal: "left",
 				}}
 				transformOrigin={{
+					// vertical: "top",
+					// horizontal: "center",
 					vertical: "top",
-					horizontal: "center",
+					horizontal: "left",
 				}}
 				disableAutoFocus={true}
 				disableEnforceFocus={true}
 			>
-				{showContentOrLoader ? (
+				{geolocation.length ? (
 					<List
 						component="nav"
 						aria-label="secondary mailbox folder"
 						// style={{ minWidth: "30ch" }}
+						// style={{ width: "847px" }}
 					>
-						{options.map(({ name, state, country }, index) => {
+						{geolocation.map(({ name, state, country }, index) => {
 							const stateDef = state ? state + ", " : "";
 							const searchText = name + ", " + stateDef + country;
 
@@ -272,7 +224,7 @@ function SearchPopover() {
 								<ListItem
 									key={index}
 									button
-									onClick={() => handleListItemClick(searchText)}
+									onClick={(event) => handleListItemClick(event, searchText)}
 								>
 									<ListItemText primary={searchText} />
 								</ListItem>
@@ -286,7 +238,7 @@ function SearchPopover() {
 					<List
 						component="nav"
 						aria-label="secondary mailbox folder"
-						// style={{ minWidth: "30ch" }}
+						style={{ minWidth: "218px" }}
 					>
 						<ListItem button disabled>
 							<ListItemText primary="No match" />
@@ -298,4 +250,17 @@ function SearchPopover() {
 	);
 }
 
-export default SearchPopover;
+const mapStateToProps = (state) => {
+	return {
+		geolocation: state.geolocation,
+	};
+};
+
+export default connect(mapStateToProps, {
+	fetchGeolocation,
+	setSearchTerm,
+	resetCurrent,
+	resetOneCall,
+	resetSearchTerm,
+	resetGeolocation,
+})(withRouter(SearchPopover));
