@@ -116,7 +116,8 @@ function CurrentView({
 		return (
 			<Card className={classes.card} raised>
 				<CardHeader
-					title={`${titleCase(locationToSearch)} - Current weather`}
+					title={titleCase(locationToSearch)}
+					// title={`${titleCase(locationToSearch)} - Current weather`}
 					subheader={date}
 				/>
 				<CardContent>

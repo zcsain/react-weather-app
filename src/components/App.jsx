@@ -32,6 +32,7 @@ import { setTheme, setUnits } from "../actions";
 import TestView from "./views/TestView";
 import AutoCompleSearchField from "./parts/AutoCompleSearchField";
 import SearchFieldAsync from "./parts/SearchFieldAsync";
+import SearchPopover from "./parts/SearchPopover";
 
 const dark = createMuiTheme({
 	palette: {
@@ -164,9 +165,10 @@ function App({ selectedTheme, selectedUnits, setTheme, setUnits }) {
 							{xsDevice && <BottomNavigation />}
 						</Route>
 						<Route path="/testview" exact>
-							<AutoCompleSearchField />
+							{/* <AutoCompleSearchField /> */}
 							{/* <TestView /> */}
-							<SearchFieldAsync />
+							{/* <SearchFieldAsync /> */}
+							<SearchPopover />
 						</Route>
 						<Route>
 							<Grid

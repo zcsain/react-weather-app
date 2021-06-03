@@ -30,6 +30,7 @@ import GitHubButton from "../parts/GitHubButton";
 import ExpandableSettings from "../parts/ExpandableSettings";
 import titleCase from "../../utils/titleCase";
 import AutoCompleSearchField from "../parts/AutoCompleSearchField";
+import SearchPopover from "../parts/SearchPopover";
 
 const useStyles = makeStyles((theme) => ({
 	spacing: {
@@ -159,7 +160,7 @@ function Header(props) {
 					)}
 					<div style={{ flexGrow: 1 }} />
 
-					{props.searchFieldInAppBar ? (
+					{/* {props.searchFieldInAppBar ? (
 						<div className={classes.search}>
 							<div className={classes.searchIcon}>
 								<SearchIcon />
@@ -177,7 +178,8 @@ function Header(props) {
 								onKeyDown={handlePress}
 							/>
 						</div>
-					) : null}
+					) : null} */}
+					<SearchPopover />
 					{/* <AutoCompleSearchField /> */}
 					<ExpandableSettings viewOptions={false} />
 					<Tooltip title="Toggle light/dark theme">
