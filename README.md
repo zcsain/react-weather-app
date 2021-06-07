@@ -19,6 +19,22 @@ A web application for displaying weather forecast information, with support for 
 
 ## Showcase
 
+| iPhone 4                         | iPhone 5, SE                            | iPhone 6, 7, 8                             |
+| -------------------------------- | --------------------------------------- | ------------------------------------------ |
+| ![iPhone 4](images/iPhone_4.jpg) | ![iPhone 5, SE](images/iPhone_5_SE.jpg) | ![iPhone 6, 7, 8](images/iPhone_6_7_8.jpg) |
+
+| iPhone 6, 7, 8 Plus                                  | iPhone X                         | Nexus 6P                         |
+| ---------------------------------------------------- | -------------------------------- | -------------------------------- |
+| ![iPhone 6, 7, 8 Plus](images/iPhone_6_7_8_Plus.jpg) | ![iPhone X](images/iPhone_X.jpg) | ![Nexus 6P](images/Nexus_6P.jpg) |
+
+| iPad                     |
+| ------------------------ |
+| ![iPad](images/iPad.jpg) |
+
+| OpePlus 7T - Light Mode                                   | OnePlus 7T - Dark Mode                                  |
+| --------------------------------------------------------- | ------------------------------------------------------- |
+| ![OpePlus 7T - Light Mode](images/One_Plust_7T_Light.jpg) | ![OpePlus 7T - Dark Mode](images/One_Plust_7T_Dark.jpg) |
+
 ## Demo
 
 Live app deployed to Netlify (client) and Heroku (server): [Simple Weather](https://priceless-tesla-d4503b.netlify.app/)
@@ -47,7 +63,3 @@ Project is created with:
   - [Google Chrome](https://www.google.com/chrome/)
   - [Responsively App](https://responsively.app/)
   - [VS Code](https://code.visualstudio.com/)
-
-| iPhone 4                         | iPhone 5, SE                            | iPhone 6, 7, 8                             | iPhone 6, 7, 8 Plus                                  | iPhone X                         |
-| -------------------------------- | --------------------------------------- | ------------------------------------------ | ---------------------------------------------------- | -------------------------------- |
-| ![iPhone 4](images/iPhone_4.jpg) | ![iPhone 5, SE](images/iPhone_5_SE.jpg) | ![iPhone 6, 7, 8](images/iPhone_6_7_8.jpg) | ![iPhone 6, 7, 8 Plus](images/iPhone_6_7_8_Plus.jpg) | ![iPhone X](images/iPhone_X.jpg) |
