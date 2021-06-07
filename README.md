@@ -43,11 +43,13 @@ A web application for displaying weather forecast information, with support for 
 
 Live app deployed to Netlify (client) and Heroku (server): [Simple Weather](https://priceless-tesla-d4503b.netlify.app/)
 
-Mobile demo:
+<!-- Mobile demo: -->
+
 ![Mobile demo](images/phone.gif)
 
-Tablet/Laptop/Desktop demo:
-1[Tablet/Laptop/Desktop demo](images/Desktop-Gif.gif)
+<!-- Tablet/Laptop/Desktop demo: -->
+
+![Tablet/Laptop/Desktop demo](images/Desktop-Gif.gif)
 
 ## Technologies
 
