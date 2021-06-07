@@ -196,13 +196,13 @@ function HourlyCard({ hour, timezone, selectedUnits, searchTerm }) {
 					</Grid>
 					<Grid item xs={12} sm={6}>
 						<InfoBoxSmall
-							iconTwo="wi wi-raindrops"
-							iconStylingTwo={classes.precipitation}
-							titleTwo="Rain (%)"
-							dataTwo={pop * 100 + selectedUnits.units.humidity}
 							iconOne="wi wi-day-sunny"
 							titleOne="Feels like"
 							dataOne={feelsLike.toFixed(0) + selectedUnits.units.temp}
+							iconTwo="wi wi-raindrops"
+							iconStylingTwo={classes.precipitation}
+							titleTwo="Rain (%)"
+							dataTwo={(pop * 100).toFixed(0) + selectedUnits.units.humidity}
 						/>
 					</Grid>
 					<Grid item xs={12} sm={6}>
