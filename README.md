@@ -23,13 +23,17 @@ A web application for displaying weather forecast information, with support for 
 | -------------------------------- | --------------------------------------- | ------------------------------------------ |
 | ![iPhone 4](images/iPhone_4.jpg) | ![iPhone 5, SE](images/iPhone_5_SE.jpg) | ![iPhone 6, 7, 8](images/iPhone_6_7_8.jpg) |
 
-| iPhone 6, 7, 8 Plus                                  | iPhone X                         | Nexus 6P                         |
-| ---------------------------------------------------- | -------------------------------- | -------------------------------- |
-| ![iPhone 6, 7, 8 Plus](images/iPhone_6_7_8_Plus.jpg) | ![iPhone X](images/iPhone_X.jpg) | ![Nexus 6P](images/Nexus_6P.jpg) |
+| iPhone 6, 7, 8 Plus                                  | iPhone X                         | Samsung Galaxy S8                                   |
+| ---------------------------------------------------- | -------------------------------- | --------------------------------------------------- |
+| ![iPhone 6, 7, 8 Plus](images/iPhone_6_7_8_Plus.jpg) | ![iPhone X](images/iPhone_X.jpg) | ![Samsung Galaxy S8 ](images/Samsung_Galaxy_S8.jpg) |
 
-| iPad                     |
-| ------------------------ |
-| ![iPad](images/iPad.jpg) |
+| iPad                     | iPad PRO                         |
+| ------------------------ | -------------------------------- |
+| ![iPad](images/iPad.jpg) | ![iPad PRO](images/iPad_Pro.jpg) |
+
+| Laptop/Desktop                               |
+| -------------------------------------------- |
+| ![Laptop/Desktop](images/Laptop-Desktop.png) |
 
 | OpePlus 7T - Light Mode                                   | OnePlus 7T - Dark Mode                                  |
 | --------------------------------------------------------- | ------------------------------------------------------- |
@@ -38,6 +42,12 @@ A web application for displaying weather forecast information, with support for 
 ## Demo
 
 Live app deployed to Netlify (client) and Heroku (server): [Simple Weather](https://priceless-tesla-d4503b.netlify.app/)
+
+Mobile demo:
+![Mobile demo](images/phone.gif)
+
+Tablet/Laptop/Desktop demo:
+1[Tablet/Laptop/Desktop demo](images/Desktop-Gif.gif)
 
 ## Technologies
 
