@@ -1,4 +1,4 @@
-import openWeatherIconsMap from "./openWeatherIconsMap.json";
+import openWeatherIconsMap from "../openWeatherIconsMap.json";
 import createLocalDate from "./createLocalDate";
 
 // export const createLocalDate = (timestamp, offset) => {

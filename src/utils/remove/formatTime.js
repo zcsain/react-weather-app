@@ -7,7 +7,7 @@
  * @returns {string} Time formated to display: "h:min" or "h:min PM/AM"
  */
 
-import formatHours from "./formatHours";
+import formatHours from "../formatHours";
 
 const formatTime = (timestamp, offset = 0, selectedUnits = "metric") => {
 	const leadingZero = (minutes) => {

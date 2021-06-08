@@ -12,7 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 
 // Custom
-import DateTimeBadge from "./parts/DateTimeBadge";
+import DateTimeBadge from "../parts/DateTimeBadge";
 
 const useStyles = makeStyles((theme) => ({
 	temp: {
