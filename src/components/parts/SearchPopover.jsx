@@ -68,11 +68,11 @@ const useStyles = makeStyles((theme) => ({
 		width: "100%",
 		[theme.breakpoints.up("sm")]: {
 			// width: "88ch",
-			width: "18ch",
-			// width: "12ch",
-			// "&:focus": {
-			// 	width: "20ch",
-			// },
+			// width: "18ch",
+			width: "12ch",
+			"&:focus": {
+				width: "20ch",
+			},
 		},
 	},
 }));
@@ -204,12 +204,7 @@ function SearchPopover({
 				disableEnforceFocus={true}
 			>
 				{geolocation.length ? (
-					<List
-						component="nav"
-						aria-label="secondary mailbox folder"
-						// style={{ minWidth: "30ch" }}
-						// style={{ width: "847px" }}
-					>
+					<List component="nav" aria-label="secondary mailbox folder">
 						{geolocation.map(({ name, state, country }, index) => {
 							const stateDef = state ? state + ", " : "";
 							const searchText = name + ", " + stateDef + country;
@@ -229,11 +224,7 @@ function SearchPopover({
 					// <div className={classes.progress}>
 					//   <CircularProgress size={28} />
 					// </div>
-					<List
-						component="nav"
-						aria-label="secondary mailbox folder"
-						style={{ minWidth: "218px" }}
-					>
+					<List component="nav" aria-label="secondary mailbox folder">
 						<ListItem button disabled>
 							<ListItemText primary="No match" />
 						</ListItem>

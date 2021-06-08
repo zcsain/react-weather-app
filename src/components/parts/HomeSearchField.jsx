@@ -95,7 +95,7 @@ function HomeSearchField(props) {
 				>
 					Simple Weather
 				</Typography>
-				<Paper component="form" className={classes.root}>
+				<Paper ref={props.reference} component="form" className={classes.root}>
 					<IconButton className={classes.iconButton} aria-label="menu">
 						<SearchIcon />
 					</IconButton>

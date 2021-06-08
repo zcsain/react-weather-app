@@ -23,12 +23,14 @@ import CurrentView from "./views/CurrentView";
 import DailyView from "./views/DailyView";
 import HourlyView from "./views/HourlyView";
 import history from "../history";
-import SearchField from "./parts/HomeSearchField";
+import HomeSearchField from "./parts/HomeSearchField";
 import NavigationTabs from "./navigation/NavigationTabs";
 import BottomNavigation from "./navigation/BottomNavigation";
 import ErrorView from "./views/ErrorView";
 import ScrollTop from "./parts/ScrollTop";
 import { setTheme, setUnits } from "../actions";
+// Testing
+import TestComponent from "./TestComponent";
 
 const dark = createMuiTheme({
 	palette: {
@@ -139,7 +141,7 @@ function App({ selectedTheme, selectedUnits, setTheme, setUnits }) {
 						<Redirect exact from="/hourly" to="/" />
 						<Route path="/" exact>
 							{!xsDevice && <Header searchFieldInAppBar={false} />}
-							<SearchField />
+							<HomeSearchField />
 						</Route>
 						{/* There is definitely a better way to do this, then repeating components for each route */}
 						<Route path="/current/:location" exact>
@@ -159,6 +161,9 @@ function App({ selectedTheme, selectedUnits, setTheme, setUnits }) {
 							{!xsDevice && <NavigationTabs />}
 							<HourlyView />
 							{xsDevice && <BottomNavigation />}
+						</Route>
+						<Route path="/test" exact>
+							<TestComponent />
 						</Route>
 						<Route>
 							<Grid
