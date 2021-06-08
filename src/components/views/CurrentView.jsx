@@ -16,7 +16,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Backdrop from "../parts/Backdrop";
 import degToCompasDir from "../../utils/degToCompasDir";
 import titleCase from "../../utils/titleCase";
-import FactsCards from "../parts/FactsCard";
+import FactsCards from "../cards/FactsCard";
 import { fetchCurrent, fetchOneCall, setSearchTerm } from "../../actions";
 import iconsMapperLuxon from "../../utils/iconsMapperLuxon";
 import InfoBoxSmall from "../parts/InfoBoxSmall";

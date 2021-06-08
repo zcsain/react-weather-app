@@ -9,20 +9,15 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // Custom
 import Backdrop from "../parts/Backdrop";
-import FactsCards from "../parts/FactsCard";
+import FactsCards from "../cards/FactsCard";
 import { fetchOneCall, setSearchTerm } from "../../actions";
-import DailyCard from "../parts/DailyCard";
+import DailyCard from "../cards/DailyCard";
 
 function DailyView(props) {
 	const theme = useTheme();
 	const showFacts = useMediaQuery(theme.breakpoints.up("sm"));
-	const {
-		oneCall,
-		selectedUnits,
-		searchTerm,
-		fetchOneCall,
-		setSearchTerm,
-	} = props;
+	const { oneCall, selectedUnits, searchTerm, fetchOneCall, setSearchTerm } =
+		props;
 	const { daily: days, timezone } = oneCall;
 
 	const locationToSearch = searchTerm || props.match.params.location;

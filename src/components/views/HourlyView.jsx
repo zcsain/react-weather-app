@@ -9,7 +9,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // Custom
 import Backdrop from "../parts/Backdrop";
-import FactsCards from "../parts/FactsCard";
+import FactsCards from "../cards/FactsCard";
 import { fetchOneCall, setSearchTerm } from "../../actions";
 import HourlyCard from "../cards/HourlyCard";
 
