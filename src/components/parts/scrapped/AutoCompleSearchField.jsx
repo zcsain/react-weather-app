@@ -15,7 +15,7 @@ import {
 	resetCurrent,
 	resetOneCall,
 	fetchGeolocation,
-} from "../../actions";
+} from "../../../actions";
 
 const useStyles = makeStyles((theme) => ({
 	search: {

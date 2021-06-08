@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 
 // Custom
-import { fetchGeolocation } from "../../actions";
+import { fetchGeolocation } from "../../../actions";
 
 function TestView({ geolocations, fetchGeolocation }) {
 	useEffect(() => {

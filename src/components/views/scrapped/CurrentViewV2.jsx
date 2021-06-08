@@ -20,13 +20,13 @@ import Collapse from "@material-ui/core/Collapse";
 
 // Custom
 // import Loader from "../parts/Loader";
-import Backdrop from "../parts/Backdrop";
-import degToCompasDir from "../../utils/degToCompasDir";
-import titleCase from "../../utils/titleCase";
-import formatTime from "../../utils/formatTime";
-import FactsCards from "../parts/FactsCard";
-import { fetchCurrent, setSearchTerm } from "../../actions";
-import iconsMapper from "../../utils/iconsMapper";
+import Backdrop from "../../parts/Backdrop";
+import degToCompasDir from "../../../utils/degToCompasDir";
+import titleCase from "../../../utils/titleCase";
+import formatTime from "../../../utils/formatTime";
+import FactsCards from "../../parts/FactsCard";
+import { fetchCurrent, setSearchTerm } from "../../../actions";
+import iconsMapper from "../../../utils/iconsMapper";
 import InfoBoxSmall from "../parts/InfoBoxSmall";
 
 const useStyles = makeStyles((theme) => ({

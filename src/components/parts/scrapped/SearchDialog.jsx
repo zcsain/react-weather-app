@@ -18,7 +18,7 @@ import {
 	resetCurrent,
 	resetOneCall,
 	resetSearchTerm,
-} from "../../actions";
+} from "../../../actions";
 
 function SearchDialog() {
 	const [open, setOpen] = useState(false);

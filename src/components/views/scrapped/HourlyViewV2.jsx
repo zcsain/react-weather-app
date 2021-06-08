@@ -10,11 +10,11 @@ import Fab from "@material-ui/core/Fab";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 
 // Custom
-import Backdrop from "../parts/Backdrop";
-import FactsCards from "../parts/FactsCard";
-import { fetchOneCall, setSearchTerm } from "../../actions";
-import HourlyCard from "../cards/HourlyCard";
-import ScrollTop from "../parts/ScrollTop";
+import Backdrop from "../../parts/Backdrop";
+import FactsCards from "../../parts/FactsCard";
+import { fetchOneCall, setSearchTerm } from "../../../actions";
+import HourlyCard from "../../cards/HourlyCard";
+import ScrollTop from "../../parts/ScrollTop";
 
 function HourlyViewV2({
 	oneCall,
