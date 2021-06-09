@@ -14,6 +14,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 // Custom
 import { setSearchTerm } from "../../actions";
+import PopoverSearch from "./PopoverSearch";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -85,17 +86,16 @@ function HomeSearchField(props) {
 	};
 
 	return (
-		<Tooltip title="For more specificity use this format: location name, state code, country code">
-			<Container className={classes.container}>
-				<Typography
-					varinat="h1"
-					className={classes.content}
-					style={{ opacity: "93%" }}
-					color="primary"
-				>
-					Simple Weather
-				</Typography>
-				<Paper ref={props.reference} component="form" className={classes.root}>
+		<Container className={classes.container}>
+			<Typography
+				varinat="h1"
+				className={classes.content}
+				style={{ opacity: "93%" }}
+				color="primary"
+			>
+				Simple Weather
+			</Typography>
+			{/* <Paper ref={props.reference} component="form" className={classes.root}>
 					<IconButton className={classes.iconButton} aria-label="menu">
 						<SearchIcon />
 					</IconButton>
@@ -107,9 +107,10 @@ function HomeSearchField(props) {
 						onChange={handleChange}
 						onKeyDown={handlePress}
 					/>
-				</Paper>
-			</Container>
-		</Tooltip>
+					<PopoverSearch />
+				</Paper> */}
+			<PopoverSearch customHeight={"45px"} />
+		</Container>
 	);
 }
 

@@ -1,4 +1,4 @@
-import Ract, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory, withRouter } from "react-router-dom";
 

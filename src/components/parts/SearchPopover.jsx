@@ -160,8 +160,8 @@ function SearchPopover({
 					<SearchIcon />
 				</div>
 				<InputBase
-					// style={{ height: "45px", width: "100%" }}
-					style={barStyle}
+					style={{ height: "45px", width: "100%" }}
+					// style={barStyle}
 					autoFocus={false}
 					placeholder="Search"
 					classes={{

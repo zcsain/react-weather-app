@@ -29,6 +29,7 @@ import {
 import GitHubButton from "../parts/GitHubButton";
 import ExpandableSettings from "../parts/ExpandableSettings";
 import titleCase from "../../utils/titleCase";
+import HeaderSearch from "../parts/HeaderSearch";
 
 const useStyles = makeStyles((theme) => ({
 	spacing: {
@@ -129,6 +130,7 @@ function Header(props) {
 		<React.Fragment>
 			{/* <AppBar position="fixed" color={props.theme ? "primary" : "inherit"}> */}
 			<AppBar
+				id="header"
 				position="fixed"
 				color={props.selectedTheme ? "primary" : "inherit"}
 			>
@@ -140,6 +142,7 @@ function Header(props) {
 						to="/"
 						onClick={resetData}
 					/>
+
 					{!props.searchTerm ? (
 						<Typography
 							className={classes.title}
@@ -153,11 +156,12 @@ function Header(props) {
 						</Typography>
 					) : (
 						<Typography className={classes.title} variant="h6" noWrap>
-							{titleCase(props.searchTerm)}
+							{props.searchTerm}
+							{/* {titleCase(props.searchTerm)} */}
 						</Typography>
 					)}
 					<div style={{ flexGrow: 1 }} />
-
+					<HeaderSearch />
 					{props.searchFieldInAppBar ? (
 						<div className={classes.search}>
 							<div className={classes.searchIcon}>
