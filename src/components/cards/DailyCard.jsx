@@ -216,9 +216,7 @@ function DailyCard({ day, timezone, selectedUnits, searchTerm }) {
 						>
 							{/* {titleCase(searchTerm)} */}
 							{!showShortDescription &&
-								[titleCase(searchTerm), " - ", capitalize(description)].join(
-									""
-								)}
+								[searchTerm, " - ", capitalize(description)].join("")}
 						</Typography>
 					</Grid>
 					<Grid item xs={12} sm={6}>
@@ -249,7 +247,7 @@ function DailyCard({ day, timezone, selectedUnits, searchTerm }) {
 							iconOne="wi wi-raindrops"
 							iconStylingOne={classes.precipitation}
 							titleOne="Rain (%)"
-							dataOne={pop * 100 + selectedUnits.units.humidity}
+							dataOne={(pop * 100).toFixed(0) + selectedUnits.units.humidity}
 							iconTwo="wi wi-raindrops"
 							iconStylingTwo={classes.precipitation}
 							titleTwo="Rain"

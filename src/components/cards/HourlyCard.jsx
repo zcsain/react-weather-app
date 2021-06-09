@@ -189,9 +189,7 @@ function HourlyCard({ hour, timezone, selectedUnits, searchTerm }) {
 						>
 							{/* {capitalize(searchTerm)} */}
 							{!showShortDescription &&
-								[titleCase(searchTerm), " - ", capitalize(description)].join(
-									""
-								)}
+								[searchTerm, " - ", capitalize(description)].join("")}
 						</Typography>
 					</Grid>
 					<Grid item xs={12} sm={6}>
