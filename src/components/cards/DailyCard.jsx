@@ -17,7 +17,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Custom
 import DateTimeBadge from "../parts/DateTimeBadge";
 import capitalize from "../../utils/capitalize";
-import titleCase from "../../utils/titleCase";
 import iconsMapperLuxon from "../../utils/iconsMapperLuxon";
 import degToCompasDir from "../../utils/degToCompasDir";
 import InfoBoxSmall from "../parts/InfoBoxSmall";

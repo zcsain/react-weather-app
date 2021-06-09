@@ -27,7 +27,7 @@ const useTargetDimensions = (myRef) => {
 		};
 
 		// Update when reference element changes
-	}, [myRef]);
+	}, [myRef, getDimensions]);
 
 	return dimensions;
 };

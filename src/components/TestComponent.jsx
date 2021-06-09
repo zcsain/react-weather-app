@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import clsx from "clsx";
 
@@ -22,10 +22,11 @@ import { toggleTheme } from "../actions";
 import GitHubButton from "./parts/GitHubButton";
 
 // Testing
-import SearchPopover from "./parts/SearchPopover";
-import useTargetDimensions from "../hooks/useTargetDimensions";
+// import SearchPopover from "./parts/SearchPopover";
+// import useTargetDimensions from "../hooks/useTargetDimensions";
 import HomeSearchField from "./parts/HomeSearchField";
-import PopoverSearch from "./parts/PopoverSearch";
+// import PopoverSearch from "./parts/PopoverSearch";
+import HeaderSearch from "./parts/HeaderSearch";
 
 const useStyles = makeStyles((theme) => ({
 	logo: {
@@ -75,34 +76,35 @@ const useStyles = makeStyles((theme) => ({
 		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
 		transition: theme.transitions.create("width"),
 		width: "100%",
-		[theme.breakpoints.up("sm")]: {
-			width: "12ch",
-			"&:focus": {
-				width: "20ch",
-			},
-		},
+		// [theme.breakpoints.up("sm")]: {
+		// 	width: "20ch",
+		// 	// width: "12ch",
+		// 	// "&:focus": {
+		// 	// 	width: "20ch",
+		// 	// },
+		// },
 	},
 }));
 
 function TestComponent({ selectedTheme, toggleTheme }) {
 	const classes = useStyles();
-	const componentRef = useRef();
-	const { width, height } = useTargetDimensions(componentRef);
-	const searchRef = useRef();
-	const { width: searchWidth, height: searchHeight } =
-		useTargetDimensions(searchRef);
+	// const componentRef = useRef();
+	// const { width, height } = useTargetDimensions(componentRef);
+	// const searchRef = useRef();
+	// const { width: searchWidth, height: searchHeight } =
+	// 	useTargetDimensions(searchRef);
 
 	console.log("TestComponent re-rendered");
 
 	const renderSearchWithPopover = () => {
 		return (
-			<div ref={componentRef} className={classes.search}>
+			<div className={classes.search}>
 				<div className={classes.searchIcon}>
 					<SearchIcon />
 				</div>
 				<InputBase
 					autoFocus={false}
-					placeholder="Search…"
+					placeholder="Search"
 					classes={{
 						root: classes.inputRoot,
 						input: classes.inputInput,
@@ -114,6 +116,7 @@ function TestComponent({ selectedTheme, toggleTheme }) {
 					// onKeyDown={handlePress}
 				/>
 			</div>
+			// <PopoverSearch />
 		);
 	};
 
@@ -129,7 +132,8 @@ function TestComponent({ selectedTheme, toggleTheme }) {
 						Simple Weather
 					</Typography>
 					<div style={{ flexGrow: 1 }} />
-					{renderSearchWithPopover()}
+					{/* {renderSearchWithPopover()} */}
+					<HeaderSearch />
 					<ExpandableSettings viewOptions={false} />
 					<Tooltip title="Toggle light/dark theme">
 						<IconButton
@@ -147,14 +151,15 @@ function TestComponent({ selectedTheme, toggleTheme }) {
 					/>
 				</Toolbar>
 			</AppBar>
-			<HomeSearchField id="search-popover" reference={searchRef} />
-			<PopoverSearch targetWidth={searchWidth} id="search-popover" />
-			<div>
+			<HomeSearchField />
+			{/* <PopoverSearch customHeight={"45px"} /> */}
+			{/* <div>
 				<p>Width: {width}</p>
 				<p>Height: {height}</p>
 				<p>Search Width: {searchWidth}</p>
 				<p>Search Height: {searchHeight}</p>
 			</div>
+			<SearchPopover /> */}
 		</>
 	);
 }
