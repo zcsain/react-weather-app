@@ -135,6 +135,7 @@ function PopoverSearch({
 		setSearchTerm(searchText);
 		resetData();
 
+		// Redirect to current view
 		history.push(`/current/${searchText}`);
 	};
 
