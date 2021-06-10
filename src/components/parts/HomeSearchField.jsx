@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 // import { useHistory } from "react-router-dom";
 
@@ -13,7 +13,7 @@ import { Typography } from "@material-ui/core";
 // import Tooltip from "@material-ui/core/Tooltip";
 
 // Custom
-import { setSearchTerm } from "../../actions";
+import { initiateHeroku } from "../../actions";
 import PopoverSearch from "./PopoverSearch";
 
 const useStyles = makeStyles((theme) => ({
@@ -67,9 +67,15 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function HomeSearchField(props) {
+function HomeSearchField({ initiateHeroku }) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
+
+	// Make a request to heroku server to wake it from sleep (reduces search times)
+	useEffect(() => {
+		initiateHeroku();
+	}, []);
+
 	// const [searchValue, setSearchValue] = useState("");
 	// const history = useHistory();
 
@@ -114,4 +120,4 @@ function HomeSearchField(props) {
 	);
 }
 
-export default connect(null, { setSearchTerm })(HomeSearchField);
+export default connect(null, { initiateHeroku })(HomeSearchField);
