@@ -74,7 +74,7 @@ function HomeSearchField({ initiateHeroku }) {
 	// Make a request to heroku server to wake it from sleep (reduces search times)
 	useEffect(() => {
 		initiateHeroku();
-	}, []);
+	}, [initiateHeroku]);
 
 	// const [searchValue, setSearchValue] = useState("");
 	// const history = useHistory();

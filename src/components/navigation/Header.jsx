@@ -106,7 +106,7 @@ function Header(props) {
 			<AppBar
 				id="header"
 				position="fixed"
-				color={props.selectedTheme ? "primary" : "inherit"}
+				color={props.selectedTheme ? "primary" : "default"}
 			>
 				<Toolbar>
 					<Icon
