@@ -22,7 +22,6 @@ import {
 	resetSearchTerm,
 	setSearchTerm,
 } from "../../actions";
-import React from "react";
 
 const useStyles = makeStyles((theme) => ({
 	search: {
@@ -124,7 +123,14 @@ function HeaderSearch({
 		setValue("");
 		// event.target.blur();
 		// document.getElementById("input-base").blur();
-		searchRef.current.blur();
+		// searchRef.current.blur();
+		// window.focus();
+		// document.activeElement.blur();
+		// console.log(document.activeElement);
+		// event.target.focus();
+		// console.log(searchRef);
+		console.log(document.getElementById("header-input-base"));
+		document.getElementById("header-input-base").blur();
 	};
 
 	const handleClose = () => {
@@ -187,7 +193,7 @@ function HeaderSearch({
 					<SearchIcon />
 				</div>
 				<InputBase
-					id="input-base"
+					id="header-input-base"
 					ref={searchRef}
 					autoFocus={false}
 					placeholder="Search"

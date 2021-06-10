@@ -3,12 +3,17 @@ import { useState, useEffect } from "react";
 const useTargetDimensions = (myRef) => {
 	const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
-	const getDimensions = () => ({
-		width: myRef.current.offsetWidth,
-		height: myRef.current.offsetHeight,
-	});
+	// const getDimensions = () => ({
+	// 	width: myRef.current.offsetWidth,
+	// 	height: myRef.current.offsetHeight,
+	// });
 
 	useEffect(() => {
+		const getDimensions = () => ({
+			width: myRef.current.offsetWidth,
+			height: myRef.current.offsetHeight,
+		});
+
 		const handleResize = () => {
 			setDimensions(getDimensions);
 		};
@@ -27,7 +32,7 @@ const useTargetDimensions = (myRef) => {
 		};
 
 		// Update when reference element changes
-	}, [myRef, getDimensions]);
+	}, [myRef]);
 
 	return dimensions;
 };

@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 // Material UI
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import InputBase from "@material-ui/core/InputBase";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
+// import Paper from "@material-ui/core/Paper";
+// import InputBase from "@material-ui/core/InputBase";
+// import IconButton from "@material-ui/core/IconButton";
+// import SearchIcon from "@material-ui/icons/Search";
 import Container from "@material-ui/core/Container";
 import { Typography } from "@material-ui/core";
-import Tooltip from "@material-ui/core/Tooltip";
+// import Tooltip from "@material-ui/core/Tooltip";
 
 // Custom
 import { setSearchTerm } from "../../actions";
@@ -70,20 +70,20 @@ const useStyles = makeStyles((theme) => ({
 function HomeSearchField(props) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
-	const [searchValue, setSearchValue] = useState("");
-	const history = useHistory();
+	// const [searchValue, setSearchValue] = useState("");
+	// const history = useHistory();
 
-	const handleChange = (event) => {
-		setSearchValue(event.target.value);
-	};
+	// const handleChange = (event) => {
+	// 	setSearchValue(event.target.value);
+	// };
 
-	const handlePress = (event) => {
-		if (event.key === "Enter") {
-			event.preventDefault();
-			props.setSearchTerm(searchValue);
-			history.push(`/current/${searchValue}`);
-		}
-	};
+	// const handlePress = (event) => {
+	// 	if (event.key === "Enter") {
+	// 		event.preventDefault();
+	// 		props.setSearchTerm(searchValue);
+	// 		history.push(`/current/${searchValue}`);
+	// 	}
+	// };
 
 	return (
 		<Container className={classes.container}>

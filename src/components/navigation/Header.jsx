@@ -28,7 +28,6 @@ import {
 } from "../../actions";
 import GitHubButton from "../parts/GitHubButton";
 import ExpandableSettings from "../parts/ExpandableSettings";
-import titleCase from "../../utils/titleCase";
 import HeaderSearch from "../parts/HeaderSearch";
 
 const useStyles = makeStyles((theme) => ({
