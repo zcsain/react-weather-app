@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Link as RouterLink, useHistory, withRouter } from "react-router-dom";
+import { Link as RouterLink, withRouter } from "react-router-dom";
 import clsx from "clsx";
 
 // Material UI
@@ -10,11 +10,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Brightness7Icon from "@material-ui/icons/Brightness7"; //light
 import Brightness4Icon from "@material-ui/icons/Brightness4"; //dark
-import SearchIcon from "@material-ui/icons/Search";
 import Tooltip from "@material-ui/core/Tooltip";
 import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles";
-import { InputBase } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Icon from "@material-ui/core/Icon";
 
@@ -95,29 +93,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Header(props) {
 	const classes = useStyles();
-	const [searchValue, setSearchValue] = useState("");
-	const history = useHistory();
-
-	const handleChange = (event) => {
-		setSearchValue(event.target.value);
-	};
-
-	const handlePress = (event) => {
-		if (event.key === "Enter") {
-			event.preventDefault();
-			props.setSearchTerm(searchValue);
-			resetData();
-
-			// Redirects to selected view
-			const currentUrl = props.match.url;
-			const currentLocation = props.match.params.location;
-			const redirectTo = currentUrl.replace(currentLocation, searchValue);
-			history.push(redirectTo);
-
-			setSearchValue("");
-			event.target.blur();
-		}
-	};
 
 	const resetData = () => {
 		props.resetCurrent();
@@ -160,28 +135,7 @@ function Header(props) {
 						</Typography>
 					)}
 					<div style={{ flexGrow: 1 }} />
-					<HeaderSearch />
-					{props.searchFieldInAppBar ? (
-						<div className={classes.search}>
-							<div className={classes.searchIcon}>
-								<SearchIcon />
-							</div>
-							<InputBase
-								autoFocus={false}
-								placeholder="Search…"
-								classes={{
-									root: classes.inputRoot,
-									input: classes.inputInput,
-								}}
-								inputProps={{ "aria-label": "search" }}
-								value={searchValue}
-								onChange={handleChange}
-								onKeyDown={handlePress}
-							/>
-						</div>
-					) : null}
-					{/* <SearchPopover /> */}
-					{/* <AutoCompleSearchField /> */}
+					{props.searchFieldInAppBar ? <HeaderSearch /> : null}
 					<ExpandableSettings viewOptions={false} />
 					<Tooltip title="Toggle light/dark theme">
 						<IconButton

@@ -75,6 +75,8 @@ function HeaderSearch({
 	resetCurrent,
 	fetchGeolocation,
 	match,
+	closeDialog,
+	customHeight,
 }) {
 	const classes = useStyles();
 	const [value, setValue] = useState("");
@@ -121,16 +123,10 @@ function HeaderSearch({
 		history.push(redirectTo);
 
 		setValue("");
-		// event.target.blur();
-		// document.getElementById("input-base").blur();
-		// searchRef.current.blur();
-		// window.focus();
-		// document.activeElement.blur();
-		// console.log(document.activeElement);
-		// event.target.focus();
-		// console.log(searchRef);
-		console.log(document.getElementById("header-input-base"));
-		document.getElementById("header-input-base").blur();
+
+		if (closeDialog) {
+			closeDialog();
+		}
 	};
 
 	const handleClose = () => {
@@ -149,7 +145,6 @@ function HeaderSearch({
 		resetCurrent();
 		resetOneCall();
 		resetGeolocation();
-		// resetSearchTerm();
 	};
 
 	const renderSearchResults = () => {
@@ -193,6 +188,7 @@ function HeaderSearch({
 					<SearchIcon />
 				</div>
 				<InputBase
+					style={{ height: customHeight || null }}
 					id="header-input-base"
 					ref={searchRef}
 					autoFocus={false}
@@ -201,11 +197,12 @@ function HeaderSearch({
 						root: classes.inputRoot,
 						input: classes.inputInput,
 					}}
-					inputProps={{ "aria-label": "search" }}
 					value={value}
 					onChange={handleChange}
 					onClick={handleClick}
-					// onKeyDown={handlePress}
+					inputProps={{
+						autoComplete: "off",
+					}}
 				/>
 			</div>
 			<Popover

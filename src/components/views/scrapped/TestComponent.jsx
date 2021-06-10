@@ -15,15 +15,15 @@ import IconButton from "@material-ui/core/IconButton";
 import { fade } from "@material-ui/core/styles";
 
 // Custom
-import ExpandableSettings from "./parts/ExpandableSettings";
-import { toggleTheme } from "../actions";
-import GitHubButton from "./parts/GitHubButton";
+import ExpandableSettings from "../../parts/ExpandableSettings";
+import { toggleTheme } from "../../../actions";
+import GitHubButton from "../../parts/GitHubButton";
 
 // Testing
 
-import HomeSearchField from "./parts/HomeSearchField";
+import HomeSearchField from "../../parts/HomeSearchField";
 
-import HeaderSearch from "./parts/HeaderSearch";
+import HeaderSearch from "../../parts/HeaderSearch";
 
 const useStyles = makeStyles((theme) => ({
 	logo: {

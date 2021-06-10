@@ -20,7 +20,7 @@ import {
 	resetOneCall,
 	resetSearchTerm,
 	resetGeolocation,
-} from "../../actions";
+} from "../../../actions";
 
 const useStyles = makeStyles((theme) => ({
 	typography: {
