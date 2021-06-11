@@ -12,6 +12,8 @@ import {
 	SET_THEME,
 	GEOLOCATE_REQUEST,
 	RESET_GEOLOCATION,
+	SET_SEARCH_HISTORY,
+	ADD_TO_SEARCH_HISTORY,
 } from "./types";
 import history from "../history";
 import openWeather from "../apis/openWeather";
@@ -215,6 +217,20 @@ export const setTheme = (themeType) => {
 	return {
 		type: SET_THEME,
 		payload: themeType,
+	};
+};
+
+export const setSearchHistory = (searchHistory) => {
+	return {
+		type: SET_SEARCH_HISTORY,
+		payload: searchHistory,
+	};
+};
+
+export const addToSearchHistory = (newSearch) => {
+	return {
+		type: ADD_TO_SEARCH_HISTORY,
+		payload: newSearch,
 	};
 };
 
