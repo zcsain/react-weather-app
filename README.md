@@ -16,6 +16,7 @@ A web application for displaying weather forecast information, with support for 
 - Choose between light or dark theme
 - Units and theme preferences are stored using cookies
 - Supports layouts for phones, tablets and laptops/desktops
+- Search suggestions for different locations with the same name
 
 ## Showcase
 
@@ -35,9 +36,9 @@ A web application for displaying weather forecast information, with support for 
 | -------------------------------------------- |
 | ![Laptop/Desktop](images/Laptop-Desktop.png) |
 
-| OpePlus 7T - Light Mode                                   | OnePlus 7T - Dark Mode                                  |
-| --------------------------------------------------------- | ------------------------------------------------------- |
-| ![OpePlus 7T - Light Mode](images/One_Plust_7T_Light.jpg) | ![OpePlus 7T - Dark Mode](images/One_Plust_7T_Dark.jpg) |
+| OpePlus 7T - Light Mode                         | OnePlus 7T - Dark Mode                        |
+| ----------------------------------------------- | --------------------------------------------- |
+| ![OpePlus 7T - Light Mode](images/Light_7T.jpg) | ![OpePlus 7T - Dark Mode](images/Dark_7T.jpg) |
 
 ## Demo
 
@@ -45,11 +46,11 @@ Live app deployed to Netlify (client) and Heroku (server): [Simple Weather](http
 
 <!-- Mobile demo: -->
 
-![Mobile demo](images/phone.gif)
+![Mobile demo](images/iphone_GIF_v2.gif)
 
 <!-- Tablet/Laptop/Desktop demo: -->
 
-![Tablet/Laptop/Desktop demo](images/Desktop-Gif.gif)
+![Tablet/Laptop/Desktop demo](images/laptop_GIF_V2.gif)
 
 ## Technologies
 
