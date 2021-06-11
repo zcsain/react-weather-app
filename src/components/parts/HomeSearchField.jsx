@@ -1,19 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 // Material UI
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import InputBase from "@material-ui/core/InputBase";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
+// import Paper from "@material-ui/core/Paper";
+// import InputBase from "@material-ui/core/InputBase";
+// import IconButton from "@material-ui/core/IconButton";
+// import SearchIcon from "@material-ui/icons/Search";
 import Container from "@material-ui/core/Container";
 import { Typography } from "@material-ui/core";
-import Tooltip from "@material-ui/core/Tooltip";
+// import Tooltip from "@material-ui/core/Tooltip";
 
 // Custom
-import { setSearchTerm } from "../../actions";
+import { initiateHeroku } from "../../actions";
+import PopoverSearch from "./PopoverSearch";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -66,36 +67,41 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function HomeSearchField(props) {
+function HomeSearchField({ initiateHeroku }) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
-	const [searchValue, setSearchValue] = useState("");
-	const history = useHistory();
 
-	const handleChange = (event) => {
-		setSearchValue(event.target.value);
-	};
+	// Make a request to heroku server to wake it from sleep (reduces search times)
+	useEffect(() => {
+		initiateHeroku();
+	}, [initiateHeroku]);
 
-	const handlePress = (event) => {
-		if (event.key === "Enter") {
-			event.preventDefault();
-			props.setSearchTerm(searchValue);
-			history.push(`/current/${searchValue}`);
-		}
-	};
+	// const [searchValue, setSearchValue] = useState("");
+	// const history = useHistory();
+
+	// const handleChange = (event) => {
+	// 	setSearchValue(event.target.value);
+	// };
+
+	// const handlePress = (event) => {
+	// 	if (event.key === "Enter") {
+	// 		event.preventDefault();
+	// 		props.setSearchTerm(searchValue);
+	// 		history.push(`/current/${searchValue}`);
+	// 	}
+	// };
 
 	return (
-		<Tooltip title="For more specificity use this format: location name, state code, country code">
-			<Container className={classes.container}>
-				<Typography
-					varinat="h1"
-					className={classes.content}
-					style={{ opacity: "93%" }}
-					color="primary"
-				>
-					Simple Weather
-				</Typography>
-				<Paper ref={props.reference} component="form" className={classes.root}>
+		<Container className={classes.container}>
+			<Typography
+				varinat="h1"
+				className={classes.content}
+				style={{ opacity: "93%" }}
+				color="primary"
+			>
+				Simple Weather
+			</Typography>
+			{/* <Paper ref={props.reference} component="form" className={classes.root}>
 					<IconButton className={classes.iconButton} aria-label="menu">
 						<SearchIcon />
 					</IconButton>
@@ -107,10 +113,11 @@ function HomeSearchField(props) {
 						onChange={handleChange}
 						onKeyDown={handlePress}
 					/>
-				</Paper>
-			</Container>
-		</Tooltip>
+					<PopoverSearch />
+				</Paper> */}
+			<PopoverSearch customHeight={"45px"} />
+		</Container>
 	);
 }
 
-export default connect(null, { setSearchTerm })(HomeSearchField);
+export default connect(null, { initiateHeroku })(HomeSearchField);

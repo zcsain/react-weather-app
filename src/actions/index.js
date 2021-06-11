@@ -12,6 +12,8 @@ import {
 	SET_THEME,
 	GEOLOCATE_REQUEST,
 	RESET_GEOLOCATION,
+	SET_SEARCH_HISTORY,
+	ADD_TO_SEARCH_HISTORY,
 } from "./types";
 import history from "../history";
 import openWeather from "../apis/openWeather";
@@ -215,5 +217,66 @@ export const setTheme = (themeType) => {
 	return {
 		type: SET_THEME,
 		payload: themeType,
+	};
+};
+
+export const setSearchHistory = (searchHistory) => {
+	return {
+		type: SET_SEARCH_HISTORY,
+		payload: searchHistory,
+	};
+};
+
+export const addToSearchHistory = (newSearch) => {
+	return {
+		type: ADD_TO_SEARCH_HISTORY,
+		payload: newSearch,
+	};
+};
+
+// Used to start up heroku server to minimize wait times (heroku sleeps after some inactivity)
+export const initiateHeroku = () => {
+	return async (dispatch) => {
+		try {
+			const response = await openWeather.get("/daily");
+
+			// There is no reducer that is handling this
+			dispatch({
+				type: null,
+				payload: response.data,
+			});
+		} catch (error) {
+			if (error.response) {
+				// Request made and server responded
+				console.group("error.response");
+				console.log("error.response.data: ");
+				console.log(error.response.data);
+				console.log("error.response.status: ", error.response.status);
+				console.log("error.response.headers: ");
+				console.log(error.response.headers);
+				console.groupEnd();
+			} else if (error.request) {
+				// The request was made but no response was received
+				console.group("error.request");
+				console.log("error.request: ");
+				console.log(error.request);
+				console.groupEnd();
+			} else {
+				// Something happened in setting up the request that triggered an Error
+				console.group("catch else");
+				console.log("Error (setting up request): ", error.message);
+				console.groupEnd();
+			}
+
+			// Maybe change this to be specific to the search term
+			history.push({
+				pathname: "/error",
+				state: {
+					title: "Not found",
+					message: "No location with specified name found.",
+					buttonText: "Reload Page",
+				},
+			});
+		}
 	};
 };

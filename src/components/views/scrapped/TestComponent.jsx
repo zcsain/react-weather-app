@@ -13,20 +13,17 @@ import Brightness7Icon from "@material-ui/icons/Brightness7"; //light
 import Brightness4Icon from "@material-ui/icons/Brightness4"; //dark
 import IconButton from "@material-ui/core/IconButton";
 import { fade } from "@material-ui/core/styles";
-import { InputBase } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
 
 // Custom
-import ExpandableSettings from "./parts/ExpandableSettings";
-import { toggleTheme } from "../actions";
-import GitHubButton from "./parts/GitHubButton";
+import ExpandableSettings from "../../parts/ExpandableSettings";
+import { toggleTheme } from "../../../actions";
+import GitHubButton from "../../parts/GitHubButton";
 
 // Testing
-// import SearchPopover from "./parts/SearchPopover";
-// import useTargetDimensions from "../hooks/useTargetDimensions";
-import HomeSearchField from "./parts/HomeSearchField";
-// import PopoverSearch from "./parts/PopoverSearch";
-import HeaderSearch from "./parts/HeaderSearch";
+
+import HomeSearchField from "../../parts/HomeSearchField";
+
+import HeaderSearch from "../../parts/HeaderSearch";
 
 const useStyles = makeStyles((theme) => ({
 	logo: {
@@ -88,37 +85,6 @@ const useStyles = makeStyles((theme) => ({
 
 function TestComponent({ selectedTheme, toggleTheme }) {
 	const classes = useStyles();
-	// const componentRef = useRef();
-	// const { width, height } = useTargetDimensions(componentRef);
-	// const searchRef = useRef();
-	// const { width: searchWidth, height: searchHeight } =
-	// 	useTargetDimensions(searchRef);
-
-	console.log("TestComponent re-rendered");
-
-	const renderSearchWithPopover = () => {
-		return (
-			<div className={classes.search}>
-				<div className={classes.searchIcon}>
-					<SearchIcon />
-				</div>
-				<InputBase
-					autoFocus={false}
-					placeholder="Search"
-					classes={{
-						root: classes.inputRoot,
-						input: classes.inputInput,
-					}}
-					inputProps={{ "aria-label": "search" }}
-
-					// value={searchValue}
-					// onChange={handleChange}
-					// onKeyDown={handlePress}
-				/>
-			</div>
-			// <PopoverSearch />
-		);
-	};
 
 	return (
 		<>

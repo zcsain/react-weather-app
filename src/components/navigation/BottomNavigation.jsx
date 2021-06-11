@@ -32,7 +32,7 @@ function BottomNavigation(props) {
 			<AppBar
 				position="fixed"
 				className={classes.appBar}
-				color={props.selectedTheme ? "primary" : "inherit"}
+				color={props.selectedTheme ? "primary" : "default"}
 			>
 				<Toolbar>
 					<Grid container justify="space-between" alignItems="center">

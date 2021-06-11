@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
-import clsx from "clsx";
 import { useHistory, withRouter } from "react-router-dom";
 
 // Material UI
@@ -136,6 +135,7 @@ function PopoverSearch({
 		setSearchTerm(searchText);
 		resetData();
 
+		// Redirect to current view
 		history.push(`/current/${searchText}`);
 	};
 

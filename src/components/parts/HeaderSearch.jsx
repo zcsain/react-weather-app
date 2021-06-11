@@ -1,4 +1,4 @@
-import Ract, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory, withRouter } from "react-router-dom";
 
@@ -22,7 +22,6 @@ import {
 	resetSearchTerm,
 	setSearchTerm,
 } from "../../actions";
-import React from "react";
 
 const useStyles = makeStyles((theme) => ({
 	search: {
@@ -76,6 +75,8 @@ function HeaderSearch({
 	resetCurrent,
 	fetchGeolocation,
 	match,
+	closeDialog,
+	customHeight,
 }) {
 	const classes = useStyles();
 	const [value, setValue] = useState("");
@@ -122,9 +123,10 @@ function HeaderSearch({
 		history.push(redirectTo);
 
 		setValue("");
-		// event.target.blur();
-		// document.getElementById("input-base").blur();
-		searchRef.current.blur();
+
+		if (closeDialog) {
+			closeDialog();
+		}
 	};
 
 	const handleClose = () => {
@@ -143,7 +145,6 @@ function HeaderSearch({
 		resetCurrent();
 		resetOneCall();
 		resetGeolocation();
-		// resetSearchTerm();
 	};
 
 	const renderSearchResults = () => {
@@ -187,7 +188,8 @@ function HeaderSearch({
 					<SearchIcon />
 				</div>
 				<InputBase
-					id="input-base"
+					style={{ height: customHeight || null }}
+					id="header-input-base"
 					ref={searchRef}
 					autoFocus={false}
 					placeholder="Search"
@@ -195,11 +197,12 @@ function HeaderSearch({
 						root: classes.inputRoot,
 						input: classes.inputInput,
 					}}
-					inputProps={{ "aria-label": "search" }}
 					value={value}
 					onChange={handleChange}
 					onClick={handleClick}
-					// onKeyDown={handlePress}
+					inputProps={{
+						autoComplete: "off",
+					}}
 				/>
 			</div>
 			<Popover
