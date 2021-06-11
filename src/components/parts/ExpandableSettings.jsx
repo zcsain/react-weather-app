@@ -77,6 +77,11 @@ function ExpandableSettings(props) {
 		setAnchorEl(null);
 	};
 
+	const handleThemeChange = () => {
+		handleClose();
+		props.toggleTheme();
+	};
+
 	return (
 		<React.Fragment>
 			<Tooltip title={props.viewOptions ? "Settings" : "Change units"}>
@@ -105,7 +110,7 @@ function ExpandableSettings(props) {
 							</Typography>
 						</ListItem>
 
-						<ListItem button onClick={() => props.toggleTheme()}>
+						<ListItem button onClick={handleThemeChange}>
 							<ListItemIcon>
 								{props.selectedTheme ? (
 									<Brightness4Icon />
