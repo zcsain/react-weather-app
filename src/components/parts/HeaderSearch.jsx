@@ -22,6 +22,7 @@ import {
 	resetGeolocation,
 	resetSearchTerm,
 	setSearchTerm,
+	addToSearchHistory,
 } from "../../actions";
 
 const useStyles = makeStyles((theme) => ({
@@ -81,6 +82,7 @@ function HeaderSearch({
 	selectedTheme,
 	enablePaper,
 	// enableAutoFocus,
+	addToSearchHistory,
 }) {
 	const classes = useStyles();
 	const [value, setValue] = useState("");
@@ -117,6 +119,7 @@ function HeaderSearch({
 	const handleListItemClick = (event, searchText) => {
 		handleClose();
 		setSearchTerm(searchText);
+		addToSearchHistory(searchText);
 		resetData();
 
 		// Redirect to selected view
@@ -255,4 +258,5 @@ export default connect(mapStateToProps, {
 	resetSearchTerm,
 	fetchGeolocation,
 	resetGeolocation,
+	addToSearchHistory,
 })(withRouter(HeaderSearch));

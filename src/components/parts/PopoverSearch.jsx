@@ -22,6 +22,7 @@ import {
 	resetOneCall,
 	resetGeolocation,
 	setSearchTerm,
+	addToSearchHistory,
 } from "../../actions";
 
 const useStyles = makeStyles((theme) => ({
@@ -85,6 +86,7 @@ function PopoverSearch({
 	resetOneCall,
 	resetGeolocation,
 	match,
+	addToSearchHistory,
 }) {
 	const classes = useStyles();
 	const history = useHistory();
@@ -133,6 +135,7 @@ function PopoverSearch({
 		handleClose();
 
 		setSearchTerm(searchText);
+		addToSearchHistory(searchText);
 		resetData();
 
 		// Redirect to current view
@@ -244,4 +247,5 @@ export default connect(mapStateToProps, {
 	resetGeolocation,
 	resetOneCall,
 	setSearchTerm,
+	addToSearchHistory,
 })(withRouter(PopoverSearch));
