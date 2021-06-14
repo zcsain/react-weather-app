@@ -80,7 +80,7 @@ function HeaderSearch({
 	customHeight,
 	selectedTheme,
 	enablePaper,
-	enableAutoFocus,
+	// enableAutoFocus,
 }) {
 	const classes = useStyles();
 	const [value, setValue] = useState("");
@@ -192,7 +192,7 @@ function HeaderSearch({
 					style={{ height: customHeight || null }}
 					id="header-input-base"
 					ref={searchRef}
-					autoFocus={enableAutoFocus}
+					// autoFocus={enableAutoFocus}
 					placeholder="Search"
 					classes={{
 						root: classes.inputRoot,
