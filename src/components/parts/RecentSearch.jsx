@@ -10,7 +10,9 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-	listRoot: {},
+	listRoot: {
+		overflow: "auto",
+	},
 }));
 
 function RecentSearch({ searchHistory, width }) {
