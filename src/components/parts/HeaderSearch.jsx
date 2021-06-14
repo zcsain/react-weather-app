@@ -11,6 +11,7 @@ import Popover from "@material-ui/core/Popover";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import Paper from "@material-ui/core/Paper";
 
 // Custom
 import useTargetDimensions from "../../hooks/useTargetDimensions";
@@ -77,6 +78,9 @@ function HeaderSearch({
 	match,
 	closeDialog,
 	customHeight,
+	selectedTheme,
+	enablePaper,
+	enableAutoFocus,
 }) {
 	const classes = useStyles();
 	const [value, setValue] = useState("");
@@ -178,11 +182,8 @@ function HeaderSearch({
 		}
 	};
 
-	const open = Boolean(anchorEl);
-	const id = open ? "popover-search" : undefined;
-
-	return (
-		<React.Fragment>
+	const renderInputBase = () => {
+		return (
 			<div ref={componentRef} className={classes.search} id={id}>
 				<div className={classes.searchIcon}>
 					<SearchIcon />
@@ -191,7 +192,7 @@ function HeaderSearch({
 					style={{ height: customHeight || null }}
 					id="header-input-base"
 					ref={searchRef}
-					autoFocus={false}
+					autoFocus={enableAutoFocus}
 					placeholder="Search"
 					classes={{
 						root: classes.inputRoot,
@@ -205,6 +206,20 @@ function HeaderSearch({
 					}}
 				/>
 			</div>
+		);
+	};
+
+	const open = Boolean(anchorEl);
+	const id = open ? "popover-search" : undefined;
+
+	return (
+		<React.Fragment>
+			{selectedTheme && enablePaper ? (
+				<Paper>{renderInputBase()}</Paper>
+			) : (
+				renderInputBase()
+			)}
+
 			<Popover
 				anchorOrigin={{
 					vertical: "bottom",
@@ -228,6 +243,7 @@ function HeaderSearch({
 
 const mapStateToProps = (state) => {
 	return {
+		selectedTheme: state.theme,
 		geolocation: state.geolocation,
 	};
 };

@@ -40,7 +40,12 @@ function FormDialog(props) {
 				aria-labelledby="form-dialog-title"
 			>
 				<DialogContent>
-					<HeaderSearch closeDialog={handleClose} customHeight="45px" />
+					<HeaderSearch
+						closeDialog={handleClose}
+						customHeight="45px"
+						enablePaper={true}
+						enableAutoFocus={true}
+					/>
 				</DialogContent>
 				<DialogContent>
 					<DialogContentText>Search city by name.</DialogContentText>
