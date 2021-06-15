@@ -44,7 +44,7 @@ function FormDialog(props) {
 						closeDialog={handleClose}
 						customHeight="45px"
 						enablePaper={true}
-						enableAutoFocus={true}
+						// enableAutoFocus={true}
 					/>
 				</DialogContent>
 				<DialogContent>

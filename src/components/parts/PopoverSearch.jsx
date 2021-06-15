@@ -9,7 +9,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles";
-import { InputBase } from "@material-ui/core";
+import InputBase from "@material-ui/core/InputBase";
+import ListSubheader from "@material-ui/core/ListSubheader";
 import SearchIcon from "@material-ui/icons/Search";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
@@ -22,7 +23,9 @@ import {
 	resetOneCall,
 	resetGeolocation,
 	setSearchTerm,
+	addToSearchHistory,
 } from "../../actions";
+import RecentSearch from "./RecentSearch";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -74,6 +77,17 @@ const useStyles = makeStyles((theme) => ({
 		// 	// },
 		// },
 	},
+	popoverRoot: {
+		[theme.breakpoints.down("xs")]: {
+			maxHeight: "300px",
+		},
+		[theme.breakpoints.up("xs")]: {
+			maxHeight: "400px",
+		},
+	},
+	listRoot: {
+		overflow: "auto",
+	},
 }));
 
 function PopoverSearch({
@@ -85,6 +99,7 @@ function PopoverSearch({
 	resetOneCall,
 	resetGeolocation,
 	match,
+	addToSearchHistory,
 }) {
 	const classes = useStyles();
 	const history = useHistory();
@@ -133,6 +148,7 @@ function PopoverSearch({
 		handleClose();
 
 		setSearchTerm(searchText);
+		addToSearchHistory(searchText);
 		resetData();
 
 		// Redirect to current view
@@ -162,31 +178,25 @@ function PopoverSearch({
 			geolocation.length === 0
 		) {
 			return (
-				<List style={{ width: width }}>
-					<ListItem button disabled>
-						<ListItemText primary="No match" />
-					</ListItem>
-				</List>
+				<ListItem button disabled>
+					<ListItemText primary="No match" />
+				</ListItem>
 			);
 		} else if (geolocation[0] !== "no match found") {
-			return (
-				<List style={{ width: width }}>
-					{geolocation.map(({ name, state, country }, index) => {
-						const stateDef = state ? state + ", " : "";
-						const searchText = name + ", " + stateDef + country;
+			return geolocation.map(({ name, state, country }, index) => {
+				const stateDef = state ? state + ", " : "";
+				const searchText = name + ", " + stateDef + country;
 
-						return (
-							<ListItem
-								key={index}
-								button
-								onClick={(event) => handleListItemClick(event, searchText)}
-							>
-								<ListItemText primary={searchText} />
-							</ListItem>
-						);
-					})}
-				</List>
-			);
+				return (
+					<ListItem
+						key={index}
+						button
+						onClick={(event) => handleListItemClick(event, searchText)}
+					>
+						<ListItemText primary={searchText} />
+					</ListItem>
+				);
+			});
 		}
 	};
 
@@ -211,6 +221,7 @@ function PopoverSearch({
 				/>
 			</Paper>
 			<Popover
+				className={classes.popoverRoot}
 				anchorOrigin={{
 					vertical: "bottom",
 					horizontal: "left",
@@ -225,7 +236,14 @@ function PopoverSearch({
 				anchorEl={anchorEl}
 				onClose={handleClose}
 			>
-				{renderSearchResults()}
+				<List
+					style={{ width: width }}
+					className={classes.listRoot}
+					subheader={<ListSubheader>Search</ListSubheader>}
+				>
+					{renderSearchResults()}
+				</List>
+				<RecentSearch width={width} handleListItemClick={handleListItemClick} />
 			</Popover>
 		</>
 	);
@@ -244,4 +262,5 @@ export default connect(mapStateToProps, {
 	resetGeolocation,
 	resetOneCall,
 	setSearchTerm,
+	addToSearchHistory,
 })(withRouter(PopoverSearch));

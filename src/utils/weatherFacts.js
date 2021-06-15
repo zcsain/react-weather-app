@@ -1,121 +1,117 @@
 const weatherFacts = [
 	{
-		title: "Crickets",
-		description: "You can tell the temperature by counting a cricket’s chirps",
-	},
-	{
-		title: "Grapes",
+		title: "Thunderstorm",
 		description:
-			"In 2003, a heatwave so intense turned grapes into raisins before they were picked from the vine",
+			"The average thunderstorm lifts 13.2 million gallons (500 million kilograms) of water vapor into the Earth's atmosphere, and releases more energy than the atomic bomb dropped on Hiroshima, Japan in 1945.",
+		url: "https://www.factsjustforkids.com/weather-facts/thunderstorm-facts-for-kids.html",
 	},
 	{
-		title: "Cats and dogs",
+		title: "Snow",
 		description:
-			"Cats and dogs have been known to sense when a tornado is coming",
+			"Snows ability to reflect ultraviolet radiation can caused a condition called snow blindness. Snow’s reflective properties literally caused a sunburned cornea (clear cover of your eye).",
+		url: "https://www.factsjustforkids.com/weather-facts/snow-facts-for-kids.html",
 	},
 	{
-		title: "Thames",
-		description: "The River Thames froze solid in 1684 for two months",
-	},
-	{
-		title: "Mississippi",
+		title: "Flood",
 		description:
-			"In 1899, it was so cold that the Mississippi River froze over its entire length",
+			"As little as two feet (0.6 meters) of rushing flood water can carry away an automobile, including a pick-up truck or SUV.",
+		url: "https://www.factsjustforkids.com/weather-facts/flood-facts-for-kids.html",
 	},
 	{
-		title: "Earthquake",
+		title: "Clouds",
 		description:
-			"An earthquake in December 1811 caused parts of the Mississippi River to flow backward",
+			"Clouds form when warm air rises and cools down in the atmosphere. As the warm air cools, the water vapor in it turns into tiny water droplets or ice crystals. These tiny water droplets and/or ice crystals eventually form a cloud.",
+		url: "https://www.factsjustforkids.com/weather-facts/cloud-facts-for-kids.html",
 	},
 	{
-		title: "Same place ",
+		title: "Hail",
 		description:
-			"Contrary to the saying, lightning often does strike at the same place twice",
+			"Hail is created when a thunderstorm has an updraft that carries rain droplets up into the extremely cold areas of the Earth's upper atmosphere.",
+		url: "https://www.factsjustforkids.com/weather-facts/hail-facts-for-kids.html",
 	},
 	{
-		title: "Hurricane",
+		title: "Rainforest",
 		description:
-			"The word “hurricane” comes from the Taino word “huricán,” who was the Carib Indian god of evil",
+			"A forest that receives between 98 and 177 inches (2,500 to 4,500 mm) of rain each year is called a rainforest.",
+		url: "https://www.factsjustforkids.com/weather-facts/rain-facts-for-kids.html",
 	},
 	{
-		title: "Lightning",
-		description: "Every second, about 100 lightning bolts strike the Earth",
-	},
-	{
-		title: "Frogs",
-		description: "Some frogs are noisier right before it rains",
-	},
-	{
-		title: "Tornadoes",
-		description: "Some tornadoes can be faster than formula one racing cars",
+		title: "Fog",
+		description:
+			"Fog is caused by tiny droplets of water and/or ice crystals that are suspended in the air near the ground, fog forms when the dew point and air temperature difference is less than 4 °F (2.5 °C). ",
+		url: "https://www.factsjustforkids.com/weather-facts/fog-facts-for-kids.html",
 	},
 	{
 		title: "Blizzards",
 		description:
-			"Blizzards can make snowflakes feel like pellets hitting your face",
+			"A blizzard is a severe snow storm with winds in excess of 35 mph (~56 km/h) and visibility of less than a 1/4 mile (0.4 kilometers) for more than 3 hours.",
+		url: "https://www.dosomething.org/us/facts/11-facts-about-blizzards",
 	},
 	{
 		title: "Dirt",
 		description:
-			"Dirt mixed with wind can make dust storms known as black blizzards",
+			"Dirt mixed with wind can make dust storms known as black blizzards.",
 		url: "https://en.wikipedia.org/wiki/Blizzard",
 	},
 	{
 		title: "Antartica",
 		description:
-			"In Antarctica, snow falls so hard that you can’t even see your own hand in front of your face",
+			"In Antarctica, snow falls so hard that you can’t even see your own hand in front of your face.",
 		url: "https://en.wikipedia.org/wiki/Climate_of_Antarctica",
 	},
 	{
 		title: "Lightning bolt",
 		description:
-			"The air located around a lightning bolt is heated to around 30,000°C (54,032°F). This is 5 times hotter than the surface of the sun",
+			"Air is a very poor conductor of electricity and gets extremely hot when lightning passes through it. In fact, lightning can heat the air it passes through to 50,000 degrees Fahrenheit (27760 Celsius), 5 times hotter than the surface of the sun.",
+		url: "https://www.weather.gov/safety/lightning-temperature#:~:text=Air%20is%20a%20very%20poor,the%20surface%20of%20the%20sun).",
 	},
 	{
-		title: "Ocean",
+		title: "Heavy Snowfall",
 		description:
-			"The ocean contains enough salt to cover all the continents to a depth of nearly 500 feet (152.4 meters)",
-	},
-	{
-		title: "The snowiest city",
-		description:
-			"The snowiest city on Earth is Aomori, Japan, with an average of 26 feet (or eight meters) of snow each year",
+			"The heaviest snowfall ever recorded in a 24-hour period in the U.S. occurred on April 14 and 15, 1921 in Silver Lake, Colorado. During this single day, 6.3 feet (1.95 meters) of snow fell onto the ground according.",
+		url: "https://science.howstuffworks.com/nature/climate-weather/storms/10-biggest-snowstorms.htm",
 	},
 	{
 		title: "Highest temperature",
 		description:
-			"The current official highest registered air temperature on Earth is 56.7 °C (134.1 °F), recorded on 10 July 1913 at Furnace Creek Ranch, in Death Valley in the United States",
+			"The current official highest registered air temperature on Earth is 56.7 °C (134.1 °F), recorded on 10 July 1913 at Furnace Creek Ranch, in Death Valley in the United States.",
 		url: "https://en.wikipedia.org/wiki/Highest_temperature_recorded_on_Earth",
 	},
 	{
-		title: "South Pole",
+		title: "Cold Weather",
 		description:
-			"The South Pole is the least sunny place - only 182 days a year get sunshine",
+			"The coldest weather recorded on Earth occurred in Antarctica: -89.2°C (-128.6°F) on July 21st, 1983.",
+		url: "https://oceanwide-expeditions.com/blog/10-weather-fueled-facts-about-antarctica",
 	},
 	{
 		title: "Land or ocean",
-		description: "9 out of 10 lightning bolts strike land rather than oceans",
+		description:
+			"Lightning doesn’t strike the ocean as much as land, but when it does,it spreads out over the water, which acts as a conductor. It can hit boats that are nearby, and electrocute fish that are near the surface.",
+		url: "https://oceantoday.noaa.gov/lightning/",
 	},
 	{
 		title: "Snowflake",
 		description:
-			"The world's largest snowflake was recorded in the Guinness Book of Records, at 38 cm (14.96 in) wide and 20 cm (7.87 in) thick. The snow flake fell at Fort Keogh, Montana, USA on 28 January 1887",
+			"Guinness World Records lists the world's largest aggregated snowflakes as those of January 1887 at Fort Keogh, Montana, which were claimed to be 15 inches (38 cm) wide.",
 		url: "https://en.wikipedia.org/wiki/Snowflake",
 	},
 	{
 		title: "John the storm",
 		description:
-			"A storm named John was the Longest-lasting Pacific tropical storm continuing for 31 days. As it crossed the dateline twice, it changed status from a hurricane to a typhoon and back to a hurricane",
+			"Hurricane John, also known as Typhoon John, was both the longest-lasting and the farthest-traveling tropical cyclone ever observed.",
+		url: "https://en.wikipedia.org/wiki/Hurricane_John_(1994)",
 	},
 	{
 		title: "Storm for days...",
 		description:
-			"'Ginger', was the longest-lasting Atlantic tropical storm, which spun around the open ocean for 28 days in 1971",
+			"The San Ciriaco hurricane is the longest-lasting Atlantic hurricane in recorded history, lasting for 27.75 days.",
+		url: "https://en.wikipedia.org/wiki/1899_San_Ciriaco_hurricane#:~:text=The%20San%20Ciriaco%20hurricane%20is,history%2C%20lasting%20for%2027.75%20days.",
 	},
 	{
 		title: "Snowfall",
 		description:
-			"The greatest snowfall recorded was on Mt Rainier, Washington State, USA - Over 30 metres (98.4 feet) fell during the winter of 1972",
+			"The greatest snowfall recorded was on Mt Rainier, Washington State, USA - Over 30 metres (98.4 feet) fell during the winter of 1972.",
+		url: "https://www.nps.gov/mora/planyourvisit/annual-snowfall-totals.htm",
 	},
 ];
 

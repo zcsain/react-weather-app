@@ -28,7 +28,8 @@ import NavigationTabs from "./navigation/NavigationTabs";
 import BottomNavigation from "./navigation/BottomNavigation";
 import ErrorView from "./views/ErrorView";
 import ScrollTop from "./parts/ScrollTop";
-import { setTheme, setUnits } from "../actions";
+import { setSearchHistory, setTheme, setUnits } from "../actions";
+import { SIMPLE_WEATHER } from "../utils/types";
 
 const dark = createMuiTheme({
 	palette: {
@@ -98,7 +99,15 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function App({ selectedTheme, selectedUnits, setTheme, setUnits }) {
+function App({
+	selectedTheme,
+	selectedUnits,
+	searchHistory,
+	setTheme,
+	setUnits,
+	setSearchHistory,
+	// searchTerm,
+}) {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 	const xsDevice = useMediaQuery(theme.breakpoints.down("xs"));
@@ -108,23 +117,32 @@ function App({ selectedTheme, selectedUnits, setTheme, setUnits }) {
 
 	useEffect(() => {
 		// Load cookies
-		const cookie = cookies.get("SimpleWeather");
+		const cookie = cookies.get(SIMPLE_WEATHER);
 
+		// Set state
 		if (cookie !== undefined) {
 			setTheme(cookie.preferredTheme);
 			setUnits(cookie.preferredUnits);
-		}
-	}, [cookies, setTheme, setUnits]);
 
-	// Update cookies when the theme or units type changes
+			if (cookie.searchHistory !== undefined) {
+				setSearchHistory(cookie.searchHistory);
+			}
+		}
+	}, [cookies, setTheme, setUnits, setSearchHistory]);
+
 	useEffect(() => {
+		// Save cookies
 		cookies.set(
-			"SimpleWeather",
-			{ preferredTheme: selectedTheme, preferredUnits: selectedUnits },
+			SIMPLE_WEATHER,
+			{
+				preferredTheme: selectedTheme,
+				preferredUnits: selectedUnits,
+				searchHistory: searchHistory,
+			},
 			{ path: "/" }
 		);
 		// Again not sure why react wants "cookies" as a dependency
-	}, [selectedTheme, selectedUnits, cookies]);
+	}, [selectedTheme, selectedUnits, searchHistory, cookies]);
 
 	return (
 		<ThemeProvider theme={selectedTheme ? blueLight : dark}>
@@ -191,7 +209,13 @@ const mapStateToProps = (state) => {
 	return {
 		selectedTheme: state.theme,
 		selectedUnits: state.units,
+		searchHistory: state.searchHistory,
+		// searchTerm: state.location, // For some reason this causes a bug in NavigationTabs component, no clue why
 	};
 };
 
-export default connect(mapStateToProps, { setTheme, setUnits })(App);
+export default connect(mapStateToProps, {
+	setTheme,
+	setUnits,
+	setSearchHistory,
+})(App);

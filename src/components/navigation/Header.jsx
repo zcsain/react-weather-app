@@ -136,7 +136,7 @@ function Header(props) {
 					)}
 					<div style={{ flexGrow: 1 }} />
 					{props.searchFieldInAppBar ? <HeaderSearch /> : null}
-					<ExpandableSettings viewOptions={false} />
+					<ExpandableSettings viewOptions={false} denseList={false} />
 					<Tooltip title="Toggle light/dark theme">
 						<IconButton
 							aria-label="toggle light/dark theme"

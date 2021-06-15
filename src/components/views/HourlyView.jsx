@@ -51,7 +51,7 @@ function HourlyView({
 					</Grid>
 					{showFacts && (
 						<Grid container item direction="column" spacing={2} xs>
-							<FactsCards n={4} />
+							<FactsCards n={3} />
 						</Grid>
 					)}
 				</Grid>
