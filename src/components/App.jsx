@@ -124,8 +124,6 @@ function App({
 			setTheme(cookie.preferredTheme);
 			setUnits(cookie.preferredUnits);
 
-			console.log(cookie);
-
 			if (cookie.searchHistory !== undefined) {
 				setSearchHistory(cookie.searchHistory);
 			}
