@@ -16,7 +16,8 @@ A web application for displaying weather forecast information, with support for 
 - Choose between light or dark theme
 - Units and theme preferences are stored using cookies
 - Supports layouts for phones, tablets and laptops/desktops
-- Search suggestions for different locations with the same name
+- Search suggestions for different locations that share the same name
+- Recent searched locations
 
 ## Showcase
 
@@ -46,11 +47,11 @@ Live app deployed to Netlify (client) and Heroku (server): [Simple Weather](http
 
 <!-- Mobile demo: -->
 
-![Mobile demo](images/iphone_GIF_v2.gif)
+![Mobile demo](images/iphone_v3.gif)
 
 <!-- Tablet/Laptop/Desktop demo: -->
 
-![Tablet/Laptop/Desktop demo](images/laptop_GIF_V2.gif)
+![Tablet/Laptop/Desktop demo](images/laptop_v3.gif)
 
 ## Technologies
 
