@@ -1,3 +1,10 @@
+/**
+ *
+ * @param {array} arr Array of numbers
+ * @param {number} n Number of unique elements to return
+ * @returns {array} Returns an array with n number of unique elements
+ */
+
 function getRandom(arr, n) {
 	var result = new Array(n),
 		len = arr.length,
