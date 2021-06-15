@@ -68,6 +68,14 @@ const useStyles = makeStyles((theme) => ({
 		// 	// },
 		// },
 	},
+	popoverRoot: {
+		[theme.breakpoints.down("xs")]: {
+			maxHeight: "300px",
+		},
+	},
+	listRoot: {
+		overflow: "auto",
+	},
 }));
 
 function HeaderSearch({
@@ -158,34 +166,25 @@ function HeaderSearch({
 	const renderSearchResults = () => {
 		if (geolocation[0] === "no match found" || geolocation.length === 0) {
 			return (
-				<List
-					style={{ width: width }}
-					subheader={<ListSubheader>Search</ListSubheader>}
-				>
-					<ListItem button disabled>
-						<ListItemText primary="No match" />
-					</ListItem>
-				</List>
+				<ListItem button disabled>
+					<ListItemText primary="No match" />
+				</ListItem>
 			);
 		} else if (geolocation[0] !== "no match found") {
-			return (
-				<List style={{ width: width }}>
-					{geolocation.map(({ name, state, country }, index) => {
-						const stateDef = state ? state + ", " : "";
-						const searchText = name + ", " + stateDef + country;
+			return geolocation.map(({ name, state, country }, index) => {
+				const stateDef = state ? state + ", " : "";
+				const searchText = name + ", " + stateDef + country;
 
-						return (
-							<ListItem
-								key={index}
-								button
-								onClick={(event) => handleListItemClick(event, searchText)}
-							>
-								<ListItemText primary={searchText} />
-							</ListItem>
-						);
-					})}
-				</List>
-			);
+				return (
+					<ListItem
+						key={index}
+						button
+						onClick={(event) => handleListItemClick(event, searchText)}
+					>
+						<ListItemText primary={searchText} />
+					</ListItem>
+				);
+			});
 		}
 	};
 
@@ -228,6 +227,7 @@ function HeaderSearch({
 			)}
 
 			<Popover
+				className={classes.popoverRoot}
 				anchorOrigin={{
 					vertical: "bottom",
 					horizontal: "left",
@@ -242,7 +242,13 @@ function HeaderSearch({
 				anchorEl={anchorEl}
 				onClose={handleClose}
 			>
-				{renderSearchResults()}
+				<List
+					style={{ width: width }}
+					className={classes.listRoot}
+					subheader={<ListSubheader>Search</ListSubheader>}
+				>
+					{renderSearchResults()}
+				</List>
 				<RecentSearch width={width} handleListItemClick={handleListItemClick} />
 			</Popover>
 		</React.Fragment>
