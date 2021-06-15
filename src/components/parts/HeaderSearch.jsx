@@ -5,7 +5,7 @@ import { useHistory, withRouter } from "react-router-dom";
 // Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles";
-import { InputBase } from "@material-ui/core";
+import { InputBase, ListSubheader } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import Popover from "@material-ui/core/Popover";
 import List from "@material-ui/core/List";
@@ -24,6 +24,7 @@ import {
 	setSearchTerm,
 	addToSearchHistory,
 } from "../../actions";
+import RecentSearch from "./RecentSearch";
 
 const useStyles = makeStyles((theme) => ({
 	search: {
@@ -157,7 +158,10 @@ function HeaderSearch({
 	const renderSearchResults = () => {
 		if (geolocation[0] === "no match found" || geolocation.length === 0) {
 			return (
-				<List style={{ width: width }}>
+				<List
+					style={{ width: width }}
+					subheader={<ListSubheader>Search</ListSubheader>}
+				>
 					<ListItem button disabled>
 						<ListItemText primary="No match" />
 					</ListItem>
@@ -239,6 +243,7 @@ function HeaderSearch({
 				onClose={handleClose}
 			>
 				{renderSearchResults()}
+				<RecentSearch width={width} handleListItemClick={handleListItemClick} />
 			</Popover>
 		</React.Fragment>
 	);

@@ -1,5 +1,4 @@
-import classes from "*.module.css";
-import React from "React";
+import React from "react";
 import { connect } from "react-redux";
 
 // Material UI
@@ -15,10 +14,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function RecentSearch({ searchHistory, width }) {
+function RecentSearch({ searchHistory, width, handleListItemClick }) {
 	const classes = useStyles();
 
-	return (
+	return searchHistory.length !== 0 ? (
 		<List
 			style={{ width: width }}
 			className={classes.listRoot}
@@ -36,7 +35,7 @@ function RecentSearch({ searchHistory, width }) {
 				);
 			})}
 		</List>
-	);
+	) : null;
 }
 
 const mapStateToProps = (state) => {
