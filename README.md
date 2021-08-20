@@ -77,3 +77,11 @@ Project is created with:
   - [Google Chrome](https://www.google.com/chrome/)
   - [Responsively App](https://responsively.app/)
   - [VS Code](https://code.visualstudio.com/)
+
+## What would I do differently?
+
+- Make a more granular plan, and stick to it (feature creep is real)
+- Create more structured and concise Git commit messages
+- Use Storybook for independent component creation
+- Use Styled Components for more granular and structured design
+- Make components more reusable
